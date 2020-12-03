@@ -2,19 +2,14 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
+/* @var $model app\models\SignUp */
 
-use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
+$this->title = 'SignUp';
 $this->params['breadcrumbs'][] = $this->title;
-$msg = Yii::$app->session->getFlash('success');
-?>
-<div class="alert alert-danger" role="alert" <?=$msg ? '' : 'style="display: none;"'?>>
-  <?=$msg?>
-</div>
-   
+
+?>  
 <div class="login-box">
   <div class="card">
     <div class="card-body login-card-body">
@@ -49,8 +44,8 @@ $msg = Yii::$app->session->getFlash('success');
           <!-- /.col -->
           <div class="col-4">
             <!-- <button type="submit" class="btn btn-primary btn-block">Sign In</button> -->
-            <button type="sumbit" class="btn btn-primary btn-block toastrDefaultError">
-                  Login
+            <button type="sumbit" class="btn btn-primary btn-block toastrDefaultErrorSignUp">
+                  SignUp
                 </button>
           </div>
           <!-- /.col -->

@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
+use app\models\SignupForm;
 use app\models\ContactForm;
 
 class SiteController extends Controller
@@ -61,6 +62,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (Yii::$app->user->isGuest) {
+            $this->redirect('/site/login');
+        }
         return $this->render('index');
     }
 
@@ -71,6 +75,8 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout = 'clear_area';
+    
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -79,7 +85,11 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
-
+        if (Yii::$app->request->post()) {
+            $ajaxResponce = json_encode($model->errors);
+            return $ajaxResponce;
+        }
+        
         $model->password = '';
         return $this->render('login', [
             'model' => $model,
@@ -97,7 +107,50 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+    /**
+     * SignUp action
+     * 
+     * @return Responce
+     */
+    public function actionSignUp()
+    {
+        $this->layout = 'clear_area';
+        
+        if (!Yii::$app->user->isGuest) {
+            return $this->goBack();
+        }
 
+        $model = new SignupForm();
+        // var_dump($model->load(Yii::$app->request->post()));die;
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            return $this->goBack();
+        }
+
+        if (Yii::$app->request->post()) {
+            $ajaxResponce = json_encode($model->errors);
+            return $ajaxResponce;
+        }
+        
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+    /**
+     * SignUp action
+     * 
+     * @return Responce
+     */
+    public function actionSignUpAjax()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goBack();
+        }
+        Yii::$app->responce->format = Response::FORMAT_JSON;
+        $array = [
+            'success' => true,
+        ];
+        return $array;
+    }
     /**
      * Displays contact page.
      *

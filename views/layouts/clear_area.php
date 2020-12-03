@@ -4,8 +4,12 @@
 /* @var $content string */
 
 use app\assets\AppAsset;
+use app\assets\ClearAreaAsset;
+use app\assets\AlertAsset;
 
 AppAsset::register($this);
+ClearAreaAsset::register($this);
+AlertAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -13,20 +17,13 @@ AppAsset::register($this);
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>DynastyPride</title>
+  <title>AdminLTE 3 | Contacts</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <?php $this->head() ?>
 </head>
-<body>
+<body class="hold-transition login-page">
 <?php $this->beginBody() ?>
-
-<div class="wrapper">
-    <?=$this->render('header.php');?>
-    <?=$this->render('left.php');?>
-    <?=$this->render('content.php', ['content' => $content]);?>
-    <?=$this->render('footer.php');?>
-</div>
-
+    <?=$content?>
 <?php $this->endBody() ?>
 </body>
 </html>

@@ -113,3 +113,24 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.logo-block {
+    width: 100%;
+}
+.login-card-body .logo-block .logo {
+    height: 130px;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+}
+
+.input-group .field-loginform-username {
+    width: 85%;
+    margin: 0;
+    padding: 0;
+}
+
+.brand-link .logo {
+    height: 35px;
+    border-radius: 50%;
+}

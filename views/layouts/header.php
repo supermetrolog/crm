@@ -25,6 +25,11 @@
       </div>
     </form>
 
+    <ul class="navbar-nav ml-auto mr-auto">
+      <li>
+        <?=$this->title;?>
+      </li>
+    </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->

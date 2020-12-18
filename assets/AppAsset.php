@@ -20,17 +20,20 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
         'css/all.min.css',
         'https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css',
         'css/adminlte.min.css',
         'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700',
         'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
+        'css/site.css',
     ];
     public $js = [
         'js/bootstrap.bundle.min.js',
         'js/adminlte.min.js',
         'js/demo.js',
+        'js/app/alert.js',
+        'js/app/layout/left.js',
+        'js/app/user/user.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

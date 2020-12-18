@@ -10,7 +10,7 @@ use yii\helpers\Url;
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
-      <img src="/img/DP_logo.png"
+      <img src="/img/DP_logo_negative.png"
            alt="DYNASTY PRIDE Logo"
            class="logo">
       <span class="brand-text font-weight-bold">DynastyPride</span>
@@ -30,7 +30,7 @@ use yii\helpers\Url;
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column menu" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview">
@@ -72,7 +72,7 @@ use yii\helpers\Url;
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= Url::to('/user/personal'); ?>" class="nav-link">
+            <a href="<?= Url::to('/user/user-info'); ?>" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Users

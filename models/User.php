@@ -1,6 +1,8 @@
 <?php
 namespace app\models;
 
+use app\models\helpers\ResponceCode;
+use yii\web\UploadedFile;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -20,6 +22,8 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * 
+ * @property Userinfo $userinfo
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -27,7 +31,17 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    public const MARITAL_STATUS_SINGLE = 0;
+    public const MARITAL_STATUS_MARRIED = 1;
+    public const MARITAL_STATUS_MARRIED_GIRL = 2;
+    public const MARITAL_STATUS_UNMARRIED = 3;
 
+    public const EDUCATION_HIGH = 0;
+    public const EDUCATION_SECONDARY = 1;
+    public const EDUCATION_SCHOOL = 2;
+
+    public const ARMY_SERVED = 0;
+    public const ARMY_NOT_SERVED = 1;   
     /**
      * {@inheritdoc}
      */
@@ -209,5 +223,46 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
-    
+    public function toFire(){
+        $this->status = self::STATUS_INACTIVE;
+        return $this->save();
+    }
+
+   /**
+     * Gets query for [[Userinfo]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserinfo()
+    {
+        return $this->hasOne(Userinfo::className(), ['pin' => 'pin']);
+    }
+
+    public static function createUser($model, $userAttr, $imageModel)
+    {
+        $transaction = Yii::$app->db->beginTransaction();
+
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+
+            $userAttr->pin = $model->pin;
+            if ($userAttr->load(Yii::$app->request->post()) && $userAttr->save()) {
+                
+                $imageModel->image = UploadedFile::getInstance($imageModel, 'image');
+
+                if ($imageModel->upload($userAttr)) {
+                    $transaction->commit();
+                    return ResponceCode::OK;
+                }
+                    return json_encode($imageModel->errors);
+            }
+
+            $transaction->rollBack();
+            
+            return json_encode($userAttr->errors);
+        }
+           
+        return json_encode($model->errors);
+    }
+
+
 }

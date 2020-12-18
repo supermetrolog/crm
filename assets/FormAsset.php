@@ -15,17 +15,19 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class ClearAreaAsset extends AssetBundle
+class FormAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/icheck-bootstrap.min.css',
+
     ];
     public $js = [
-        'js/app/user/auth.js',
-        'js/app/alert.js',
+        'js/bs-custom-file-input.min.js',
+        'js/moment.min.js',
+        'js/jquery.inputmask.bundle.min.js',
     ];
+
     public $depends = [
         'yii\web\YiiAsset',
     ];

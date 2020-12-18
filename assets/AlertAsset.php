@@ -27,4 +27,7 @@ class AlertAsset extends AssetBundle
         'js/sweetalert2.min.js',
         'js/toastr.min.js',
     ];
+    public $depends = [
+        'yii\web\YiiAsset',
+    ];
 }

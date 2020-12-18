@@ -4,8 +4,10 @@
 /* @var $content string */
 
 use app\assets\AppAsset;
-
+use app\assets\AlertAsset;
+use yii\helpers\Html;
 AppAsset::register($this);
+AlertAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -15,6 +17,7 @@ AppAsset::register($this);
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>DynastyPride</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <?=Html::csrfMetaTags();?>
   <?php $this->head() ?>
 </head>
 <body>
@@ -24,7 +27,6 @@ AppAsset::register($this);
     <?=$this->render('header.php');?>
     <?=$this->render('left.php');?>
     <?=$this->render('content.php', ['content' => $content]);?>
-    <?=$this->render('footer.php');?>
 </div>
 
 <?php $this->endBody() ?>

@@ -134,3 +134,130 @@ a.desc:after {
     height: 35px;
     border-radius: 50%;
 }
+
+.has-error .error {
+    border: 1px solid rgb(230, 4, 4);
+    /* border-left: none; */
+    /* box-shadow: 0 0 5px 0 rgb(255, 1, 1); */
+}
+
+.required.has-success .error {
+    border: 1px solid rgb(5, 238, 25);
+    /* border-left: none; */
+    /* box-shadow: 0 0 5px 0 rgb(255, 1, 1); */
+}
+
+
+.image-form img{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+}
+.user-img img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.widget-user-image {
+    -webkit-transition: -webkit-transform .2s ease-in-out;
+          transition: top .2s ease-in-out;
+}
+.widget-user-image img {
+    -webkit-transition: -webkit-transform .2s ease-in-out;
+          transition: box-shadow .2s ease-in-out;
+}
+.widget-user:hover .widget-user-image{
+    top: 70px;
+}
+.widget-user:hover .widget-user-image img{
+    box-shadow: 0 3px 12px rgba(0,0,0,.38),0 3px 12px rgba(0,0,0,.38)!important;
+}
+
+.user-item {
+    text-decoration: none;
+    color: black;
+}
+
+.user-item:hover{
+    color: black;
+}
+
+
+.profile-view{
+    background-color: white;
+}
+
+.user-bg-it{
+    background-color: #008148;
+}
+
+.user-bg-upp{
+    background-color: #17a2b8;
+}
+.user-bg-reseption{
+    background-color: #F56476;
+}
+.user-bg-okk{
+    background-color: #031927;
+}
+.user-bg-control{
+    background-color: #E65035;
+}
+
+.user-bg-hr{
+    background-color: #B3296A;
+}
+
+.user-bg-epod{
+    background-color: #5D7B80;
+}
+
+
+.user-bg-represent{
+    background-color: #E68435;
+}
+
+.user-department-name {
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+    width: 40%;
+    /* width: 60%; */
+    /* width: 25%; */
+    margin: auto;
+}
+
+@media(max-width:1500px) {
+    .user-department-name {
+        width: 40%;
+    }
+}
+
+@media(max-width:1180px) {
+    .user-department-name {
+        width: 60%;
+    }
+}
+
+@media(max-width:767px) {
+    .user-department-name {
+        width: 25%;
+    }
+}
+
+.btn-success {
+    background-color: #008148!important;
+    font-weight: bold;
+}
+.btn-danger {
+    font-weight: bold;
+}
+.btn-warning{
+    font-weight: bold;
+}
+
+.bg-success {
+    background-color: #008148!important;
+}
+
+

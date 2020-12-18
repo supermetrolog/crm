@@ -31,13 +31,7 @@ function responceResult(data) {
   console.log(data);
   errors(data);
 }
-function errors(data) {
-  data = JSON.parse(data);
 
-  $.each(data, function (key, value) {
-    toastr.error(value);
-  });
-}
 
 $(document).ready(function () { 
     $('.toastrDefaultError').click(function() {

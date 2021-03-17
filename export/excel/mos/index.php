@@ -27,22 +27,31 @@ $sheet->setTitle('Выгрузка на мос.ру');
 
 // Вставляем текст в ячейку A1
 $sheet->setCellValue("A1", 'ID');
-$sheet->setCellValue("B1", 'Link');
-$sheet->setCellValue("C1", 'Building Address');
-$sheet->setCellValue("D1", 'Floor');
-$sheet->setCellValue("E1", 'Area');
-$sheet->setCellValue("F1", 'Price');
-$sheet->setCellValue("G1", 'Name');
-$sheet->setCellValue("H1", 'RoomType');
-$sheet->setCellValue("I1", 'INN');
-$sheet->setCellValue("J1", 'Image');
-$sheet->setCellValue("K1", 'Description');
-$sheet->setCellValue("L1", 'FloorsNum');
-$sheet->setCellValue("M1", 'District');
-$sheet->setCellValue("N1", 'Metro');
-$sheet->setCellValue("O1", 'BuildingClass');
-$sheet->setCellValue("P1", 'Phone');
-$sheet->setCellValue("Q1", 'Email');
+$sheet->setCellValue("B1", 'Building Address');
+$sheet->setCellValue("C1", 'Floor');
+$sheet->setCellValue("D1", 'Area');
+$sheet->setCellValue("E1", 'Price');
+$sheet->setCellValue("F1", 'CostTypeID');
+$sheet->setCellValue("G1", 'RateTypeID');
+$sheet->setCellValue("H1", 'Name');
+$sheet->setCellValue("I1", 'RoomTypeID');
+$sheet->setCellValue("J1", 'Lat');
+$sheet->setCellValue("K1", 'Lon');
+$sheet->setCellValue("L1", 'INN');
+$sheet->setCellValue("M1", 'Description');
+$sheet->setCellValue("N1", 'Image');
+$sheet->setCellValue("O1", 'District');
+$sheet->setCellValue("P1", 'Region');
+$sheet->setCellValue("Q1", 'Metro');
+$sheet->setCellValue("R1", 'Status');
+$sheet->setCellValue("S1", 'FloorsNum');
+$sheet->setCellValue("T1", 'BeginDate');
+$sheet->setCellValue("U1", 'BuildingClass');
+$sheet->setCellValue("V1", 'Email');
+$sheet->setCellValue("W1", 'Phone');
+$sheet->setCellValue("X1", 'CeilingHeight');
+$sheet->setCellValue("Y1", 'ExpPayment');
+$sheet->setCellValue("Z1", 'Link');
 //$sheet->getStyle('A1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
 //$sheet->getStyle('A1')->getFill()->getStartColor()->setRGB('EEEEEE');
 
@@ -90,25 +99,66 @@ while($object = $sql->fetch(PDO::FETCH_LAZY)){
 
     $obj = [];
 
+    //ID
     $obj[] = $object->visual_id;
-    $obj[] = 'https://industry.realtor.ru';
-    $obj[] = $object->region_name . ' ' . $object->town_name;
+    //Address
+    $obj[] = $object->address;
+    //Floor
     $obj[] = $object->floor_min;
+    //Area
     $obj[] = $object->area_max;
+    //Price
     $obj[] = $object->price_floor_min ;
-    $obj[] = 'Индустриальная недвижимость';
-    $obj[] = $object->object_type_name  ;
+    //CostTypeID
+    $obj[] = 1100601 ;
+    //RateTypeID
+    $obj[] = 1100302;
+    //Name
+    $obj[] = $object->object_type_name ;
+    //RoomTypeID
+    $obj[] = $object->object_type_name == 'Складской комплекс' ? 6503  : 6502  ;
+    //Lat
+    $obj[] = $object->area_max;
+    //Lon
+    $obj[] = $object->area_max;
+    //INN
     $obj[] = '7704610164' ;
-    $obj[] = json_decode($object->photos)[0] ;
+    //Description
     $obj[] = $object->description ;
-    $obj[] = $object->floor_max ;
-
+    //Image
+    $imgLine = '';
+    foreach (json_decode($object->photos) as $photo) {
+        $photo =  'http://pennylane.pro' . $photo;
+        $imgLine .= $photo . ',';
+    }
+    $obj[] = trim($imgLine,',');
+    //District
     $obj[] = $object->district_name ? $object->district_name : $object->district_moscow_name ;
-    $obj[] = $object->metro_name ;
+    //Region
+    $obj[] = $object->region_name;
+    //Metro
+    $obj[] = $object->metro_name;
+    //Status
+    $obj[] = 'Свободно';
+    //FloorsNum
+    $obj[] = $object->floor_max;
+    //BeginDate
+    $obj[] = date('Y-m-d', time());
+    //BuildingClass
     $obj[] = $object->class_name ;
-
-    $obj[] = '+7 495 150 0323' ;
+    //Email
     $obj[] = 'sklad@realtor.ru' ;
+    //Phone
+    $obj[] = '+7 495 150 0323' ;
+    //CeilingHeight
+    $obj[] = $object->ceiling_height_max;
+    //ExpPayment
+
+    //Link
+    $obj[] = 'https://industry.realtor.ru';
+
+
+
 
 
 

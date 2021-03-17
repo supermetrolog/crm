@@ -1,0 +1,519 @@
+.rotate-45 {
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.rotate-90 {
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.rotate-135 {
+    -o-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+}
+
+.rotate-180 {
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.rotate-225 {
+    -o-transform: rotate(225deg);
+    -ms-transform: rotate(225deg);
+    -moz-transform: rotate(225deg);
+    -webkit-transform: rotate(225deg);
+    transform: rotate(225deg);
+}
+
+.rotate-270 {
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+
+.rotate-315 {
+    -o-transform: rotate(315deg);
+    -ms-transform: rotate(315deg);
+    -moz-transform: rotate(315deg);
+    -webkit-transform: rotate(315deg);
+    transform: rotate(315deg);
+}
+
+
+.full-width{
+    width: 100% !important;
+}
+.full-height{
+    height: 100% !important;
+}
+.full-height-strong{
+    height: 100vh !important;
+}
+.box {
+    padding: 20px;
+    box-sizing: border-box;
+}
+.box-small {
+    padding: 10px;
+    box-sizing: border-box;
+}
+.box-free {
+    box-sizing: border-box;
+}
+.box-vertical{
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+.box-small-vertical {
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+.box-small-wide {
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+.box-wide{
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.box-wide-big{
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.ghost {
+    opacity: 0.5;
+}
+.underlined{
+    text-decoration: underline;
+}
+.flex-box {
+    display: flex;
+    align-items: center;
+}
+.flex-stretch {
+    display: flex;
+    align-items: stretch !important;
+}
+.flex-box-to-left{
+    align-items: flex-start !important;
+}
+
+.flex-box-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-box-inline {
+    display: inline-flex;
+    align-items: center;
+}
+
+.flex-between {
+    justify-content: space-between;
+}
+
+.flex-around {
+    justify-content: space-around;
+}
+.flex-column {
+    flex-direction: column;
+}
+.flex-right {
+    justify-content: flex-end;
+}
+
+.flex-center-center {
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-vertical-top {
+    align-items: flex-start;
+}
+
+.flex-vertical-bottom {
+    align-items: flex-end;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+.to-end {
+    margin-left: auto;
+}
+
+.to-end-vertical {
+    margin-top: auto;
+}
+
+.right {
+    margin-left: auto;
+}
+
+.half-flex {
+    max-width: 50%;
+    min-width: 50%;
+    width: 50%;
+    box-sizing: border-box;
+}
+.half-vertical {
+    height: 50%;
+}
+.one-fourth-flex {
+    flex-grow: 1;
+    height: 100%;
+    width: 25%;
+    max-width: 25%;
+    min-width: 25%;
+}
+
+.two-fourth-flex {
+    flex-grow: 1;
+    height: 100%;
+    width: 50%;
+    max-width: 50%;
+    min-width: 50%;
+}
+
+.three-fourth-flex {
+    flex-grow: 3;
+    height: 100%;
+    max-width: 75%;
+}
+
+.one-third-flex {
+    flex-grow: 1;
+    height: 100%;
+    width: 33.3333%;
+    max-width: 33.3333%;
+    min-width: 33.3333%;
+}
+
+.two-third-flex {
+    flex-grow: 2;
+    height: 100%;
+    width: 66.66%;
+    max-width: 66.66%;
+    min-width: 66.66%;
+}
+
+
+
+.background-fix {
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}
+
+.display-block{
+    display: block;
+}
+
+.red-frame{
+    border: 3px solid red;
+}
+
+.green-frame{
+    border: 3px solid limegreen;
+}
+
+
+/*-------------------------GRID NEW --------------------------------------------*/
+
+.grid-book-sortable-zone,.grid-page-sortable-zone,.grid-column-sortable-zone {
+    width: 100%;
+    min-height: 100px;
+
+}
+
+.grid-page-sortable-zone {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.grid-element-delete{
+    display: none;
+    position: absolute;
+    margin: 0;
+    top: -10px;
+    right: -10px;
+    z-index: 11;
+    padding: 5px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+.grid-book{
+    min-height: 300px;
+    position:relative;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    border: 1px dashed grey;
+
+}
+
+.grid-book .grid-element-delete{
+    background: blue;
+    color: #FFFFFF;
+}
+
+.grid-book-editable{
+    border: 5px dashed blue;
+    padding : 40px 30px;
+    box-sizing: border-box;
+}
+
+.grid-book-name{
+    position: absolute;
+    z-index: 10;
+    display: none;
+    width: 100px;
+    margin: 0;
+    top: 0;
+    right: 0;
+}
+
+.grid-element-editable .grid-book-name{
+    display: block;
+}
+.grid-element-editable .grid-book-delete{
+    display: flex;
+}
+
+/*-----------------------------------GRID PAGE--------------------------------------*/
+.grid-page{
+    min-height: 300px;
+    position:relative;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    /*border: 1px dashed grey;*/
+
+}
+
+.grid-page > .grid-element-delete{
+    background: blue;
+    color: #FFFFFF;
+}
+
+.grid-page-editable{
+    border: 5px dashed #e1e1e1;
+    padding : 40px 30px;
+    box-sizing: border-box;
+}
+
+.grid-page-name{
+    position: absolute;
+    z-index: 10;
+    display: none;
+    width: 100px;
+    margin: 0;
+    top: 0;
+    right: 0;
+}
+
+.grid-element-editable .grid-page-name{
+    display: block;
+}
+.grid-element-editable .grid-page-delete{
+    display: flex;
+}
+
+/*---------------------GRID COLUMN-----------------------------------*/
+.grid-column{
+    min-height: 100px;
+    position:relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.grid-column > .grid-element-delete{
+    background: orange;
+    color: #FFFFFF;
+}
+
+.grid-element-editable{
+    border: 2px dashed #e1e1e1;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.grid-column-change{
+    position: absolute;
+    z-index: 10;
+    display: none;
+    width: 40px;
+    margin: 0;
+    top: 0;
+    left: 0;
+}
+.grid-element-editable .grid-column-change{
+    display: block !important;
+}
+.grid-element-editable .grid-column-delete{
+    display: flex;
+}
+
+/*------grid columns elements-------------*/
+
+.grid-elements-list > .grid-element-unit{
+    margin: 10px;
+}
+
+.grid-elements-list .grid-element-content,
+.grid-elements-list .grid-element-delete{
+    display: none !important;
+    visibility: hidden;
+
+}
+.grid-element-core{
+    position: relative;
+    width: 100%;
+    min-height: 30px;
+
+}
+
+.grid-element-editable > .grid-element-core > .grid-element-content{
+    border: 2px dashed grey;
+    cursor: move;
+    overflow: hidden;
+}
+.grid-element-core > .grid-element-name{
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    padding: 5px;
+    display: none;
+    background: #000000;
+    color: #FFFFFF;
+}
+.grid-element-core > .grid-element-delete{
+    background: #000000;
+    color: #FFFFFF;
+}
+
+
+.grid-element-core > .grid-element-overlay{
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(256,256,256,0.8);
+    display: none;
+
+}
+
+.grid-element-editable .grid-element-name,
+.grid-element-editable .grid-element-delete,
+.grid-element-editable .grid-element-overlay{
+    display: flex ;
+}
+
+
+.grid-column > input{
+    box-sizing: border-box;
+    background: #eceff1;
+    border: 1px dashed #e1e1e1;
+    outline: none;
+    width: 70px;
+    padding: 10px;
+}
+
+/*---------------------------------------МЕНЮ РЕДАКТИРОВАНИЯ ПОЛЕЙ-----------------------------------------------*/
+.grid-edit-panel {
+    height: 100%;
+    position: fixed;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    text-align: left;
+    color: white ;
+    z-index: 9999999999999;
+    top: 0;
+    background: #020202;
+    text-transform: none;
+}
+
+
+.grid-edit-panel-right{
+    right: -210px; /* прячем меню */
+    width: 210px;
+}
+
+.grid-edit-btn{
+    position: fixed;
+    z-index: 99999999999;
+    right: 0;
+    top: 50%;
+    color: white;
+    cursor: pointer;
+    width: 20px;
+    opacity: 0.5;
+    background: #3e4148;
+    font-size: 20px;
+    padding: 10px 5px;
+    border-radius: 3px 0 0 3px;
+}
+
+
+.tabs{
+
+}
+
+.tabs > .tab{
+    cursor: pointer;
+}
+
+.tabs > .tab-active{  
+    border-bottom: 3px solid green;
+    font-weight: bold;
+    cursor: default;
+}
+
+.tabs-content-overline{
+    border-top: 1px solid #cacaca;
+}
+
+.tabs-content > .tab-content:first-child{
+
+}
+
+.tabs-content > .tab-content{
+    display: none;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.tab-content-active{
+    display: flex !important;
+}
+
+.hidden{
+    display: none ;
+}

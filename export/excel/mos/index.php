@@ -137,7 +137,7 @@ while($object = $sql->fetch(PDO::FETCH_LAZY)){
     //Region
     $obj[] = $object->region_name;
     //Metro
-    $obj[] = $object->metro_name;
+    $obj[] = (string)$object->metro_name;
     //Status
     $obj[] = 'Свободно';
     //FloorsNum
@@ -166,10 +166,11 @@ while($object = $sql->fetch(PDO::FETCH_LAZY)){
 
 }
 
-for ($i = 2; $i < 18; $i++) {
+for ($i = 2; $i < 40; $i++) {
     for ($j = 2; $j < count($objects_arr)+2; $j++) {
         // Выводим таблицу умножения
         $sheet->setCellValueByColumnAndRow($i - 2, $j, $objects_arr[$j-2][$i-2]);
+        echo $objects_arr[$j-2][$i-2];
         // Применяем выравнивание
         //$sheet->getStyleByColumnAndRow($i - 2, $j)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     }

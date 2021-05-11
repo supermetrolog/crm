@@ -402,7 +402,7 @@ if($_COOKIE['member_id'] == 141){
                                 <div class="contact-unit box-small" >
                                     <div class="flex-box  text_left ">
                                         <div class="one-third-flex background-fix" style="height: 230px; position: relative; background-image: url('<?=PROJECT_URL.'/system/controllers/photos/thumb.php/300/'.$building->postId().'/'.array_pop(explode('/',$building->getJsonField('photo')[0]))?>');">
-                                            <a class="full-height display-block" href="/object/<?=$building->postId()?>" target="_blank" >
+                                            <a class="full-height display-block" href="<?=PROJECT_URL?>/complex/<?=$building->getField('complex_id')?>" target="_blank" >
                                             </a>
                                             <div class="flex-box" style="position: absolute; top: 10px; left: 5px; width: 95%;">
                                                 <div>
@@ -430,7 +430,7 @@ if($_COOKIE['member_id'] == 141){
                                         <div class="one-third-flex box-small" style="height: 230px;">
                                             <div class="half-vertical">
                                                 <div class="isBold">
-                                                    <a href="/object/<?=$building->postId()?>">
+                                                    <a href="<?=PROJECT_URL?>/complex/<?=$building->getField('complex_id')?>">
                                                         <?if($building->title()){?>
                                                             <?=$building->title()?>
                                                         <?}else{?>
@@ -563,7 +563,11 @@ if($_COOKIE['member_id'] == 141){
                                                 <div class="half-flex shadow-block box-small half-vertical " >
                                                     <?$deal_type = new Post($offer->getField('deal_type'))?>
                                                     <?$deal_type->getTable('l_deal_types')?>
-                                                    <div class="isBold"><?=$deal_type->title()?></div>
+                                                    <div class="isBold">
+                                                        <a  target="_blank" href="<?=PROJECT_URL?>/complex/<?=$building->getField('complex_id')?>?offer_id=[<?=$offer->postId()?>]#offers">
+                                                            <?=$deal_type->title()?>
+                                                        </a>
+                                                    </div>
                                                     <div><?= valuesCompare($offer->getOfferBlocksMinValue('area_min'), $offer->getOfferBlocksMaxSumValue('area_max'))?> м<sup>2</sup></div>
                                                     <div><?= $offer->showOfferCalcStat(valuesCompare($offer->getOfferBlocksMinValue('price'), $offer->getOfferBlocksMaxValue('price')), '<i class="fas fa-ruble-sign"></i>', '-')?> м<sup>2</sup>/год</div>
                                                     <?

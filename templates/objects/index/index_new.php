@@ -375,6 +375,9 @@
                                 <a href="/tour-360/<?=$object->setTableId()?>/<?=$object->postId()?>/photos_360" target="_blank"><span title="Панорама"><i class="fas fa-globe"></i></span></a>
                             </div>
                         <?}?>
+                        <div class="icon-round ">
+                            <a target="_blank" href="/pdf-test.php?original_id=<?=$object->postId()?>&type_id=3&member_id=<?=$logedUser->member_id()?>"><i class="fas fa-file-pdf"></i></a>
+                        </div>
                         <?if($object->getField('cadastral_number')){?>
                             <div class="icon-round " title="ссылка на кадастр">
                                 <a href="https://pkk5.rosreestr.ru/#x=4034393.888696498&y=6756994.231129&z=20&text=<?=$object->getField('cadastral_number')?>&type=1&app=search&opened=1" target="_blank">
@@ -5947,6 +5950,11 @@
                                                                                             <div class="flex-box to-end ">
                                                                                                 <div class="flex-box box-small">
                                                                                                     <?if($logedUser->isAdmin()){?>
+                                                                                                        <div class="icon-round" >
+                                                                                                            <a href="http://pennylane.pro/system/controllers/subitems/recover.php?id=<?=$obj_block->getField('id')?>">
+                                                                                                                <i class="fas fa-trash-restore"></i>
+                                                                                                            </a>
+                                                                                                        </div>
                                                                                                         <div class="icon-round modal-call-btn " data-form="<?=$deal_forms_blocks_arr[$object->getField('is_land')][$offer->getField('deal_type')-1]?>" data-id="<?=$obj_block->postId()?>" data-table="<?=$obj_block->setTableId()?>"  data-modal="edit-all" data-modal-size="modal-big"><i class="fas fa-pencil-alt"></i></div>
                                                                                                         <?if(!$obj_block->hasPartUnactive()){?>
                                                                                                             <div class="icon-round  modal-call-btn  " <?if($obj_block->getField('deal_id') != 0/*$obj_block->hasDeal()*/){?> style="background: limegreen; color: white;" title="Редактировать сделку"<?}?> title="Создать сделку" data-modal="edit-all" data-id="<?= (int)$obj_block->getField('deal_id')/*$obj_block->getDealId()*/?>" data-table="<?=(new Deal())->setTableId()?>"  data-names='["block_id"]' data-values='[<?=$obj_block->postId()?>]'  data-show-name="object_id"   data-modal-size="modal-middle"  >

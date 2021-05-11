@@ -517,7 +517,7 @@ $agent = new Member($object->getField('agent_id'));
                             </div>
                             площади
                             <?
-                            if(1){
+                            if($offer->getField('type_id') != 3){
                                 $deal_type = $offer->getField('deal_type');
                                 if($deal_type == '2'){
                                     $val = 'на продажу';
@@ -550,14 +550,17 @@ $agent = new Member($object->getField('agent_id'));
                             <?= numFormat($area)?> <span >м<sup>2</sup></span>
                         </div>
                         <div class="font-display-pro" style="font-size: 40px;">
-                            <?if($smallest < $area){?>
-                                Деление от <span class="attention isBold"><?= numFormat($smallest)?> м<sup>2</sup></span>
-                            <?}else{?>
-                                Деление не предполагается
-                            <?}?>
+                            <? if ($offer->getField('type_id') != 3) { ?>
+                                <?if($smallest < $area){?>
+                                    Деление от <span class="attention isBold"><?= numFormat($smallest)?> м<sup>2</sup></span>
+                                <?}else{?>
+                                    Деление не предполагается
+                                <?}?>
+                            <? } ?>
                         </div>
                     </div>
                     <div class=" box" style="width: 901px;  height: 350px; font-size: 40px;  border: 2px solid  #e7e5f2; ">
+                        <? if ($offer->getField('type_id') != 3) { ?>
                         <div class="isBold uppercase">
                             <div class="box-small">
 
@@ -588,6 +591,7 @@ $agent = new Member($object->getField('agent_id'));
                             }?>
                             <?= numFormat($price_min)?> руб.
                         </div>
+                        <? } ?>
                         <div class="font-display-pro">
                             <?
                             $offer_stat = '';
@@ -849,7 +853,11 @@ $agent = new Member($object->getField('agent_id'));
                 <br>
                 <div class="box-small-wide text_left" style="font-size: 40px; line-height: 60px;">
                     <?$no_id = 1?>
-                    <? include ($_SERVER['DOCUMENT_ROOT']."/autodesc.php")?>
+                    <? if ($offer->getField('type_id') == 3) { ?>
+                        <?=$offer->getField('description')?>
+                    <? } else {?>
+                        <? include ($_SERVER['DOCUMENT_ROOT']."/autodesc.php")?>
+                    <? } ?>
                 </div>
             </div>
         <?}?>
@@ -891,7 +899,11 @@ $agent = new Member($object->getField('agent_id'));
                 <br>
                 <div class="box-small-vertical text_left" style="font-size: 40px; line-height: 60px;">
                     <?$no_id = 1?>
-                    <? include ($_SERVER['DOCUMENT_ROOT']."/autodesc.php")?>
+                    <? if ($offer->getField('type_id') == 3) { ?>
+                        <?=$offer->getField('description')?>
+                    <? } else {?>
+                        <? include ($_SERVER['DOCUMENT_ROOT']."/autodesc.php")?>
+                    <? } ?>
                 </div>
             </div>
         <?}?>
@@ -935,8 +947,10 @@ $agent = new Member($object->getField('agent_id'));
                                     Площади в аренду
                                 <?}elseif($offer->getField('deal_type') == 3){?>
                                     Площади на продажу
-                                <?}else{?>
+                                <?}elseif($offer->getField('deal_type') == 1 || $offer->getField('deal_type') == 4){?>
                                     Площади в аренду
+                                <?}else{?>
+                                    Площади
                                 <?}?>
                             </div>
                             <ul>
@@ -1343,7 +1357,7 @@ $agent = new Member($object->getField('agent_id'));
                                         Канализация центральная:
                                     </div>
                                     <div>
-                                        <?=($offer->getField('sewage_central')) ? 'есть' : '-'?>
+                                        <?=($offer->getField('sewage_central')) ? 'есть' : 'нет'?>
                                         <?if($water_value = $offer->getField('sewage_central_value')){?>
                                             <?=$water_value?>
                                             <span>
@@ -1366,7 +1380,7 @@ $agent = new Member($object->getField('agent_id'));
                                             Вентиляция:
                                         </div>
                                         <div>
-                                            <?=( ($item = $offer->getField('ventilation'))!=0 ) ? $item :  '-'?>
+                                            <?= $offer->getField('ventilation')  ? $offer->getField('ventilation') :  '-'?>
                                         </div>
                                     </li>
                                 <?}?>
@@ -1462,7 +1476,7 @@ $agent = new Member($object->getField('agent_id'));
                                                 Ж/Д ветка:
                                             </div>
                                             <div>
-                                                <?=($offer->getField('railway')) ? 'есть' : ''?>
+                                                <?=($offer->getField('railway') == 1) ? 'есть' : 'нет'?>
                                                 <?if($offer->getField('railway_value')){?>
                                                     <?=$offer->getField('railway_value')?>
                                                     <span>м.</span>

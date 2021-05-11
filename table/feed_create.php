@@ -258,7 +258,7 @@ while($block = $sql->fetch(PDO::FETCH_LAZY)){
         $item->getTable('l_waters');
         $res= $item->title();
     }
-    $values_arr[] = $res;
+    $values_arr[] = $block->water == 1 ? 'есть' : 'нет';
 
     //
     $fields_arr[]= 'water_value';
@@ -272,7 +272,7 @@ while($block = $sql->fetch(PDO::FETCH_LAZY)){
 
     //
     $fields_arr[]= 'sewage_central';
-    $values_arr[]= $object->getField('sewage_central');
+    $values_arr[]= $block->sewage == 1 ? 'есть' : 'нет';
     //
     $fields_arr[]= 'sewage_central_value';
     $values_arr[]= $object->getField('sewage_central_value');
@@ -316,8 +316,9 @@ while($block = $sql->fetch(PDO::FETCH_LAZY)){
     //
     $fields_arr[]= 'ventilation';
     $res = 0;
-    if($object->getField('ventilation')){
-        $item = new Post($object->getField('ventilation'));
+    //if($object->getField('ventilation')){
+    if($ventId = json_decode($block->ventilation)[0]){
+        $item = new Post($ventId);
         $item->getTable('l_ventilations');
         $res= $item->title();
     }
@@ -342,7 +343,6 @@ while($block = $sql->fetch(PDO::FETCH_LAZY)){
         $item->getTable('l_firefighting');
         $res = $item->title();
     }
-
     $values_arr[]= $res;
     //
     $fields_arr[]= 'video_control';
@@ -3061,6 +3061,9 @@ if(1) {
         }
         $values_arr[]= $val;
 
+        $fields_arr[] = 'description';
+        $values_arr[] = $object->description ? $object->description :  $object->description_auto ;
+        //$values_arr[] = '34343';
 
         //
         $fields_arr[]= 'power_value';
@@ -3077,6 +3080,8 @@ if(1) {
         //
         $fields_arr[]= 'is_land';
         $values_arr[]= $object->is_land;
+
+
 
         //
         $fields_arr[]= 'from_mkad';

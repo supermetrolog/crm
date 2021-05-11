@@ -3,7 +3,9 @@ if($_COOKIE['member_id'] == 999){
     include_once($_SERVER['DOCUMENT_ROOT'].'/errors.php');
 }
 
-echo 1111;
+if($_COOKIE['member_id'] == 141){
+   echo 33333;
+}
 
 /*
 if( $curl = curl_init() ) {

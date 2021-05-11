@@ -3,6 +3,8 @@ if($_COOKIE['member_id'] == 999){
     include_once($_SERVER['DOCUMENT_ROOT'].'/errors.php');
 }
 
+echo 1111;
+
 /*
 if( $curl = curl_init() ) {
     curl_setopt($curl, CURLOPT_URL, 'https://pennylane.pro/services/accesslog/write.php?ip=' . $_SERVER['REMOTE_ADDR']);

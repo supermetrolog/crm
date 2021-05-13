@@ -19,7 +19,6 @@
                     <i class="fas fa-file-pdf"></i>
                 </div>
                 <br>
-
                 <div>к отправке</div>
             </div>
         </div>

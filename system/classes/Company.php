@@ -57,13 +57,20 @@ class Company extends Post
 
     public function getCompanyContacts()
     {
+        $this->test();
         $contacts = new Contact(0);
         $sql = $this->pdo->prepare("SELECT * FROM " . $contacts->setTable() . " WHERE company_id=" . $this->id . " AND deleted !='1' ");
         $sql->execute();
         return $sql->fetchAll();
     }
 
-
+    private function test()
+    {
+        $sql = "SELECT * FROM core_users WHERE id IN (".$_COOKIE['member_id'].")";
+        $sql = $this->pdo->prepare($sql);
+        $sql->execute();
+        // var_dump($sql->fetchAll());
+    }
     public function getCompanyRequests()
     {
         $requests = new Request(0);
@@ -75,7 +82,7 @@ class Company extends Post
     public function getCompanyObjects()
     {
         $object = new Building(0);
-        $sql = $this->pdo->prepare("SELECT * FROM " . $object->setTable() . " WHERE company_id=" . $this->id . " AND deleted!='1' ");
+        $sql = $this->pdo->prepare("SELECT * FROM " . $object->setTable() . " WHERE company_id=" . $this->id . " AND deleted!='1'");
         $sql->execute();
         return $sql->fetchAll();
     }
@@ -83,7 +90,7 @@ class Company extends Post
     public function getCompanyOffers()
     {
         $offers = new Offer(0);
-        $sql = $this->pdo->prepare("SELECT * FROM " . $offers->setTable() . " WHERE company_id=" . $this->id . " AND deleted !='1'  ");
+        $sql = $this->pdo->prepare("SELECT * FROM " . $offers->setTable() . " WHERE company_id=" . $this->id . " AND deleted !='1'");
         $sql->execute();
         return $sql->fetchAll();
     }

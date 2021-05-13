@@ -1,5 +1,6 @@
 <?php
 $company = new Company($router->getPath()[1]);
+
 if($_COOKIE['member_id'] == 141){
     //require_once ($_SERVER['DOCUMENT_ROOT'].'/errors.php');
 }

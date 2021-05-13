@@ -292,7 +292,7 @@ class Member extends Unit
         $sql->execute();
         $member = $sql->fetch(PDO::FETCH_LAZY);
         $user_hash = md5($_SERVER ['HTTP_USER_AGENT'] . '%' . $member['password']); //создаем хэш для проверки
-        if (!hash_equals($member->user_hash, $user_hash)) {
+        if (!hash_equals((string)$member->user_hash, $user_hash)) {
             setcookie("member_id", "0", time() - 3600, "/");
             return false;
         } else {

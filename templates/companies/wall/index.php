@@ -3,7 +3,6 @@
 <?php
 
 $logedUser = new Member($_COOKIE['member_id']);
-
 $objects = new Item();
 
 ?>
@@ -247,7 +246,8 @@ if($filters_arr->page_num){
 $unique_objects = [];
 //ВИБИРАЕМ ВСЕ ДЛЯ ОБЬЕКТОВ
 //$sql_objects = $pdo->prepare("SELECT (c.id) FROM  c_industry_companies c LEFT JOIN c_industry_requests r ON r.company_id=c.id  $join_line  WHERE c.deleted!='1' $search_fil $filter_line ORDER BY $sort_param $sort_direction  ");
-$sql_objects = $pdo->prepare("SELECT (c.id) FROM  c_industry_companies c LEFT JOIN c_industry_requests r ON r.company_id=c.id  $join_line  WHERE c.deleted!='1' $search_fil $filter_line ORDER BY c.last_update DESC ");
+$sqlm = "SELECT (c.id) FROM  c_industry_companies c LEFT JOIN c_industry_requests r ON r.company_id=c.id  $join_line  WHERE c.deleted!='1' $search_fil $filter_line ORDER BY c.last_update DESC";
+$sql_objects = $pdo->prepare($sqlm);
 $sql_objects->execute();
 while($obj = $sql_objects->fetch(PDO::FETCH_LAZY)){
     if(!in_array($obj->id,$unique_objects)){

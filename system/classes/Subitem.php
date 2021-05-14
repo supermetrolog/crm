@@ -27,8 +27,14 @@ class Subitem extends Post
 
     public function isLand()
     {
-        $offer = new Offer($this->getField('offer_id'));
-        $object = new Building($offer->getField('object_id'));
+        // $offer = new Offer($this->getField('offer_id'));
+        // $object = new Building($offer->getField('object_id'));
+        $offer_id = $this->getField('offer_id');
+        $offer_id = ($offer_id == "") ? null : $offer_id;
+        $offer = new Offer($offer_id);
+        $object_id = $this->getField('object_id');
+        $object_id = ($object_id == "") ? null : $object_id;
+        $object = new Building($object_id);
         return $object->getField('is_land');
     }
 

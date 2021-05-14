@@ -96,7 +96,8 @@ class Building extends Post
     public function getElevators(): array
     {
         $elevators = [];
-        $sql = $this->pdo->prepare("SELECT id FROM " . (new Elevator())->setTable() . " WHERE object_id=" . $this->id);
+        $sql = "SELECT id FROM " . (new Elevator())->setTable() . " WHERE object_id=" . $this->id;
+        $sql = $this->pdo->prepare($sql);
         $sql->execute();
         while ($elevator = $sql->fetch(PDO::FETCH_LAZY)) {
             $elevators[] = $elevator->id;

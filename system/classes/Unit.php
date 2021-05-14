@@ -43,7 +43,8 @@ abstract class Unit implements UnitActions
     public function getLine()
     {
         if (!$this->bdata) {
-            $sql = $this->pdo->prepare("SELECT * FROM " . $this->setTable() . " WHERE id='" . $this->id . "' ");
+            $sql = "SELECT * FROM " . $this->setTable() . " WHERE id='" . $this->id . "' ";
+            $sql = $this->pdo->prepare($sql);
             $sql->execute();
             $this->bdata = $sql->fetch(PDO::FETCH_LAZY);
         }

@@ -1520,7 +1520,7 @@ input:checked + .slider:before {
 
 
 /*------------------------TUMBLER-CHECKBOX ---------------------------------*/
-.toggle-checkbox{
+/* .toggle-checkbox{
     position: relative;
 }
 .toggle-checkbox input {
@@ -1541,4 +1541,52 @@ input:checked + .slider:before {
     background: #76a665;
     color: #FFFFFF;
 }
+ */
+/*------------------------THUMBLER RADIO ---------------------------------*/
+.toggle-checkbox{
+  position: relative;
+  /*background: #ffffff;*/
+}
+.toggle-checkbox input {
+  width: 0%;
+  height: 8px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.toggle-checkbox div {
+  color: #000000;
+}
 
+.toggle-checkbox label {
+  /*height: 50px;*/
+  cursor: pointer;
+  display :flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggle-checkbox label.block-field-select div {
+  opacity: 0.4;
+}
+
+.toggle-checkbox input:checked ~ label {
+  background: #76a665;
+
+  /*border: 2px dashed gainsboro;*/
+  color: #FFFFFF;
+}
+
+.toggle-checkbox input:checked.block-field-select ~ label {
+  background: #76a665;
+  color: #FFFFFF;
+  /*border: 2px dashed gainsboro;*/
+
+}
+
+.toggle-checkbox input:checked ~ label.block-field-select div {
+  opacity: 1;
+}

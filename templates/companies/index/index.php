@@ -920,7 +920,7 @@ if($_COOKIE['member_id'] == 141){
                                             <?include($_SERVER['DOCUMENT_ROOT'].'/templates/tasks/wall/index.php')?>
                                         </div>
                                         <div class="tab-content">
-                                            <div class="box">
+                                            <div class="box" style="max-width: 100%;">
                                                 <div class="flex-box box-small-vertical isBold">
                                                     <div style="width: 100px;">
                                                         #ID

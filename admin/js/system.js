@@ -209,7 +209,20 @@ function getPostHtml(url, post_id, table_id){
 
 
 
+ //зависимости да нет полей
+ $('body').on('click','.no-value',function(){
+    $(this).closest('.field-module').find('.field-step-2').hide();
+    $(this).closest('.field-module').find('.field-step-2').find('input').val('');
+    $(this).closest('.field-module').find('.field-step-2').find('input').prop('disabled','true');
+    $(this).closest('.field-module').find('.field-step-2').find('select').attr('disabled','true');
+    $(this).closest('.field-module').find('.field-step-2').find('input').removeAttr("checked");
+});
 
+$('body').on('click','.yes-value',function(){
+    $(this).closest('.field-module').find('.field-step-2').show();
+    $(this).closest('.field-module').find('.field-step-2').find('select').removeAttr('disabled');
+    $(this).closest('.field-module').find('.field-step-2').find('input').removeAttr("disabled");
+});
 
 
 

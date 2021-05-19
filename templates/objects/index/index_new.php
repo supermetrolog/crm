@@ -7449,11 +7449,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <? if ($logedUser->member_id() == 314) { ?>
+                                                        <? //if ($logedUser->member_id() == 314) { ?>
                                                         <div class="box">
                                                             <?= $offer->getField('description') ? $offer->getField('description') : $offer->getField('description_auto')?>
                                                         </div>
-                                                        <? } ?>
+                                                        <? //} ?>
                                                     </div>
                                                 </div>
 

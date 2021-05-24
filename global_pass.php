@@ -20,9 +20,9 @@ define("UPLOAD_DIR",'/uploads/');
 
 //Записываем пассы в константы
 define("DB_HOST", 'localhost');
-define("DB_NAME", 'crm');
-define("DB_USER", 'root');
-define("DB_PASSWORD", 'root');
+define("DB_NAME", 'pennylane');
+define("DB_USER", 'timon');
+define("DB_PASSWORD", '20091993dec');
 
 /*
 //Записываем пассы к SMTP в константы

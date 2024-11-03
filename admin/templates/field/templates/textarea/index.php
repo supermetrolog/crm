@@ -1,0 +1,1 @@
+<textarea name='<?=$field->title()?>' <?=($field->getField('field_required') ? 'required' : '')?>  placeholder=' '><?=($src[$field->title()])? $src[$field->title()] : ''; ?></textarea>

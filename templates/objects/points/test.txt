@@ -1,0 +1,7 @@
+SELECT DISTINCT  i.id FROM  c_industry i    
+                                            LEFT JOIN  c_industry_offers o  ON o.object_id=i.id  
+                                            LEFT JOIN c_industry_blocks b ON b.offer_id=o.id
+                                            LEFT JOIN l_locations l ON l.id=i.location_id
+                                            LEFT JOIN core_users u ON u.id=o.agent_id  
+                                                   
+                                              WHERE i.deleted!='1' AND o.deleted!='1' AND b.deleted!='1'    

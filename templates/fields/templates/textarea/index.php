@@ -1,0 +1,1 @@
+<textarea   class="<?=($field->getField('field_editor_enable')) ? 'textarea-to-modify' : '' ?>" <?=($field->getField('field_is_disabled')) ? 'disabled' : ''?> name='<?=$field->title()?>' <?=($field->getField('field_required')) ? 'required' : ''?>  placeholder=' '><?=($src[$field->title()])? $src[$field->title()] : $field->getField('field_default_text'); ?></textarea>

@@ -1,0 +1,13 @@
+#files
+firebase-messaging-sw.js
+test.pdf
+Thumbs.db
+update.php
+.env
+global_pass.php
+log.log
+
+#folders
+uploads/
+docker/mysql/data
+docker/nginx/logs

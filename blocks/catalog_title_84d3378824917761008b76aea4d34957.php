@@ -1,0 +1,1 @@
+								 <div class='container_slim'><div class="line ">Коллекция <?=$_GET['collection']?></div></div><br><br>   						  														

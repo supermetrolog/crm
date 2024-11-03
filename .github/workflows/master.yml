@@ -3,6 +3,7 @@ on:
     branches:
       - master
 
+
 name: 🚀 Deploy on push
 env:
   PROJECT_PATH: /home/user/web/pennylane.test.pro/public_html

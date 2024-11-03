@@ -1,4 +1,4 @@
-<?
+<?php
 //Приведение даты к читаемому виду
 function date_format_rus($date){
  $month_array = array (

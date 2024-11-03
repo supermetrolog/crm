@@ -1,12 +1,14 @@
-<?
+<?php
 //ini_set('display_errors', 1);
 //ini_set('display_startup_errors', 1);
 //error_reporting(E_ALL);
-if($_COOKIE['member_id'] == 999){
+$memberId = $_COOKIE['member_id'] ?? null;
+
+if($memberId == 999){
     include_once($_SERVER['DOCUMENT_ROOT'].'/errors.php');
 }
 
-if($_COOKIE['member_id'] == 141){
+if($memberId == 141){
    echo 33333111222;
 }
 
@@ -26,8 +28,7 @@ if( $curl = curl_init() ) {
     }
 //}
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/global_pass.php'); 
-
+require_once($_SERVER['DOCUMENT_ROOT'].'/global_pass.php');
 
 ($router = Bitkit\Core\Routing\Router::getInstance())->setURL();
 $router->getWay();

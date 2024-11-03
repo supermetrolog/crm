@@ -315,7 +315,7 @@ $favourites = $logedUser->getJsonField('favourites');
         </div>
 
 
-        <script src="https://api-maps.yandex.ru/2.1/?apikey=2b6763cf-cc99-48c7-81f1-f4ceb162502a&lang=ru_RU" type="text/javascript">
+        <script src="https://api-maps.yandex.ru/2.1/?suggest_apikey=e08e55be-8f23-40a5-ae7f-d1a6758ebfca&apikey=7cb3c3f6-2764-4ca3-ba87-121bd8921a4e&lang=ru_RU" type="text/javascript">
         </script>
         <?
         $sql = $pdo->prepare("SELECT id,address,latitude,longitude FROM c_industry WHERE complex_id=".$complex->getField('id'));

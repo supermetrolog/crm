@@ -90,6 +90,9 @@ $favourites = $logedUser->getJsonField('favourites');
                 <?
                 $start = microtime(true);
 
+                $companiesAPI = getApiCompanies($unique_companies);
+                //var_dump($companiesAPI);
+
                 foreach($unique_offers as $unique_offer){
                     //echo $unique_offer;
                     $offer = new  OfferMix($unique_offer);

@@ -6,7 +6,7 @@ ini_set('display_startup_errors', 1);
 
 $address = urlencode('Россия, Москва, Кремль');
 
-$url = 'https://geocode-maps.yandex.ru/1.x/?apikey=2b6763cf-cc99-48c7-81f1-f4ceb162502a&format=json&geocode='.$address;
+$url = 'https://geocode-maps.yandex.ru/1.x/?apikey=7cb3c3f6-2764-4ca3-ba87-121bd8921a4e&format=json&geocode='.$address;
 
 
 if( $curl = curl_init() ) {

@@ -645,8 +645,8 @@ $agent = new Member($object->getField('agent_id'));
                                 <img style="width: 35px;" src="<?=PROJECT_URL?>/img/pdf/icons/power.png" />
                             </div>
                             <div>
-                                <?if($object->getField('power')){?>
-                                    <?= floor($object->getField('power'))?> кВТ
+                                <?if($offer->getField('power')){?>
+                                    <?= floor($offer->getField('power_value'))?> кВТ
                                 <?}else{?>
                                     -
                                 <?}?>
@@ -672,7 +672,7 @@ $agent = new Member($object->getField('agent_id'));
                             </div>
                         </div>
                         <div class="one-third box-small object-option" style="width: 257px; height: 175px;">
-
+                            <!--
                             <?if($offer->getField('cranes_min')){?>       м
                                 <div class="box-small">
                                     <i class="fas fa-truck-loading"></i>
@@ -681,6 +681,7 @@ $agent = new Member($object->getField('agent_id'));
                                     <?= valuesCompare($offer->getField('cranes_min'),$offer->getField('cranes_max'))?> т.
                                 </div>
                             <?}?>
+                            -->
                         </div>
                     </div>
                 </div>
@@ -1172,10 +1173,14 @@ $agent = new Member($object->getField('agent_id'));
                                                 Нагрузка на мезонин:
                                             </div>
                                             <div>
-                                                <?=valuesCompare($offer->getField('load_mezzanine_min'),$offer->getField('load_mezzanine_max'))?>
-                                                <span>
-                                            т/м<sup>2</sup>
-                                        </span>
+                                                <? $mezzLoad = valuesCompare($offer->getField('load_mezzanine_min'),$offer->getField('load_mezzanine_max'))?>
+                                                <? if ((int)$mezzLoad > 0 ) { ?>
+                                                    <span>
+                                                        т/м<sup>2</sup>
+                                                    </span>
+                                                <? } else { ?>
+                                                    -
+                                                <? } ?>
                                             </div>
                                         </li>
                                     <?}?>
@@ -1242,7 +1247,7 @@ $agent = new Member($object->getField('agent_id'));
                                         Охрана объекта:
                                     </div>
                                     <div>
-                                        <?=($offer->getField('guard')) ? 'есть' : '-'?>
+                                        <?=($offer->getField('guard') == 1) ? 'есть' : '-'?>
                                     </div>
                                 </li>
                                 <?if(!$offer->getField('is_land')){?>
@@ -1251,7 +1256,7 @@ $agent = new Member($object->getField('agent_id'));
                                             Пожаротушение:
                                         </div>
                                         <div>
-                                            <?=($offer->getField('firefighting')) ? 'есть' : '-'?>
+                                            <?=($offer->getField('firefighting') == 1) ? 'есть' : '-'?>
                                         </div>
                                     </li>
                                 <?}?>
@@ -1260,7 +1265,7 @@ $agent = new Member($object->getField('agent_id'));
                                         Видеонаблюдение:
                                     </div>
                                     <div>
-                                        <?=($offer->getField('video_control')) ? 'есть' : '-'?>
+                                        <?=($offer->getField('video_control') == 1) ? 'есть' : '-'?>
                                     </div>
                                 </li>
                                 <li>
@@ -1268,7 +1273,7 @@ $agent = new Member($object->getField('agent_id'));
                                         Контроль доступа:
                                     </div>
                                     <div>
-                                        <?=($offer->getField('access_control')) ? 'есть' : '-'?>
+                                        <?=($offer->getField('access_control') == 1) ? 'есть' : '-'?>
                                     </div>
                                 </li>
                                 <?if(!$offer->getField('is_land')){?>
@@ -1277,7 +1282,7 @@ $agent = new Member($object->getField('agent_id'));
                                             Охранная сигнализация:
                                         </div>
                                         <div>
-                                            <?=($offer->getField('security_alert')) ? 'есть' : '-'?>
+                                            <?=($offer->getField('security_alert') == 1) ? 'есть' : '-'?>
                                         </div>
                                     </li>
                                     <li>
@@ -1285,7 +1290,7 @@ $agent = new Member($object->getField('agent_id'));
                                             Пожарная сигнализация:
                                         </div>
                                         <div>
-                                            <?=($offer->getField('fire_alert')) ? 'есть' : '-'?>
+                                            <?=($offer->getField('fire_alert') == 1) ? 'есть' : '-'?>
                                         </div>
                                     </li>
                                     <li>
@@ -1293,7 +1298,7 @@ $agent = new Member($object->getField('agent_id'));
                                             Дымоудаление:
                                         </div>
                                         <div>
-                                            <?=($offer->getField('smoke_exhaust')) ? 'есть' : '-'?>
+                                            <?=($offer->getField('smoke_exhaust') == 1) ? 'есть' : '-'?>
                                         </div>
                                     </li>
                                     <li>
@@ -1317,7 +1322,7 @@ $agent = new Member($object->getField('agent_id'));
                                         Электричество:
                                     </div>
                                     <div>
-                                        <?if(($item = $object->getField('power')) != 0){?>
+                                        <?if(($item = $offer->getField('power_value')) != 0){?>
                                             <?= floor($item)?> <span> кВт</span>
                                         <?}else{?>
                                             -
@@ -1330,7 +1335,7 @@ $agent = new Member($object->getField('agent_id'));
                                             Отопление:
                                         </div>
                                         <div>
-                                            <?if($offer->getField('heated')){?>
+                                            <?if($offer->getField('heated') == 1){?>
                                                 Теплый
                                             <?}else{?>
                                                 Холодный
@@ -1343,7 +1348,7 @@ $agent = new Member($object->getField('agent_id'));
                                         Водоснабжение:
                                     </div>
                                     <div>
-                                        <?=($offer->getField('water')) ? $offer->getField('water') : ''?>
+                                        <?=($offer->getField('water') == 1) ? $offer->getField('water') : ''?>
                                         <?if($water_value = $offer->getField('water_value')){?>
                                             <?=$water_value?>
                                             <span>
@@ -1357,7 +1362,7 @@ $agent = new Member($object->getField('agent_id'));
                                         Канализация центральная:
                                     </div>
                                     <div>
-                                        <?=($offer->getField('sewage_central')) ? 'есть' : 'нет'?>
+                                        <?=($offer->getField('sewage_central') == 1) ? 'есть' : 'нет'?>
                                         <?if($water_value = $offer->getField('sewage_central_value')){?>
                                             <?=$water_value?>
                                             <span>
@@ -1371,7 +1376,7 @@ $agent = new Member($object->getField('agent_id'));
                                         Канализация ливневая:
                                     </div>
                                     <div>
-                                        <?=($offer->getField('sewage_rain')) ? 'есть' : '-'?>
+                                        <?=($offer->getField('sewage_rain') == 1) ? 'есть' : '-'?>
                                     </div>
                                 </li>
                                 <?if(!$offer->getField('is_land')){?>
@@ -1380,7 +1385,7 @@ $agent = new Member($object->getField('agent_id'));
                                             Вентиляция:
                                         </div>
                                         <div>
-                                            <?= $offer->getField('ventilation')  ? $offer->getField('ventilation') :  '-'?>
+                                            <?= $offer->getField('ventilation') == 1  ? $offer->getField('ventilation') :  '-'?>
                                         </div>
                                     </li>
                                 <?}?>
@@ -1390,8 +1395,8 @@ $agent = new Member($object->getField('agent_id'));
                                             Газ:
                                         </div>
                                         <div>
-                                            <?if($offer->getField('gas')){?>
-                                                <?=($offer->getField('gas')) ? 'есть' : ''?>
+                                            <?if($offer->getField('gas') == 1){?>
+                                                <?=($offer->getField('gas') == 1) ? 'есть' : ''?>
                                                 <?= $offer->getField('gas_value')? $offer->getField('gas_value') : ''?>
                                                 <span>
                                             м<sup>3</sup>/час.
@@ -1402,14 +1407,14 @@ $agent = new Member($object->getField('agent_id'));
                                         </div>
                                     </li>
                                 <?}?>
-                                <?if(!$offer->getField('steam')){?>
+                                <?if(!$offer->getField('steam') == 1){?>
                                     <li>
                                         <div>
                                             Пар:
                                         </div>
                                         <div>
-                                            <?if($offer->getField('steam')){?>
-                                                <?=($offer->getField('steam')) ? 'есть' : ''?>
+                                            <?if($offer->getField('steam') == 1){?>
+                                                <?=($offer->getField('steam') == 1) ? 'есть' : ''?>
                                                 <?= $offer->getField('steam_value')? $offer->getField('steam_value') : ''?>
                                                 <span>
                                                 бар.
@@ -1425,7 +1430,7 @@ $agent = new Member($object->getField('agent_id'));
                                         Телефония:
                                     </div>
                                     <div>
-                                        <?=($offer->getField('phone')) ? 'есть' : '-'?>
+                                        <?=($offer->getField('phone') == 1) ? 'есть' : '-'?>
                                     </div>
                                 </li>
                                 <li>
@@ -1434,7 +1439,7 @@ $agent = new Member($object->getField('agent_id'));
                                     </div>
                                     <div>
                                         <?//=( ( $item = $offer->getField('internet')) !=0 ) ? $item :  '-'?>
-                                        <?= $offer->getField('internet') ? 'да' : '-'    ?>
+                                        <?= $offer->getField('internet') == 1 ? 'да' : '-'    ?>
                                     </div>
                                 </li>
                                 <li>

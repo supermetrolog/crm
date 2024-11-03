@@ -70,12 +70,15 @@ class OfferMix extends Post
 
     public function getOfferNeighbors()
     {
-        $sql = $this->pdo->prepare("SELECT (id) FROM c_industry_offers_mix WHERE  object_id=" . $this->getField('object_id') . " AND type_id IN(2,3)  AND area_min > 0  AND id!=" . $this->id . "    ");
-        $sql->execute();
         $result = [];
-        while ($item = $sql->fetch(PDO::FETCH_LAZY)) {
-            $result[] = $item->id;
+        if ($this->id) {
+            $sql = $this->pdo->prepare("SELECT (id) FROM c_industry_offers_mix WHERE  object_id=" . $this->getField('object_id') . " AND type_id IN(2,3)  AND area_min > 0  AND id!=" . $this->id . "    ");
+            $sql->execute();
+            while ($item = $sql->fetch(PDO::FETCH_LAZY)) {
+                $result[] = $item->id;
+            }
         }
+
         return $result;
     }
 

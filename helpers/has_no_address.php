@@ -14,7 +14,7 @@ $sql = $pdo->prepare("SELECT * FROM $table WHERE deleted!='1' LIMIT 10");
 $sql->execute();
 while($item = $sql->fetch(PDO::FETCH_LAZY)){
 
-    $url = 'https://geocode-maps.yandex.ru/1.x/?apikey=2b6763cf-cc99-48c7-81f1-f4ceb162502a&format=json&geocode='.urlencode($item->address);
+    $url = 'https://geocode-maps.yandex.ru/1.x/?apikey=7cb3c3f6-2764-4ca3-ba87-121bd8921a4e&format=json&geocode='.urlencode($item->address);
 
 
     if( $curl = curl_init() ) {

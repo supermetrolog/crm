@@ -105,7 +105,7 @@ $favourites = $logedUser->getJsonField('favourites');
     </div>
 
 
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=2b6763cf-cc99-48c7-81f1-f4ceb162502a&lang=ru_RU" type="text/javascript">
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=59572809-066b-46d5-9e5d-269a65751b84apikey=5969b690-a971-4dab-84b9-76c49fad67c6suggest_apikey=5969b690-a971-4dab-84b9-76c49fad67c6&lang=ru_RU" type="text/javascript">
     </script>
     <script async defer type="text/javascript">
         ymaps.ready(init);

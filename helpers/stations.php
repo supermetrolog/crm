@@ -47,9 +47,9 @@ $trainstations = [];
 $busstops = [];
 $metrostations = [];
 
-$api_key = '0d440afe-79ed-475f-97ce-e1e47b704432';
+	$api_key = '0d440afe-79ed-475f-97ce-e1e47b704432';
 
-$api_key_geo = '2b6763cf-cc99-48c7-81f1-f4ceb162502a';
+$api_key_geo = '7cb3c3f6-2764-4ca3-ba87-121bd8921a4e';
 
 $address = 'Россия, Москва, пристань Гостиница Украина';
 

@@ -62,14 +62,14 @@ $arr_info = [
     'area_field'=>'Уличное хранение',
 
     'floor'=>'Этажность',
-    'class'=>'Класс объекта',
+    'class_name'=>'Класс объекта',
     'ceiling_height'=>'Высота потолков',
     'gate_type'=>'Тип ворот',
     'gate'=>'Количество ворот',
-    'racks'=>'Стеллажи', 
-    'load_floor'=>'Стеллажи',
-    'load_mezzanine'=>'Нагрузка на пол',
-    'temperature'=>'Нагрузка на мезонин ',
+    'racks'=>'Стеллажи',
+    'load_floor'=>'Нагрузка на пол',
+    'load_mezzanine'=>'Нагрузка на мезонин',
+    'temperature'=>'Температура',
     'column_grid'=>'Шаг колон',
     'elevators'=>'Грузовые лифты',
     'facing'=>'Внешняя отделка',
@@ -113,6 +113,7 @@ $arr_info = [
 //МАССИВ ДЛЯ СБОРА БЛОКОВ
 $block_fields = [
     'object_id',
+    'visual_id',
     'floor_min',
     'area_min',
     'area_max',
@@ -210,7 +211,7 @@ $arr = [
         ['Характеристики'],
         [
             'floor'=>'этаж',
-            'class'=>'',
+            'class_name'=>'',
             'ceiling_height'=>'м.',
             'gate_type'=>'',
             'gate'=>'шт/',
@@ -311,12 +312,13 @@ if($offerMix->getField('floor_type')){
     $val= $offerMix->getField('floor_type');
     $general['floor'] = $val;
 }
-if($offerMix->getField('temperature_max') > 10){
+if($offerMix->getField('heated') == 1 || $offerMix->getField('temperature_max') > 10){
     $val= 'Теплый';
 }else{
     $val= 'Холодный';
 }
 $general['heating'] = $val;
+
 if($offerMix->getField('water')){
     $val= 'Вода';
     $general['water'] = $val;
@@ -325,11 +327,11 @@ if($offerMix->getField('sewage_central')){
     $val= 'Канализация';
     $general['sewage'] = $val;
 }
-if($offerMix->getField('gas')){
+if($offerMix->getField('gas') == 1){
     $val= 'Газ';
     $general['gas'] = $val;
 }
-if($offerMix->getField('steam')){
+if($offerMix->getField('steam') == 1){
     $val= 'Пар';
     $general['steam'] = $val;
 }
@@ -355,7 +357,11 @@ foreach($arr as $name=>$item){
         //ФОРМАТ ПЛОЩАДЕЙ
         if($offerMix->hasField($field.'_min')){
             $val = valuesCompare($offerMix->getField($field.'_min'),$offerMix->getField($field.'_max')).' '.$dimension;
-            ${$name}[$field] = [$name_rus,$val,$vert];
+            if ($val == 0) {
+                ${$name}[$field] = [$name_rus,'---'];
+            } else {
+                ${$name}[$field] = [$name_rus,$val,$vert];
+            }
         }
 
         //ФОРМАТ ГАБАРИТОВ
@@ -370,8 +376,13 @@ foreach($arr as $name=>$item){
             if($offerMix->hasField($field)){
                 if($offerMix->getField($field) == 1){
                     $val.= 'есть';
+                }elseif($offerMix->getField($field) == 2){
+                    $val.= 'нет';
+                }elseif($offerMix->getField($field) === 0 || $offerMix->getField($field) === '0'){
+                    $val.= 'не указано';
                 }else{
-                    $val.= mb_strtolower($offerMix->getField($field));
+                    //$val.= mb_strtolower($offerMix->getField($field));
+                    $val.= ($offerMix->getField($field));
                 }
             }
             if($offerMix->getField($field.'_value')){
@@ -411,7 +422,7 @@ foreach($fields as $field){
             foreach ($photos as $photo) {
                 $els = explode('/',$photo);
                 $img_name = array_pop($els);
-                $photos_full[] = 'https://pennylane.pro/system/controllers/photos/watermark.php/1200/2552/'.$img_name;
+                $photos_full[] = 'https://pennylane.pro/system/controllers/photos/watermark.php/1200/' . $offerMix->getField('object_id') . '/'.$img_name;
             }
             $value = $photos_full;
         }elseif($field === 'address'){

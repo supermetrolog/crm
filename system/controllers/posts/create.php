@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Zhitkov
@@ -6,19 +7,19 @@
  * Time: 9:50
  */
 
-if($_COOKIE['member_id'] == 941){
-   //ini_set('error_reporting', E_ALL);ini_set('display_errors', 1);ini_set('display_startup_errors', 1);
+if ($_COOKIE['member_id'] == 941) {
+    //ini_set('error_reporting', E_ALL);ini_set('display_errors', 1);ini_set('display_startup_errors', 1);
     //var_dump($_POST);
 }
 
 
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/global_pass.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/global_pass.php');
 
-if($_POST['id']){
+if ($_POST['id']) {
     $id = (int)$_POST['id'];
     $action_id = 3;
-}else{
+} else {
     $id = 0;
     $action_id = 1;
 }
@@ -36,9 +37,9 @@ $telegram = new \Bitkit\Social\Telegram('736512998:AAGIlIPVdPdrffvQRmh1Kwoj2_isb
 
 
 $logedUser = new Member($_COOKIE['member_id']);
-if($logedUser->is_valid() ){
+if ($logedUser->is_valid()) {
 
-    echo '---';
+    // echo '---';
     $post = new Post($id);
 
     $post->getTable($table);
@@ -57,17 +58,17 @@ if($logedUser->is_valid() ){
 
     //для запросов создаем автоматом сделку
     $requests = new Request(0);
-    if($table == $requests->setTable() && !$id){
+    if ($table == $requests->setTable() && !$id) {
         //создаем сделку
         $deal = new Deal(0);
         $deal_id = $deal->createUpdate();
         //проставляем запросу ID сделки
         $request = new Request($post_id);
-        $request->updateField('deal_id',$deal_id);
+        $request->updateField('deal_id', $deal_id);
     }
 
     //ЕСЛИ ЭТО УЧАСТОК ЗЕМЛИ ТО АВТОМАТОМ СОЗДАЕМ ЭТАЖ ИЛИ ПЕРЕСОХРАНЯЕМ
-    if($table_id == 5 && $post->getField('is_land') ){
+    if ($table_id == 5 && $post->getField('is_land')) {
 
 
 
@@ -77,16 +78,16 @@ if($logedUser->is_valid() ){
         //смотрим этаж если есть то находим если нет то создаем
         $floor = new Floor();
 
-        foreach($_POST as $key=>$value){
-            if($key != 'id' && $floor->hasField($key)){
+        foreach ($_POST as $key => $value) {
+            if ($key != 'id' && $floor->hasField($key)) {
                 $floor_fields[] = $key;
                 $floor_values[] = $value;
             }
         }
 
         //тут набираем массив
-        if($floor->getFloorFieldByObjectId($post_id) == 0){
-            $floor_id = $floor->createLine($floor_fields,$floor_values);
+        if ($floor->getFloorFieldByObjectId($post_id) == 0) {
+            $floor_id = $floor->createLine($floor_fields, $floor_values);
             $floor = new Floor($floor_id);
 
             //если создаем то добавляем номер объекта
@@ -103,10 +104,7 @@ if($logedUser->is_valid() ){
             $telegram->sendMessage('создали этаж улицы', $logedUser->getField('telegram_id'));
         }
 
-        $floor->updateLine($floor_fields,$floor_values);
-
-
-
+        $floor->updateLine($floor_fields, $floor_values);
     }
 
     //Отправка почты
@@ -138,17 +136,17 @@ if($logedUser->is_valid() ){
     */
 
     //ДЛЯ ПРОСТЛЕНИЯ КОНТАКТА КОМПАНИИИ
-    if($table_id == '15'){
+    if ($table_id == '15') {
         $company = new Company((int)$_POST['company_id']);
-        if(!$company->hasContact()){
+        if (!$company->hasContact()) {
             $company->setContact($post_id);
         }
     }
 
     //ДЛЯ СОЗДАНИЯ СДЕЛКИ ПРОСТАВЛЯЕМ ЕЕ id ТП к которому она создана
-    if($table_id == '23'){
+    if ($table_id == '23') {
         $block = new Subitem((int)$post->getField('block_id'));
-        $block->updateField('deal_id',$post->postId());
+        $block->updateField('deal_id', $post->postId());
     }
 
 
@@ -165,54 +163,53 @@ if($logedUser->is_valid() ){
     */
 
 
-    if(in_array($table_id,[11])){
+    if (in_array($table_id, [11])) {
         $curr_block = new Subitem($post->postId());
         $stacks = $curr_block->getBlockStacks();
-        foreach($stacks as $elem){
+        foreach ($stacks as $elem) {
             $sum_block_id = $elem;
-            include(PROJECT_ROOT.'/system/controllers/subitems/merge.php');
+            include(PROJECT_ROOT . '/system/controllers/subitems/merge.php');
         }
-
     }
 
 
     //пересобираем торговые предложения из частей
-    if($table_id == 35){
-        $like = '%"'.$post_id.'"%';
+    if ($table_id == 35) {
+        $like = '%"' . $post_id . '"%';
         $sql = $pdo->prepare("SELECT id  FROM c_industry_blocks WHERE parts LIKE '$like'");
         $sql->execute();
-        while($item = $sql->fetch(PDO::FETCH_LAZY)){
+        while ($item = $sql->fetch(PDO::FETCH_LAZY)) {
             $sum_block_id = $item['id'];
-            include($_SERVER['DOCUMENT_ROOT'].'/system/controllers/subitems/merge.php');
+            include($_SERVER['DOCUMENT_ROOT'] . '/system/controllers/subitems/merge.php');
         }
     }
 
 
 
     //обновление КЭШ ТАБЛИЦЫ ФИДОВ
-    if(in_array($table_id,[5,16,11,35])){
-        if(1){
-        //if($_COOKIE['member_id'] == 141){
-            if ($table_id == 35 ) {
-                if($_POST['id']) {
-                    include_once (PROJECT_ROOT.'/table/feed_create.php');
+    if (in_array($table_id, [5, 16, 11, 35])) {
+        if (1) {
+            //if($_COOKIE['member_id'] == 141){
+            if ($table_id == 35) {
+                if ($_POST['id']) {
+                    include_once(PROJECT_ROOT . '/table/feed_create.php');
                 }
-            }else{
-                include_once (PROJECT_ROOT.'/table/feed_create.php');
+            } else {
+                include_once(PROJECT_ROOT . '/table/feed_create.php');
             }
         }
     }
 
 
     //СМОТРИМ AJAX или нет
-    if($_POST['ajax']){
-        $response = ['post_id'=>$post_id,'table'=>$table];
+    if ($_POST['ajax']) {
+        $response = ['post_id' => $post_id, 'table' => $table];
         echo json_encode($response);
-    }else{
-        if($logedUser->isAdmin() && $_POST['admin_panel']){
-            header("Location: ".PROJECT_URL.'/'."admin/index.php?action=show&type=".$table);
-        }else{
-            if($table_id == '16') {
+    } else {
+        if ($logedUser->isAdmin() && $_POST['admin_panel']) {
+            header("Location: " . PROJECT_URL . '/' . "admin/index.php?action=show&type=" . $table);
+        } else {
+            if ($table_id == '16') {
                 $offer_id = $post_id;
                 $offer = new Offer($post_id);
                 $object_id = $offer->getField('object_id');
@@ -228,28 +225,20 @@ if($logedUser->is_valid() ){
 
 
                 if ($logedUser->member_id() == 941) {
-
                 } else {
                     header("Location: " . $loc);
                 }
-            }elseif($table_id == '33'){
-                header("Location: " . "https://pennylane.pro/complex/".$post_id);
-            }else{
-                if($logedUser->member_id() == 941) {
-
-                }else{
+            } elseif ($table_id == '33') {
+                header("Location: " . "https://pennylane.pro/complex/" . $post_id);
+            } else {
+                if ($logedUser->member_id() == 941) {
+                } else {
                     header("Location: " . $_SERVER['HTTP_REFERER']);
                 }
             }
-
         }
     }
-
-
-
-
-}else{
-    header("Location: ".$_SERVER['HTTP_REFERER']);
+} else {
+    header("Location: " . $_SERVER['HTTP_REFERER']);
     echo "F*ck you, hacker=)";
 }
-

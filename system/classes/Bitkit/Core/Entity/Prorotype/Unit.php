@@ -10,7 +10,7 @@ abstract class Unit implements \BitKit\Core\Interfaces\UnitActions
 	/*конструктор, подключающийся к базе данных, устанавливающий локаль и кодировку соединения */
 	public function __construct(int $id) {
 		$this->id = $id;
-		$this->mysqli = new \mysqli('localhost', 'timon', '20091993dec', 'pennylane');
+		$this->mysqli = new \mysqli('localhost', 'user_supermetrolog', 'Studentjke2h', 'user_pennylane');
 		$this->mysqli->query("SET lc_time_names = 'ru_RU'");
 		$this->mysqli->query("SET NAMES 'utf8'");
         $this->pdo = \BitKit\Core\Database\Connect::getInstance()->pdo;
@@ -214,5 +214,6 @@ abstract class Unit implements \BitKit\Core\Interfaces\UnitActions
         return $id_info['MAX(id)'];
     }
 }
+
 
 

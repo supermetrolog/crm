@@ -1,4 +1,7 @@
 <?
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
 if($_COOKIE['member_id'] == 999){
     include_once($_SERVER['DOCUMENT_ROOT'].'/errors.php');
 }
@@ -45,4 +48,5 @@ $page = $router->getPage();
 </div>
 <?if($logedUser->isAdmin() && $logedUser->member_id() == 141){require_once($_SERVER['DOCUMENT_ROOT'].'/components/constructor/index.php');}?>
 <?php require_once($_SERVER['DOCUMENT_ROOT'].'/components/footer/index.php');?>
+
 

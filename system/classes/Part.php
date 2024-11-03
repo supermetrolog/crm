@@ -8,6 +8,12 @@ class Part extends Post
         return 'c_industry_parts';
     }
 
+    public function getAgentId()
+    {
+        $offer = new Offer($this->getField('offer_id'));
+        return $offer->getField('agent_id');
+    }
+
 
     public function isActivePart()
     {

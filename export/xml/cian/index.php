@@ -2,7 +2,7 @@
 <?php
 
 //ini_set('error_reporting', E_ALL);ini_set('display_errors', 1);ini_set('display_startup_errors', 1);
-include_once($_SERVER['DOCUMENT_ROOT'].'/global_pass.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/global_pass.php');
 
 
 $start = microtime(true);
@@ -14,7 +14,7 @@ $objects_count = 0;
 
 
 //Создает XML-строку и XML-документ при помощи DOM
-$dom = new DomDocument('1.0','UTF-8');
+$dom = new DomDocument('1.0', 'UTF-8');
 
 //добавление корня - <books>
 $feed = $dom->appendChild($dom->createElement('feed'));
@@ -73,15 +73,15 @@ $blocklist = [
     2519,
 ];
 
-$blocklist_str = implode(',',$blocklist);
+$blocklist_str = implode(',', $blocklist);
 
 
-$sql_text = "SELECT * FROM $table WHERE deal_type!=3 AND type_id IN (1) AND ad_cian=1  AND  deleted!=1 AND hide_from_market !=1  AND status=1 AND is_land!=1 AND (price_floor_min > 0 OR  price_sale_min > 0)  AND test_only!=1 AND photos!='[\"[]\"]'   ";
+$sql_text = "SELECT * FROM $table WHERE deal_type!=3 AND type_id IN (1) AND ad_cian=1  AND  deleted!=1 AND hide_from_market !=1  AND status=1 AND (price_floor_min > 0 OR  price_sale_min > 0)  AND test_only!=1 AND photos!='[\"[]\"]'   ";
 //$sql = $pdo->prepare("SELECT * FROM $table WHERE deleted!='1' AND ad_cian=1 AND status=1 AND is_land!=1 AND (deal_type=1 OR deal_type=4 OR object_id=196) ");
-$sql = $pdo->prepare( $sql_text);
+$sql = $pdo->prepare($sql_text);
 echo  $sql_text;
 $sql->execute();
-while($offer = $sql->fetch(PDO::FETCH_LAZY)){
+while ($offer = $sql->fetch(PDO::FETCH_LAZY)) {
 
     $object_building = new Building($offer->object_id);
 
@@ -92,35 +92,50 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     $Category = $object->appendChild($dom->createElement('Category'));
     $object_types = json_decode($offer->object_type);
     $arr_types = [
-        '1'=>'warehouse',
-        '2'=>'industry',
-        '3'=>'commercialLandSale',
+        '1' => 'warehouse',
+        '2' => 'industry',
+        '3' => 'commercialLand',
     ];
     $arr_deals = [
-        '1'=>'Rent',
-        '2'=>'Sale',
-        '3'=>'Rent',
-        '4'=>'Rent',
+        '1' => 'Rent',
+        '2' => 'Sale',
+        '3' => 'Rent',
+        '4' => 'Rent',
     ];
     $type = min($object_types);
     $deal = $offer->deal_type;
-    $Category->appendChild($dom->createTextNode($arr_types[$type].$arr_deals[$deal]));
+    $Category->appendChild($dom->createTextNode($arr_types[$type] . $arr_deals[$deal]));
 
     //ВНУТРЕННИЙ ID БЛОУВ И ОБЪЕКТА
     $ExternalId = $object->appendChild($dom->createElement('ExternalId'));
-    $ExternalId->appendChild($dom->createTextNode($offer->visual_id));
+    $objectId = $offer->object_id;
+    $visualId = $offer->visual_id;
+    if (in_array($objectId, [10607])) {
+        $visualId .= '-new';
+    }
+    $ExternalId->appendChild($dom->createTextNode($visualId));
 
-    if($offer->is_land) {
+    if ($offer->is_land) {
         $prop_type = 'land';
-    }elseif(in_array(2,json_decode($offer->object_type))){
+    } elseif (in_array(2, json_decode($offer->object_type))) {
         $prop_type = 'industry';
-    }else{
+    } else {
         $prop_type = 'warehouse';
     }
 
     $PropType = $object->appendChild($dom->createElement('PropertyType'));
     $PropType->appendChild($dom->createTextNode($prop_type));
+    // Продается складской комплекс категории B - 3830 м. кв.  Ограничения отсутствуют
+    // Объект находится в  Москвы Ближайшее метро Нагатинская  .  
 
+
+
+    // ТУ, коммуникации и безопасность: 100кВт, охранная сигнализация, контроль доступа на территорию, и интернет, 
+    // Обьект под охраной (ЧОП). Парковка: для а/м от 10т, На территории есть столовая,  
+
+    //  Планы БТИ и дополнительную информацию отправим по запросу
+    // На объекте возможно организовать: сборочное пр-во, автосервис/мойка, швейное.   
+    // ID 140-П-1   
     //ОПИСАНИЕ
     $Description = $object->appendChild($dom->createElement('Description'));
     $original_id = $offer->original_id;
@@ -128,8 +143,21 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
     //получить результат файла в переменную
     ob_start();
-    include($_SERVER['DOCUMENT_ROOT']."/ciandesc.php");
+    include($_SERVER['DOCUMENT_ROOT'] . "/autodesc.php");
     $desc = ob_get_clean();
+
+    if ($offer->type_id == 1) {
+        $block_sql = "SELECT * FROM c_industry_blocks WHERE id = " . $offer->original_id;
+        /** @var \PDO $pdo */
+        $stmt = $pdo->prepare($block_sql);
+        $stmt->execute();
+        $offerBlock = $stmt->fetchObject();
+        if ($offerBlock && $offerBlock->description_manual_use) {
+            $desc = $offerBlock->description;
+        }
+    }
+
+
 
     //$desc = exec($_SERVER['DOCUMENT_ROOT']."/autodesc.php");
     $Description->appendChild($dom->createTextNode(strip_tags($desc)));
@@ -148,12 +176,12 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
 
     //КАДАСТРОВЫЕ НОМЕРА
-    if($offer->cadastral_number || $offer->cadastral_number_land){
+    if ($offer->cadastral_number || $offer->cadastral_number_land) {
 
         $CadastralNumber = $object->appendChild($dom->createElement('CadastralNumber'));
-        if($offer->is_land){
+        if ($offer->is_land) {
             $CadastralNumber->appendChild($dom->createTextNode($offer->cadastral_number_land));
-        }else{
+        } else {
             $CadastralNumber->appendChild($dom->createTextNode($offer->cadastral_number));
         }
     }
@@ -171,12 +199,12 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
 
     //ШОССЕ И РАССТОЯНИЕ ОТ МКАД
-    if($offer->highway || $offer->from_mkad){
+    if ($offer->highway || $offer->from_mkad) {
         $Highway = $object->appendChild($dom->createElement('Highway'));
     }
 
 
-    if($offer->highway){
+    if ($offer->highway) {
 
         $Id = $Highway->appendChild($dom->createElement('Id'));
 
@@ -188,7 +216,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
         $Id->appendChild($dom->createTextNode($highway_info->id));
     }
 
-    if($offer->from_mkad){
+    if ($offer->from_mkad) {
         $Distance = $Highway->appendChild($dom->createElement('Distance'));
         $Distance->appendChild($dom->createTextNode($offer->from_mkad));
     }
@@ -198,7 +226,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
 
     //МЕТРО
-    if($offer->metro) {
+    if ($offer->metro) {
         $Undergrounds = $object->appendChild($dom->createElement('Undergrounds'));
 
         $UndergroundInfoSchema = $Undergrounds->appendChild($dom->createElement('UndergroundInfoSchema'));
@@ -210,47 +238,46 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
         $metro_info = $sql2->fetch(PDO::FETCH_LAZY);
         $Id->appendChild($dom->createTextNode($metro_info->id));
 
-        if($offer->from_metro_value){
+        if ($offer->from_metro_value) {
             $Time = $UndergroundInfoSchema->appendChild($dom->createElement('Time'));
             $Time->appendChild($dom->createTextNode($offer->from_metro_value));
         }
 
 
-        if($offer->from_metro){
+        if ($offer->from_metro) {
             $arr_transport_metro = [
-                '1'=>'walk',
-                '2'=>'transport',
+                '1' => 'walk',
+                '2' => 'transport',
             ];
             $TransportType = $UndergroundInfoSchema->appendChild($dom->createElement('TransportType'));
             $TransportType->appendChild($dom->createTextNode($arr_transport_metro[$offer->from_metro]));
         }
-
     }
 
 
     //ДАТА ОСВОБОЖДЕНИЯ
     $availableFrom = $object->appendChild($dom->createElement('AvailableFrom'));
-    if($offer->available_from){
-        if(time() > $offer->available_from){
+    if ($offer->available_from) {
+        if (time() > $offer->available_from) {
             $av_time = 'свободен';
-        }else{
-            $av_time = 'освобождается '.date('d/m/Y',$offer->available_from);
+        } else {
+            $av_time = 'освобождается ' . date('d/m/Y', $offer->available_from);
         }
-    }else{
+    } else {
         $av_time = 'свободен';
     }
     $availableFrom->appendChild($dom->createTextNode($av_time));
 
     //ТИП СОБСТВЕННОСТИ
     $estateType = $object->appendChild($dom->createElement('EstateType'));
-    if($offer->is_land){
+    if ($offer->is_land) {
         $ownType = $offer->own_type_land;
-    }else{
+    } else {
         $ownType = $offer->own_type;
     }
-    if($ownType == 'Собственность'){
+    if ($ownType == 'Собственность') {
         $cian_own_type = 'owned';
-    }else{
+    } else {
         $cian_own_type = 'rent';
     }
     $estateType->appendChild($dom->createTextNode($cian_own_type));
@@ -269,20 +296,19 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     $MinArea->appendChild($dom->createTextNode($min_area));
     */
 
-    if($offer->tax_form == 'с ндс'){
-        $vat_inc='true';
+    if ($offer->tax_form == 'с ндс') {
+        $vat_inc = 'true';
         $VatType_value = 'included';
-    }elseif($offer->tax_form == 'без ндс' ){
-        $vat_inc='false';
+    } elseif ($offer->tax_form == 'без ндс') {
+        $vat_inc = 'false';
         $VatType_value = 'notIncluded';
-    }elseif($offer->tax_form == 'triple net' ){
-        $vat_inc='false';
+    } elseif ($offer->tax_form == 'triple net') {
+        $vat_inc = 'false';
         $VatType_value = 'notIncluded';
-    }elseif($offer->tax_form == 'усн' ){
-        $vat_inc='false';
+    } elseif ($offer->tax_form == 'усн') {
+        $vat_inc = 'false';
         $VatType_value = 'usn';
-    }else{
-
+    } else {
     }
 
 
@@ -298,7 +324,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
         //Если блоки есть то минимальный для общего не выгружаем ибо будут дублироваться с теми что внутри
         $blocks_inside_id = json_decode($offer->blocks);
         if (arrayIsNotEmpty($blocks_inside_id)) {
-            foreach ($blocks_inside_id  as $id){
+            foreach ($blocks_inside_id  as $id) {
                 $block_inside = new OfferMix((int)$id);
 
                 if ($block_inside->getField('deal_id') == 0 && $block_inside->getField('deleted') != 1) {
@@ -313,8 +339,8 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
                     $VatPrice->appendChild($dom->createTextNode(0)); //хз чо писать
                 }
             }
-        //иначе вывожу мин для общего
-        }else {
+            //иначе вывожу мин для общего
+        } else {
             $RentByPartsSchema = $AreaParts->appendChild($dom->createElement('RentByPartsSchema'));
             $Area = $RentByPartsSchema->appendChild($dom->createElement('Area'));
             $Area->appendChild($dom->createTextNode($offer->area_min));
@@ -325,17 +351,13 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
             $VatPrice = $RentByPartsSchema->appendChild($dom->createElement('VatPrice'));
             $VatPrice->appendChild($dom->createTextNode(0)); //хз чо писать
         }
-
-
-
-
     }
 
 
     //ЭТАЖ
     $FloorNumber = $object->appendChild($dom->createElement('FloorNumber'));
     $floor_min = $offer->floor_min;
-    if(!$floor_min){
+    if (!$floor_min) {
         $floor_min = $offer->floor_max;
     }
     $FloorNumber->appendChild($dom->createTextNode($floor_min));
@@ -384,11 +406,11 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
     $photo_num = 0;
     $photos = json_decode($offer->photos);
-    foreach($photos as $photo){
+    foreach ($photos as $photo) {
 
         $photo_num++;
 
-        $photo_way_arr = explode('/',$photo);
+        $photo_way_arr = explode('/', $photo);
 
         $name = array_pop($photo_way_arr);
         //$post = (int)array_pop($photo_way_arr);
@@ -397,18 +419,17 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
         $PhotoSchema = $Photos->appendChild($dom->createElement('PhotoSchema'));
         $FullUrl = $PhotoSchema->appendChild($dom->createElement('FullUrl'));
-        $FullUrl->appendChild($dom->createTextNode(PROJECT_URL.'/system/controllers/photos/watermark.php/1200/'.$post.'/'.$name));
+        $FullUrl->appendChild($dom->createTextNode(PROJECT_URL . '/system/controllers/photos/watermark.php/1200/' . $post . '/' . $name));
 
         $IsDefault = $PhotoSchema->appendChild($dom->createElement('IsDefault'));
         $IsDefault->appendChild($dom->createTextNode($photo_num == 1 ? 'true' : 'false'));
-
     }
 
 
     //ТИПЫ НАЗНАЧЕНИЙ
     $specialty = $object->appendChild($dom->createElement('Specialty'));
     $object_types = json_decode($offer->purposes);
-    foreach($object_types as $obj_type){
+    foreach ($object_types as $obj_type) {
         $obj_type = new Post($obj_type);
         $obj_type->getTable('l_purposes');
         $add_type = $specialty->appendChild($dom->createElement('AdditionalType'));
@@ -421,13 +442,13 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     //ТИП ПОЛА
     $FloorMaterialTypeType = $object->appendChild($dom->createElement('FloorMaterialTypeType'));
     $floor_arr = [
-        'Асфальт'=>'asphalt',
-        'Бетон'=>'concrete',
-        'Антипыль'=>'selfLeveling',
-        'стяжка'=>'reinforcedConcrete',
-        'бет. плиты'=>'concrete ',
-        'тех. плитка'=>'tile',
-        'разные'=>'selfLeveling',
+        'Асфальт' => 'asphalt',
+        'Бетон' => 'concrete',
+        'Антипыль' => 'selfLeveling',
+        'стяжка' => 'reinforcedConcrete',
+        'бет. плиты' => 'concrete ',
+        'тех. плитка' => 'tile',
+        'разные' => 'selfLeveling',
     ];
     $FloorMaterialTypeType->appendChild($dom->createTextNode($floor_arr[$offer->floor_type]));
 
@@ -448,9 +469,9 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     //$Id->appendChild($dom->createTextNode('true'));
 
     //ВИДЕО
-    if(count($videos = json_decode($offer->videos)) > 0 && arrayIsNotEmpty(json_decode($offer->videos))){
+    if (count($videos = json_decode($offer->videos)) > 0 && arrayIsNotEmpty(json_decode($offer->videos))) {
         $Videos = $object->appendChild($dom->createElement('Videos'));
-        foreach ($videos as $video){
+        foreach ($videos as $video) {
             $VideoSchema = $Videos->appendChild($dom->createElement('VideoSchema'));
             $Url = $VideoSchema->appendChild($dom->createElement('Url'));
             $Url->appendChild($dom->createTextNode($video));
@@ -461,15 +482,15 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
 
     $Title = $object->appendChild($dom->createElement('title'));
-    if(in_array(1,$object_types) && in_array(2,$object_types)){
+    if (in_array(1, $object_types) && in_array(2, $object_types)) {
         $title_first = 'ПСК  ';
-    }elseif(in_array(2,$object_types)) {
+    } elseif (in_array(2, $object_types)) {
         $title_first = 'Производство ';
-    }else {
+    } else {
         $title_first = 'Склад ';
     }
     $min_area = $offer->area_min;
-    $title_first = $title_first .$offer->area_max . 'м.кв.';
+    $title_first = $title_first . $offer->area_max . 'м.кв.';
 
     $Title->appendChild($dom->createTextNode($title_first));
 
@@ -479,7 +500,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
     $building_obj = new Building($offer->object_id);
 
-    ($building_obj->getField('title'))?  $title = $building_obj->getField('title') : $title = $building_obj->getField('address');
+    ($building_obj->getField('title')) ?  $title = $building_obj->getField('title') : $title = $building_obj->getField('address');
 
     //НАЗВАНИЕ ОБЬЕКТА
     $Name = $Building->appendChild($dom->createElement('Name'));
@@ -491,7 +512,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
 
     //ГОД ПОСТРОЙКИ
-    if($building_obj->getField('year_build') > 0){
+    if ($building_obj->getField('year_build') > 0) {
         $BuildYear = $Building->appendChild($dom->createElement('BuildYear'));
         $BuildYear->appendChild($dom->createTextNode($building_obj->getField('year_build')));
     }
@@ -505,13 +526,13 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
     $HeatingType = $Building->appendChild($dom->createElement('HeatingType'));
     $heating_arr = [
-        'Центральное'=>'central',
-        'Автономное'=>'autonomous',
-        'Холодное'=>'no',
+        'Центральное' => 'central',
+        'Автономное' => 'autonomous',
+        'Холодное' => 'no',
     ];
-    if($heating_arr[$offer->heating]){
+    if ($heating_arr[$offer->heating]) {
         $heat_value = $heating_arr[$offer->heating];
-    }else{
+    } else {
         $heat_value = 'no';
     }
     $HeatingType->appendChild($dom->createTextNode($heat_value));
@@ -533,15 +554,15 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     //ТИП ПАРКОВКИ (ЛЕГКОВАЯ ИЛИ ГРУЗОВАЯ)
     $PurposeType = $Parking->appendChild($dom->createElement('PurposeType'));
 
-    if($offer->parking_truck){
+    if ($offer->parking_truck) {
         //echo "truck";
         $parkingPurposeType = 'cargo';
         $offer->parking_truck_value == 2 ? $isFree = 'true' : $isFree = 'false';
-    }elseif($offer->parking_car && !$offer->parking_truck){
+    } elseif ($offer->parking_car && !$offer->parking_truck) {
         $parkingPurposeType = 'passenger';
         $offer->parking_car_value == 2 ? $isFree = 'true' : $isFree = 'false';
         //echo "car";
-    }else{
+    } else {
         $isFree = 'false';
         $parkingPurposeType = '';
     }
@@ -562,14 +583,13 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
     //ТИП ОБЪЕКТА
 
-    if(in_array(1,$object_types)){
+    if (in_array(1, $object_types)) {
         $Type = $Building->appendChild($dom->createElement('Type'));
         $Type->appendChild($dom->createTextNode('warehouseComplex'));
-    }elseif(in_array(2,$object_types)){
+    } elseif (in_array(2, $object_types)) {
         $Type = $Building->appendChild($dom->createElement('Type'));
         $Type->appendChild($dom->createTextNode('industrialComplex'));
-    }else{
-
+    } else {
     }
 
 
@@ -586,9 +606,9 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     //СИСТЕМА ВЕНТИЛЯЦИИ
     $VentilationType = $Building->appendChild($dom->createElement('VentilationType'));
     $vent_arr = [
-        'Естественная'=>'natural',
-        'Приточно-вытяжная'=>'forced',
-        '0'=>'no',
+        'Естественная' => 'natural',
+        'Приточно-вытяжная' => 'forced',
+        '0' => 'no',
     ];
     $VentilationType->appendChild($dom->createTextNode($vent_arr[$offer->ventilation]));
 
@@ -598,12 +618,12 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     //СИСТЕМА ПОЖАРОТУШЕНИЯ
     $ExtinguishingSystemType = $Building->appendChild($dom->createElement('ExtinguishingSystemType'));
     $fire_arr = [
-        'Гидрантная система'=>'hydrant ',
-        'Спринклерная система'=>'sprinkler',
-        '0'=>'no',
-        'Порошковая система'=>'powder',
-        'Газовая система'=>'gas',
-        'Огнетушители'=>'powder',
+        'Гидрантная система' => 'hydrant ',
+        'Спринклерная система' => 'sprinkler',
+        '0' => 'no',
+        'Порошковая система' => 'powder',
+        'Газовая система' => 'gas',
+        'Огнетушители' => 'powder',
     ];
     $ExtinguishingSystemType->appendChild($dom->createTextNode($fire_arr[$offer->firefighting]));
 
@@ -613,7 +633,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
 
 
-    if($offer->elevators_num){
+    if ($offer->elevators_num) {
 
         //ТИП ЛИФТА --ПОСТОЯННОЕ--
         $Type = $LiftTypeSchema->appendChild($dom->createElement('Type'));
@@ -641,7 +661,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     $CranageTypes = $Building->appendChild($dom->createElement('CranageTypes'));
 
 
-    if($offer->cranes_gantry_num){
+    if ($offer->cranes_gantry_num) {
         $CranageTypeSchema = $CranageTypes->appendChild($dom->createElement('CranageTypeSchema'));
 
         //ТИП КРАНА
@@ -657,7 +677,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
         $Count->appendChild($dom->createTextNode($offer->cranes_gantry_num));
     }
 
-    if($offer->cranes_railway_num){
+    if ($offer->cranes_railway_num) {
         $CranageTypeSchema = $CranageTypes->appendChild($dom->createElement('CranageTypeSchema'));
 
         //ТИП КРАНА
@@ -673,7 +693,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
         $Count->appendChild($dom->createTextNode($offer->cranes_railway_num));
     }
 
-    if($offer->cranes_cathead_num){
+    if ($offer->cranes_cathead_num) {
         $CranageTypeSchema = $CranageTypes->appendChild($dom->createElement('CranageTypeSchema'));
 
         //ТИП КРАНА
@@ -691,7 +711,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
 
 
-    if($offer->cranes_overhead_num){
+    if ($offer->cranes_overhead_num) {
         $CranageTypeSchema = $CranageTypes->appendChild($dom->createElement('CranageTypeSchema'));
 
         //ТИП КРАНА
@@ -713,16 +733,16 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     //ТИП ВОРОТ
     $GatesType = $Building->appendChild($dom->createElement('GatesType'));
     $gates_arr = [
-        'на нулевом уровне'=>'atZero',
-        'докового типа'=>'dockType',
-        'авторампа'=>'onRamp',
-        'Ж/Д рампа'=>'onRamp',
+        'на нулевом уровне' => 'atZero',
+        'докового типа' => 'dockType',
+        'авторампа' => 'onRamp',
+        'Ж/Д рампа' => 'onRamp',
     ];
     $GatesType->appendChild($dom->createTextNode($gates_arr[$offer->gate_type]));
 
 
     //СЕТКА КОЛОНН
-    if($offer->column_grid){
+    if ($offer->column_grid) {
         $ColumnGrid = $Building->appendChild($dom->createElement('ColumnGrid'));
         $ColumnGrid->appendChild($dom->createTextNode($offer->column_grid));
     }
@@ -751,7 +771,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     //ЕСТЬ ЛИ ОФИСЫ
     $HasOfficeSpace = $Infrastructure->appendChild($dom->createElement('HasOfficeSpace'));
 
-    $object_building->getField('area_office_full') ? $hasOffice = 'true' : $hasOffice = 'false' ;
+    $object_building->getField('area_office_full') ? $hasOffice = 'true' : $hasOffice = 'false';
     $HasOfficeSpace->appendChild($dom->createTextNode($hasOffice));
 
 
@@ -762,7 +782,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
     //ПЛОЩАДЬ
     $Area = $Land->appendChild($dom->createElement('Area'));
-    $Area->appendChild($dom->createTextNode($object_building->getField('area_field_full')/100));
+    $Area->appendChild($dom->createTextNode($object_building->getField('area_field_full') / 100));
 
 
     //ЕДИНИЦА ИЗМЕРЕНИЯ
@@ -771,35 +791,59 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
     //СТАТУС УЧАСТКА
     $AreaStatus = $Land->appendChild($dom->createElement('Status'));
-    $AreaStatus->appendChild($dom->createTextNode('sotka'));
+
+
+    $oType = json_decode($offer->object_type);
+    if ($oType && is_array($oType) && in_array(3, $oType)) {
+
+        $obj_sql = "SELECT * FROM c_industry WHERE id = " . $offer->object_id;
+        /** @var \PDO $pdo */
+        $stmt = $pdo->prepare($obj_sql);
+        $stmt->execute();
+        $offerObject = $stmt->fetchObject();
+        $landCategory = $offerObject->land_category;
+        if ($landCategory == 6) {
+            // Участок сельскохозяйственного назначения
+            $AreaStatus->appendChild($dom->createTextNode('forAgriculturalPurposes'));
+        } else if ($landCategory == 4) {
+            // Поселений
+            $AreaStatus->appendChild($dom->createTextNode('settlements'));
+        } else {
+            // Участок промышленности, транспорта, связи и иного не сельхоз. назначения
+            $AreaStatus->appendChild($dom->createTextNode('industryTransportCommunications'));
+        }
+    } else {
+        $AreaStatus->appendChild($dom->createTextNode('sotka'));
+    }
+
 
 
     //ТИП УЧАСТКА
     $Type = $Land->appendChild($dom->createElement('Type'));
-    if($offer->deal_type == 4){
+    if ($offer->deal_type == 4) {
         $land_own = 'rent';
-    }else{
+    } else {
         $land_own = 'owned';
     }
     $Type->appendChild($dom->createTextNode($land_own));
 
-    if($offer->deal_type == 3){
+    if ($offer->deal_type == 3) {
         $HasSafeCustody = $object->appendChild($dom->createElement('HasSafeCustody'));
         $HasSafeCustody->appendChild($dom->createTextNode('true'));
     }
 
-    if($offer->rent_business == 1){
-        $HasInvestment= $object->appendChild($dom->createElement('HasInvestmentProject'));
+    if ($offer->rent_business == 1) {
+        $HasInvestment = $object->appendChild($dom->createElement('HasInvestmentProject'));
         $HasInvestment->appendChild($dom->createTextNode('true'));
     }
 
-    if($offer->land_use_restrictions){
-        $HasEncumbrances= $object->appendChild($dom->createElement('HasEncumbrances'));
+    if ($offer->land_use_restrictions) {
+        $HasEncumbrances = $object->appendChild($dom->createElement('HasEncumbrances'));
         $HasEncumbrances->appendChild($dom->createTextNode('true'));
     }
 
 
-    if($offer->power){
+    if ($offer->power) {
         $Electricity = $object->appendChild($dom->createElement('Electricity'));
 
         //ПЛОЩАДЬ
@@ -807,7 +851,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
         $Power->appendChild($dom->createTextNode($offer->power_value));
     }
 
-    if($offer->gas){
+    if ($offer->gas) {
         $Gas = $object->appendChild($dom->createElement('Gas'));
 
         //ПЛОЩАДЬ
@@ -815,7 +859,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
         $Capacity->appendChild($dom->createTextNode($offer->gas_value));
     }
 
-    if($offer->sewage_central){
+    if ($offer->sewage_central) {
         $Sewage = $object->appendChild($dom->createElement('Sewage'));
 
         //ПЛОЩАДЬ
@@ -823,7 +867,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
         $Capacity->appendChild($dom->createTextNode($offer->sewage_central_value));
     }
 
-    if($offer->water){
+    if ($offer->water) {
         $Water = $object->appendChild($dom->createElement('Water'));
 
         //ПЛОЩАДЬ
@@ -848,19 +892,19 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     $ServicesEnum = $Services->appendChild($dom->createElement('ServicesEnum'));
     $ServicesEnum->appendChild($dom->createTextNode('paid'));
 
-    if($offer->ad_cian_premium){
+    if ($offer->ad_cian_premium) {
 
         $ServicesEnum = $Services->appendChild($dom->createElement('ServicesEnum'));
         $ServicesEnum->appendChild($dom->createTextNode('premium'));
     }
 
-    if($offer->ad_cian_top3 ){
+    if ($offer->ad_cian_top3) {
 
         $ServicesEnum = $Services->appendChild($dom->createElement('ServicesEnum'));
         $ServicesEnum->appendChild($dom->createTextNode('top3'));
     }
 
-    if($offer->ad_cian_hl){
+    if ($offer->ad_cian_hl) {
 
         $ServicesEnum = $Services->appendChild($dom->createElement('ServicesEnum'));
         $ServicesEnum->appendChild($dom->createTextNode('highlight'));
@@ -869,19 +913,19 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     $ExcludedServices = $PublishTermSchema->appendChild($dom->createElement('ExcludedServices'));
 
 
-    if($offer->ad_cian_premium == 0){
+    if ($offer->ad_cian_premium == 0) {
         $ExcludedServicesEnum = $ExcludedServices->appendChild($dom->createElement('ExcludedServicesEnum'));
         $ExcludedServicesEnum->appendChild($dom->createTextNode('premium'));
     }
 
 
-    if($offer->ad_cian_top3 == 0){
+    if ($offer->ad_cian_top3 == 0) {
         $ExcludedServicesEnum = $ExcludedServices->appendChild($dom->createElement('ExcludedServicesEnum'));
         $ExcludedServicesEnum->appendChild($dom->createTextNode('top3'));
     }
 
 
-    if($offer->ad_cian_hl == 0){
+    if ($offer->ad_cian_hl == 0) {
         $ExcludedServicesEnum = $ExcludedServices->appendChild($dom->createElement('ExcludedServicesEnum'));
         $ExcludedServicesEnum->appendChild($dom->createTextNode('highlight'));
     }
@@ -894,30 +938,36 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
     //ЦЕНА
     $Price = $BargainTerms->appendChild($dom->createElement('Price'));
-    if($offer->is_land){
-        if($offer->deal_type == 2){
-            $price = $offer->price_sale_min/100;
-            if(!$price){
-                $price = $offer->price_sale_max/100;
+    if ($offer->is_land) {
+        if ($offer->deal_type == 2) {
+            // $price = $offer->price_sale_min / 100;
+            // Переводим в цену за сотку
+            $price = $offer->price_sale_min * $object_building->getField('area_field_full');
+            if (!$price) {
+                // $price = $offer->price_sale_max / 100;
+                // Переводим в цену за сотку
+                $price = $offer->price_sale_max * $object_building->getField('area_field_full');
             }
-
-        }else{
-            $price = $offer->price_floor_min/100;
-            if(!$price){
-                $price = $offer->price_floor_max/100;
+        } else {
+            // $price = $offer->price_floor_min / 100;
+            // Переводим в цену за сотку
+            $price = $offer->price_floor_min * 100;
+            if (!$price) {
+                // $price = $offer->price_floor_max / 100;
+                // Переводим в цену за сотку
+                $price = $offer->price_floor_max * 100;
             }
-
         }
         $price_type = 'sotka';
-    }else{
-        if($offer->deal_type == 2){
+    } else {
+        if ($offer->deal_type == 2) {
             /*
             $price = $offer->price_sale_min * $offer->area_min;
             if(!$price){
                 $price = $offer->price_sale_max*$offer->area_max;
             }*/
-            $price = $offer->price_sale_max*$offer->area_max;
-        }else{
+            $price = $offer->price_sale_max * $offer->area_max;
+        } else {
             /*
             $price = $offer->price_floor_min;
             if(!$price){
@@ -942,7 +992,7 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     $Currency = $BargainTerms->appendChild($dom->createElement('Currency'));
     $Currency->appendChild($dom->createTextNode('rur'));
 
-    if($offer->deal_type ==1 || $offer->deal_type == 4 ){
+    if ($offer->deal_type == 1 || $offer->deal_type == 4) {
         //ПЕРИОД ОПЛАТЫ
         $PaymentPeriod = $BargainTerms->appendChild($dom->createElement('PaymentPeriod'));
         $PaymentPeriod->appendChild($dom->createTextNode('annual'));
@@ -951,20 +1001,19 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
     //ВКЛЮЧЕН ЛИ НДС
     //$VatIncluded = $BargainTerms->appendChild($dom->createElement('VatIncluded'));
-    if($offer->tax_form == 'с ндс'){
-        $vat_inc='true';
+    if ($offer->tax_form == 'с ндс') {
+        $vat_inc = 'true';
         $VatType_value = 'included';
-    }elseif($offer->tax_form == 'без ндс' ){
-        $vat_inc='false';
+    } elseif ($offer->tax_form == 'без ндс') {
+        $vat_inc = 'false';
         $VatType_value = 'notIncluded';
-    }elseif($offer->tax_form == 'triple net' ){
-        $vat_inc='false';
+    } elseif ($offer->tax_form == 'triple net') {
+        $vat_inc = 'false';
         $VatType_value = 'notIncluded';
-    }elseif($offer->tax_form == 'усн' ){
-        $vat_inc='false';
+    } elseif ($offer->tax_form == 'усн') {
+        $vat_inc = 'false';
         $VatType_value = 'usn';
-    }else{
-
+    } else {
     }
     //$VatIncluded->appendChild($dom->createTextNode($vat_inc));
 
@@ -979,11 +1028,11 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
 
     //ТИП АРЕНДЫ
-    if($offer->deal_type != 2){
+    if ($offer->deal_type != 2) {
         $LeaseType = $BargainTerms->appendChild($dom->createElement('LeaseType'));
-        if($offer->deal_type == 4){
+        if ($offer->deal_type == 4) {
             $leaseType_value = 'sublease';
-        }else{
+        } else {
             $leaseType_value = 'direct';
         }
         $LeaseType->appendChild($dom->createTextNode($leaseType_value));
@@ -994,12 +1043,12 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     //ВКЛЮЧЕНО В СТАВКУ
     $IncludedOptions = $BargainTerms->appendChild($dom->createElement('IncludedOptions'));
 
-    if($offer->price_opex_inc){
+    if ($offer->price_opex_inc) {
         $IncludedOptionsEnum = $IncludedOptions->appendChild($dom->createElement('IncludedOptionsEnum'));
         $IncludedOptionsEnum->appendChild($dom->createTextNode('operationalCosts'));
     }
 
-    if($offer->price_public_services_inc){
+    if ($offer->price_public_services_inc) {
         $IncludedOptionsEnum = $IncludedOptions->appendChild($dom->createElement('IncludedOptionsEnum'));
         $IncludedOptionsEnum->appendChild($dom->createTextNode('utilityCharges'));
     }
@@ -1024,11 +1073,11 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
     //$ClientFee->appendChild($dom->createTextNode($clientFee_value));
     $ClientFee->appendChild($dom->createTextNode(0));
 
-    if($offer->deal_type != 2) {
+    if ($offer->deal_type != 2) {
         //ОБЕСПЕЧИТЕЛЬНЫЙ ДЕПОЗИТ
         $SecurityDeposit = $BargainTerms->appendChild($dom->createElement('SecurityDeposit'));
 
-        $paymentValue = ceil($offer->pledge * $offer->price_floor_max * $offer->area_max /12);
+        $paymentValue = ceil($offer->pledge * $offer->price_floor_max * $offer->area_max / 12);
         $SecurityDeposit->appendChild($dom->createTextNode($paymentValue));
     }
 
@@ -1049,12 +1098,6 @@ while($offer = $sql->fetch(PDO::FETCH_LAZY)){
 
 
     $blocks_count++;
-
-
-
-
-
-
 }
 //остановился на  LiftTypes
 //генерация xml
@@ -1064,8 +1107,8 @@ $dom->formatOutput = true; // установка атрибута formatOutput
 $test1 = $dom->saveXML(); // передача строки в test1
 $dom->save('feed.xml'); // сохранение файла
 
-echo 'Колво блоков'.$blocks_count.'<br>';
-echo 'Колво объектов'.$objects_count.'<br>';
+echo 'Колво блоков' . $blocks_count . '<br>';
+echo 'Колво объектов' . $objects_count . '<br>';
 
 
 //header("Location: http://industry.gorki.ru/xml_industry_new_obj.php?page=$next_page");

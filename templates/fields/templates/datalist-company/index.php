@@ -18,7 +18,7 @@
         <?}?>
 
         <span></span>
-        <input data-table="<?=$field->getField('linked_table')?>" data-company="1" class="datalist-input" data-async="1"  type="text" value="<?=$val_res?>" />
+        <input data-table="<?=$field->getField('linked_table')?>" data-company="1" class="datalist-input-api" data-async="1"  type="text" value="<?=$val_res?>" />
         <input type="hidden" value="<?=$src[$field->title()]?>" name="<?=$field->title()?>"/>
         <div class="field-list-variants box-small" style="position: absolute; display: none; background: white; z-index: 999; height: 150px; width: 100%;  overflow-y: scroll; border: 1px solid grey" >
 

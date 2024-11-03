@@ -1,75 +1,100 @@
-<div class="search-block" >
-    <div id="catalog-form" class="filters-block"  >
+<div class="search-block">
+    <div id="catalog-form" class="filters-block">
         <div>
-            <div class="filter-primary-block background-fix filters-first-step"  style=" background-image: url(<?=PROJECT_URL?>//uploads/objects/90/1.jpg) ">
+            <div class="filter-primary-block background-fix filters-first-step" style=" background-image: url(<?= PROJECT_URL ?>//uploads/objects/90/1.jpg) ">
                 <div>
                     <div class="flex-box flex-between ">
-                        <?if($router->getPageName() == 'objects' || $router->getPageName() == 'requests' || $router->getPageName() == 'offers'  || $router->getPageName() == 'services'){?>
+                        <? if ($router->getPageName() == 'objects' || $router->getPageName() == 'requests' || $router->getPageName() == 'offers'  || $router->getPageName() == 'services') { ?>
                             <div class=" box flex-box flex-around full-width">
                                 <!--
                                 <div id="filter-step-12" class="flex-box">
-                                    <?$filter = new Filter(64)?>
-                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/'.$filter->filterGroupTemplate().'/index.php') ?>
+                                    <? $filter = new Filter(64) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
                                 </div>
                                 -->
 
                                 <div id="filter-step-1" class="flex-box">
-                                    <?$filter = new Filter(33)?>
-                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/'.$filter->filterGroupTemplate().'/index.php') ?>
+                                    <? $filter = new Filter(33) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
                                 </div>
                                 <div id="filter-step-2" class="flex-box flex-around box-vertical to-end">
-                                    <?$filter = new Filter(1)?>
-                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/'.$filter->filterGroupTemplate().'/index.php') ?>
+                                    <? $filter = new Filter(1) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
                                 </div>
-                                <div id="filter-step-safe"  class="flex-box flex-around ">
-                                    <?$filter = new Filter(67)?>
-                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/'.$filter->filterGroupTemplate().'/index.php') ?>
+                                <div id="filter-step-safe" class="flex-box flex-around ">
+                                    <? $filter = new Filter(67) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
+                                </div>
+                                <div id="filter-step-cian" class="flex-box flex-around ">
+                                    <? $filter = new Filter(64) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
+                                </div>
+                                <div id="filter-step-realtor" class="flex-box flex-around ">
+                                    <? $filter = new Filter(68) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
+                                </div>
+
+                                <div id="filter-step-cian-no" class="flex-box flex-around ">
+                                    <? $filter = new Filter(70) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
+                                </div>
+                                <div id="filter-step-realtor-no" class="flex-box flex-around ">
+                                    <? $filter = new Filter(71) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
+                                </div>
+                                <div id="filter-step-yandex-no" class="flex-box flex-around ">
+                                    <? $filter = new Filter(72) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
+                                </div>
+                                <div id="filter-step-free-no" class="flex-box flex-around ">
+                                    <? $filter = new Filter(73) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
                                 </div>
                             </div>
-                        <?}?>
+                        <? } ?>
                     </div>
                     <div style="height: 50px">
 
                     </div>
-                    <div class="search-line-block"  >
+                    <div class="search-line-block">
                         <div class="search-line flex-box">
-                            <input id="main-search"  style="padding: 15px ;" value="" class="full-width filter-input" type="text"  name="search" placeholder="ID, адрес, собственник, телефон, Ф.И.О, брокер, название СК" />
+                            <input id="main-search" style="padding: 15px ;" value="" class="full-width filter-input" type="text" name="search" placeholder="ID, адрес, собственник, телефон, Ф.И.О, брокер, название СК" />
                         </div>
                     </div>
-                    <div id="filter-step-3"  class="flex-around flex-box">
-                        <?if($router->getPageName() == 'objects' || $router->getPageName() == 'requests' || $router->getPageName() == 'offers'  || $router->getPageName() == 'services'){?>
+                    <div id="filter-step-3" class="flex-around flex-box">
+                        <? if ($router->getPageName() == 'objects' || $router->getPageName() == 'requests' || $router->getPageName() == 'offers'  || $router->getPageName() == 'services') { ?>
                             <div class=" box-vertical ">
                                 <div class="flex-box flex-around ">
-                                    <?$filter = new Filter(42)?>
-                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/'.$filter->filterGroupTemplate().'/index.php') ?>
+                                    <? $filter = new Filter(42) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
                                 </div>
                                 <!-- тут тип обьекта-->
                                 <div class="flex-box flex-around box">
-                                    <?$filter = new Filter(41)?>
-                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/'.$filter->filterGroupTemplate().'/index.php') ?>
+                                    <? $filter = new Filter(41) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
                                 </div>
                                 <div class="box hidden">
-                                    <?$filter = new Filter(65)?>
-                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/'.$filter->filterGroupTemplate().'/index.php') ?>
+                                    <? $filter = new Filter(65) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
                                 </div>
                             </div>
-                        <?}?>
-                        <?if($router->getPageName() == 'companies'){?>
+                        <? } ?>
+                        <? if ($router->getPageName() == 'companies') { ?>
                             <div class="box" id="filter-step-1-comp">
                                 <div class="filter-unit flex-box flex-around ">
-                                    <?$filter = new Filter(46)?>
-                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/'.$filter->filterGroupTemplate().'/index.php') ?>
+                                    <? $filter = new Filter(46) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
                                 </div>
                                 <div class="filter-unit flex-box flex-around flex-around">
-                                    <?$filter = new Filter(14)?>
-                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/'.$filter->filterGroupTemplate().'/index.php') ?>
+                                    <? $filter = new Filter(14) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
                                 </div>
                                 <div class="filter-unit flex-box flex-around flex-around">
-                                    <?$filter = new Filter(66)?>
-                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/'.$filter->filterGroupTemplate().'/index.php') ?>
+                                    <? $filter = new Filter(66) ?>
+                                    <? include($_SERVER["DOCUMENT_ROOT"] . '/templates/filters/templates/' . $filter->filterGroupTemplate() . '/index.php') ?>
                                 </div>
                             </div>
-                        <?}?>
+                        <? } ?>
                     </div>
                 </div>
                 <div style="height: 100px">
@@ -79,23 +104,23 @@
 
         </div>
 
-        <?if( $router->getPageName() == 'offers' || $router->getPageName() == 'requests'  || $router->getPageName() == 'services'){?>
+        <? if ($router->getPageName() == 'offers' || $router->getPageName() == 'requests'  || $router->getPageName() == 'services') { ?>
             <div id="filter-step-4" class="box-small" style="background: #f3f3f3;">
                 <div id="filters-panel-regions" style="background: #ffffff">
 
                 </div>
             </div>
-            <div id="filter-step-5" class="box-small" style="background: #f3f3f3;" >
+            <div id="filter-step-5" class="box-small" style="background: #f3f3f3;">
                 <div id="filters-panel-all" style="background: #ffffff">
 
                 </div>
             </div>
-        <?}?>
+        <? } ?>
         <div class=" box-small">
-            <div class="flex-box flex-center box-small" >
+            <div class="flex-box flex-center box-small">
                 <div class="filter-clear flex-box flex-center" style="position: absolute; bottom: -35px; z-index: 999; background: #f3f3f3; border-radius: 50%; width: 70px; height: 70px; border-bottom: 3px solid white;">
                     <div class="flex-box flex-center" style="background: white; border-radius: 50%; width: 35px; height: 35px; border: 1px solid #d0d0d0;">
-                        <a href="/offers/"  >
+                        <a href="/offers/">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>
@@ -108,10 +133,6 @@
 
 
 <script type="text/javascript">
-
-
-
-
     let filter_arr = {}; // Создаём ассоциативный массив
 
     document.getElementById('main-search').onchange = function() {
@@ -123,94 +144,138 @@
 
 
 
-    <?if($router->getPageName() == 'objects' || $router->getPageName() == 'requests' || $router->getPageName() == 'offers'  || $router->getPageName() == 'services'){?>
+    <? if ($router->getPageName() == 'objects' || $router->getPageName() == 'requests' || $router->getPageName() == 'offers'  || $router->getPageName() == 'services') { ?>
 
 
-    document.getElementById('filter-step-1').onchange = function() {
-        if (event.target.tagName === 'INPUT') {
+        document.getElementById('filter-step-1').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadFiltersRegions(request);
+                reloadCatalog(request);
+
+            }
+        };
+
+        document.getElementById('filter-step-2').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadCatalog(request);
+            }
+        };
+
+        document.getElementById('filter-step-safe').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadCatalog(request);
+            }
+        };
+
+        document.getElementById('filter-step-cian').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadCatalog(request);
+            }
+        };
+
+        document.getElementById('filter-step-realtor').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadCatalog(request);
+            }
+        };
+
+        document.getElementById('filter-step-cian-no').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadCatalog(request);
+            }
+        };
+
+        document.getElementById('filter-step-yandex-no').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadCatalog(request);
+            }
+        };
+
+        document.getElementById('filter-step-realtor-no').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadCatalog(request);
+            }
+        };
+
+        document.getElementById('filter-step-free-no').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadCatalog(request);
+            }
+        };
+
+
+
+        document.getElementById('filter-step-3').onchange = function() {
+            //alert('ds');
+            if (event.target.tagName === 'INPUT') {
+
+                let request = builtRequest();
+                reloadFilters(request);
+                reloadCatalog(request);
+
+
+                $('input[name="price_format"]:first-child').hide();
+                $('input[name="price_format"]:first-child').prop('checked', true);
+
+                //alert(event.target.value);
+            }
+        };
+
+        $('body').on('click', '.filter-sort', function() {
             let request = builtRequest();
-            reloadFiltersRegions(request);
             reloadCatalog(request);
-
-        }
-    };
-
-    document.getElementById('filter-step-2').onchange = function() {
-        if (event.target.tagName === 'INPUT') {
-            let request = builtRequest();
-            reloadCatalog(request);
-        }
-    };
-
-    document.getElementById('filter-step-safe').onchange = function() {
-        if (event.target.tagName === 'INPUT') {
-            let request = builtRequest();
-            reloadCatalog(request);
-        }
-    };
-
-    document.getElementById('filter-step-3').onchange = function() {
-        //alert('ds');
-        if (event.target.tagName === 'INPUT') {
-
-            let request = builtRequest();
-            reloadFilters(request);
-            reloadCatalog(request);
-
-
-            $('input[name="price_format"]:first-child').hide();
-            $('input[name="price_format"]:first-child').prop('checked', true);
-
-            //alert(event.target.value);
-        }
-    };
-
-    $('body').on('click','.filter-sort',function(){
-        let request = builtRequest();
-        reloadCatalog(request);
-    });
+        });
 
 
 
-    document.getElementById('filter-step-4').onchange = function() {
-        if (event.target.tagName === 'INPUT') {
-            let request = builtRequest();
-            reloadCatalog(request);
-        }
-    };
+        document.getElementById('filter-step-4').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadCatalog(request);
+            }
+        };
 
-    document.getElementById('filter-step-5').onchange = function() {
-        if (event.target.tagName === 'INPUT') {
-            let request = builtRequest();
-            reloadCatalog(request);
-        }
-    };
+        document.getElementById('filter-step-5').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadCatalog(request);
+            }
+        };
 
 
 
 
 
-    <?}?>
+    <? } ?>
 
-    <?if($router->getPageName() == 'companies'){?>
-
-
-    document.getElementById('filter-step-1-comp').onchange = function() {
-        if (event.target.tagName === 'INPUT') {
-            let request = builtRequest();
-            reloadCatalog(request);
-        }
-    };
+    <? if ($router->getPageName() == 'companies') { ?>
 
 
-
-    <?}?>
+        document.getElementById('filter-step-1-comp').onchange = function() {
+            if (event.target.tagName === 'INPUT') {
+                let request = builtRequest();
+                reloadCatalog(request);
+            }
+        };
 
 
 
+    <? } ?>
 
 
-    $('body').on('click','.page-item',function () {
+
+
+
+    $('body').on('click', '.page-item', function() {
         let request = builtRequest();
         reloadCatalog(request);
     });
@@ -224,15 +289,15 @@
         }
     };
 
-    $('body').on('click','.filters-more',function () {
+    $('body').on('click', '.filters-more', function() {
         //$('.filters-panel').css('max-height','none');
         $('.filters-panel').toggleClass('big-filters');
     });
 
 
 
-    $('body').on('click','input[name="deal_type"]',function () {
-        if(this.value == 3) {
+    $('body').on('click', 'input[name="deal_type"]', function() {
+        if (this.value == 3) {
             $('input[name="object_type"]').closest('.box').hide();
             $('input[name="safe_type[]"]').closest('.box').show();
 
@@ -244,7 +309,7 @@
             filter_arr['purposes'] = '';
 
 
-        }else{
+        } else {
             $('input[name="safe_type[]"]').closest('.box').hide();
             $('input[name="object_type"]').closest('.box').show();
 
@@ -253,7 +318,7 @@
         }
     });
 
-    $('body').on('click','.map-more',function () {
+    $('body').on('click', '.map-more', function() {
         $('.map-block').toggleClass('big-map');
     });
 
@@ -277,9 +342,9 @@
         };
 
         //let xhttp=new XMLHttpRequest();
-        let url = "<?=PROJECT_URL?>/templates/"+catalog_array['<?=$router->getPageName()?>']+"/wall/index_mix.php?request="+request;
+        let url = "<?= PROJECT_URL ?>/templates/" + catalog_array['<?= $router->getPageName() ?>'] + "/wall/index_mix.php?request=" + request;
         //alert(url);
-        xhttp.open('GET',url,true);
+        xhttp.open('GET', url, true);
         xhttp.send();
 
         xhttp.onreadystatechange = function() {
@@ -293,17 +358,18 @@
                 return;
             }
 
-            if (xhttp.readyState === 4 && xhttp.status === 200){
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
                 //alert(xhttp.responseText);
                 document.getElementById("main-area").innerHTML = xhttp.responseText;
                 document.getElementById("preloader").style.display = 'none';
-
-                if('<?=$router->getPageName()?>' == 'offers'){
+                console.log("FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUK");
+                replaceCompaniesInfo()
+                if ('<?= $router->getPageName() ?>' == 'offers') {
                     showPoints(request);
                 }
 
                 //
-            }else{
+            } else {
                 alert('возникли неполадки');
             }
 
@@ -314,11 +380,11 @@
 
     showPoints(JSON.stringify([]));
 
-    function showPoints(request){
-        let xhttpPoints=new XMLHttpRequest();
-        let pointsUrl = "<?=PROJECT_URL?>/templates/objects/points/index.php?request="+request;
+    function showPoints(request) {
+        let xhttpPoints = new XMLHttpRequest();
+        let pointsUrl = "<?= PROJECT_URL ?>/templates/objects/points/index.php?request=" + request;
         //alert(pointsUrl);
-        xhttpPoints.open('GET',pointsUrl,true);
+        xhttpPoints.open('GET', pointsUrl, true);
         xhttpPoints.send();
 
         xhttpPoints.onreadystatechange = function() {
@@ -330,20 +396,20 @@
                 return;
             }
 
-            if (xhttpPoints.readyState === 4 && xhttpPoints.status === 200){
+            if (xhttpPoints.readyState === 4 && xhttpPoints.status === 200) {
                 //alert(xhttpPoints.responseText);
 
                 initMap(JSON.parse(xhttpPoints.responseText));
 
-            }else{
+            } else {
                 alert('возникли неполадки');
             }
         };
     }
 
 
-    function reloadFiltersRegions(request){
-        if(filter_arr['region'] ) {
+    function reloadFiltersRegions(request) {
+        if (filter_arr['region']) {
 
 
 
@@ -351,7 +417,7 @@
 
 
             xhttpPanelRegion.abort();
-            xhttpPanelRegion.open('GET',"<?=PROJECT_URL?>/templates/filters/panel-regions/index.php?request="+request,true);
+            xhttpPanelRegion.open('GET', "<?= PROJECT_URL ?>/templates/filters/panel-regions/index.php?request=" + request, true);
             xhttpPanelRegion.send();
 
             xhttpPanelRegion.onreadystatechange = function() {
@@ -363,30 +429,30 @@
                     return;
                 }
 
-                if (xhttpPanelRegion.readyState === 4 && xhttpPanelRegion.status === 200){
+                if (xhttpPanelRegion.readyState === 4 && xhttpPanelRegion.status === 200) {
                     document.getElementById("filters-panel-regions").innerHTML = xhttpPanelRegion.responseText;
                     //document.getElementById("filters-panel-all").innerHTML = '1';
                     //document.getElementById("preloader").style.display = 'none';
-                }else{
+                } else {
                     alert('возникли неполадки');
                 }
             }
-        }else{
+        } else {
             document.getElementById("filters-panel-all").innerHTML = '';
         }
     }
 
-    function reloadFilters(request){
+    function reloadFilters(request) {
 
         //alert('ds');
 
-        if(filter_arr['deal_type'] && (filter_arr['object_type'] || filter_arr['safe_type']) ) {
+        if (filter_arr['deal_type'] && (filter_arr['object_type'] || filter_arr['safe_type'])) {
             //if(filter_arr['deal_type'] == 3 || (filter_arr['deal_type'] && filter_arr['object_type']) ) {
             //alert('Начали перезагружать фильтры');
 
 
             xhttpPanelAll.abort();
-            xhttpPanelAll.open('GET',"<?=PROJECT_URL?>/templates/filters/panel-manual/index.php?request="+request,true);
+            xhttpPanelAll.open('GET', "<?= PROJECT_URL ?>/templates/filters/panel-manual/index.php?request=" + request, true);
             xhttpPanelAll.send();
 
 
@@ -405,53 +471,53 @@
                 }
 
 
-                if (xhttpPanelAll.readyState === 4 && xhttpPanelAll.status === 200){
+                if (xhttpPanelAll.readyState === 4 && xhttpPanelAll.status === 200) {
                     //alert(xhttpPanelAll.responseText);
                     //document.getElementById("filters-panel-all").innerHTML = xhttpPanelAll.responseText;
                     //document.getElementById("preloader").style.display = 'none';
-                }else{
+                } else {
                     alert('возникли неполадки');
                 }
             }
 
             //alert('Перезагрузили фильтры');
-        }else{
+        } else {
             document.getElementById("filters-panel-all").innerHTML = '';
         }
     }
 
-    function builtRequest(){
+    function builtRequest() {
 
 
         let target = event.target;
 
         //для input  и НЕ input
-        let input_name = (target.getAttribute('name').replace('[]','')) ? target.getAttribute('name').replace('[]','') : target.name.replace('[]','');
-        let input_value = (target.getAttribute('value'))? target.getAttribute('value') : target.value;
+        let input_name = (target.getAttribute('name').replace('[]', '')) ? target.getAttribute('name').replace('[]', '') : target.name.replace('[]', '');
+        let input_value = (target.getAttribute('value')) ? target.getAttribute('value') : target.value;
 
-        if(target.type === 'checkbox' ){
+        if (target.type === 'checkbox') {
 
             let field_arr = [];
             let items = document.getElementsByName(target.name);
-            for(let i = 0; i < items.length; i++){
-                if(items[i].checked === true){
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].checked === true) {
                     field_arr.push(items[i].value);
                 }
             }
             filter_arr[input_name] = field_arr;
-        }else{
+        } else {
             filter_arr[input_name] = input_value;
         }
 
-        if(input_name !== 'page_num'){
+        if (input_name !== 'page_num') {
             filter_arr['page_num'] = '1';
         }
 
         //ПИШЕМ НА ФИЛЬТРАХ ВЫБРАННЫЕ ПУНКТЫ
-        if(input_name === 'region' ){
+        if (input_name === 'region') {
             //ИЗМЕНЯЕМ ВИД ВЫПАДАШКИ
-            if(filter_arr[input_name].length > 0 ){
-                let str = document.getElementById('label-'+input_name+'-'+filter_arr[input_name]).getAttribute('title');
+            if (filter_arr[input_name].length > 0) {
+                let str = document.getElementById('label-' + input_name + '-' + filter_arr[input_name]).getAttribute('title');
                 /* если множественный выбор
                 let str = '';
                 for(let i = 0; i < filter_arr[input_name].length; i++){
@@ -467,23 +533,23 @@
                 }
                 */
                 $(target).closest('.custom-select').find('.custom-select-header .box-wide').html(str);
-                $(target).closest('.custom-select').find('.select-title-filled').css('background','#ffdf88');
-                $(target).closest('.custom-select').find('.select-title-filled').css('color','#00000');
-                $(target).closest('.custom-select').find('.select-title-underline').css('color','limegreen');
-                $(target).closest('.custom-select').find('.select-title-underline').css('border-bottom','2px dashed limegreen');
-            }else{
+                $(target).closest('.custom-select').find('.select-title-filled').css('background', '#ffdf88');
+                $(target).closest('.custom-select').find('.select-title-filled').css('color', '#00000');
+                $(target).closest('.custom-select').find('.select-title-underline').css('color', 'limegreen');
+                $(target).closest('.custom-select').find('.select-title-underline').css('border-bottom', '2px dashed limegreen');
+            } else {
                 $(target).closest('.custom-select').find('.custom-select-header .box-wide').html($(target).closest('.custom-select').attr('title'));
-                $(target).closest('.custom-select').find('.select-title-filled').css('background','#ffffff');
-                $(target).closest('.custom-select').find('.select-title-filled').css('color','white');
-                $(target).closest('.custom-select').find('.select-title-underline').css('color','white');
-                $(target).closest('.custom-select').find('.select-title-underline').css('border-bottom','2px dashed white');
+                $(target).closest('.custom-select').find('.select-title-filled').css('background', '#ffffff');
+                $(target).closest('.custom-select').find('.select-title-filled').css('color', 'white');
+                $(target).closest('.custom-select').find('.select-title-underline').css('color', 'white');
+                $(target).closest('.custom-select').find('.select-title-underline').css('border-bottom', '2px dashed white');
             }
         }
 
 
 
         //Выкидываем все данные из вторичных фильтров при изменении типа сделки и типа объекта
-        if(input_name === 'deal_type' || input_name === 'object_type'){
+        if (input_name === 'deal_type' || input_name === 'object_type') {
 
             let first_step_fields = [
                 'search',
@@ -502,8 +568,8 @@
 
             //alert(first_step_fields.length);
 
-            for(let i=0; i < first_step_fields.length; i++){
-                if(filter_arr[first_step_fields[i]] != 0 && filter_arr[first_step_fields[i]] != undefined){
+            for (let i = 0; i < first_step_fields.length; i++) {
+                if (filter_arr[first_step_fields[i]] != 0 && filter_arr[first_step_fields[i]] != undefined) {
                     filter_arr_new[first_step_fields[i]] = filter_arr[first_step_fields[i]];
                     //alert(filter_arr_new[first_step_fields[i]]);
                 }
@@ -513,7 +579,7 @@
         }
 
         //очищаем занчения направлений и тд
-        if(input_name === 'region'){
+        if (input_name === 'region') {
             delete filter_arr['directions'];
             delete filter_arr['districts_moscow'];
         }
@@ -522,5 +588,4 @@
         //alert(JSON.stringify(filter_arr));
         return JSON.stringify(filter_arr);
     }
-
 </script>

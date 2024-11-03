@@ -1,10 +1,9 @@
-
-
-
 <?php
 
+
+
 if($_COOKIE['member_id']){
-    //ini_set('display_errors', 1); ini_set('display_startup_errors', 1); ini_set('error_reporting', E_ALL);
+    ini_set('display_errors', 1); ini_set('display_startup_errors', 1); ini_set('error_reporting', E_ALL);
 }
 
 
@@ -32,6 +31,8 @@ $objects = new Item(0);
 
 $filters = [];
 
+//$data = file_get_contents('php://input');
+
 if($_POST['request']){
     $filters_arr = json_decode($_POST['request']);
 }else{
@@ -41,12 +42,12 @@ if($_POST['request']){
         $filters['id'] =  0;
         $filters['page_num'] = 1;
 
-        $filters['page_items'] = 32;
+        $filters['page_items'] = 500;
 
 
         $filters['search'] =  '';
 
-        $filters['region'] =  'moskva-i-mo';
+        $filters['region'] =  '';
         $filters['directions'] =  '';
         $filters['towns'] =  '';
         $filters['highway'] =  [];
@@ -58,7 +59,7 @@ if($_POST['request']){
         $filters['object_type'] = [];
         //$filters['safe_type'] = [1,2];
         $filters['safe_type'] = '';
-        $filters['self_leveling'] = 1;
+        $filters['self_leveling'] = '';
 
 
         $filters['racks'] = 0;
@@ -96,12 +97,9 @@ if($_POST['request']){
 
     $filters_arr = json_decode($filters);
 
-    echo $filters;
-    echo '<br>';
+    //echo $filters;
 
 }
-
-
 
 
 $filter_line = '';
@@ -223,7 +221,7 @@ if($value = $filters_arr->search) {
     if(1) {
 
         $arr_location = [
-            
+
 
             [
                 'name'=>'districts_moscow',
@@ -583,11 +581,6 @@ if($value = $filters_arr->search) {
 
 
 
-
-
-
-
-
 //СОРТИРОВКА
 if($filters_arr->sort_field){
     $sort_field = $filters_arr->sort_field;
@@ -617,16 +610,21 @@ $curr_num = $pageItems*($page_num-1);
 
 /*$sql_search_text11 = "FROM  c_industry_offers_mix o
                                        LEFT JOIN  c_industry i ON o.object_id=i.id
-                                       LEFT JOIN l_locations l ON l.id=i.location_id                                                                                                 
-                                                  
-                                       $join_line WHERE o.ad_realtor=1 AND o.type_id!=3  $filter_line  $sort_sql ";*/
+                                       LEFT JOIN l_locations l ON l.id=i.location_id
 
-$sql_search_text = "FROM  c_industry_offers_mix o  $join_line WHERE  o.ad_realtor=1  AND (price_floor_min > 0 OR  price_sale_min > 0 OR price_safe_pallet_min > 0)  AND  type_id=2  AND area_min > 0  AND test_only!=1 AND photos!='[\"[]\"]'  $filter_line  $sort_sql ";
+                                       $join_line WHERE o.ad_realtor=1 AND o.type_id!=3  $filter_line  $sort_sql ";*/
+if (isset($_GET['all'])) {
+    $sql_search_text = "FROM  c_industry_offers_mix o WHERE type_id IN(2,3) AND o.deleted!=1 ";
+} else {
+    $sql_search_text = "FROM  c_industry_offers_mix o  $join_line WHERE type_id IN(2,3) AND o.ad_realtor=1 AND  (o.object_type LIKE '%1%' OR o.object_type LIKE '%2%')   AND  o.type_id=2  AND area_min > 0  AND test_only!=1 AND photos!='[\"[]\"]'  $filter_line  $sort_sql ";
+}
+
+//$sql_search_text = "FROM  c_industry_offers_mix o  $join_line WHERE  o.ad_realtor=1  AND  type_id=2  AND test_only!=1 AND photos!='[\"[]\"]'  $filter_line  $sort_sql ";
 
 //echo " SELECT DISTINCT o.id $sql_search_text LIMIT $curr_num, $pageItems ";
 
 
-$all_offers = []; 
+$all_offers = [];
 
 $intersect = 0;
 
@@ -747,8 +745,13 @@ while($offer = $sql_objects->fetch(PDO::FETCH_LAZY)){
     }else{
         //echo $offerMix->getField('id').' - '.$offerMix->getField('blocks').' - '.json_encode(getActiveOnly($offerMix->getJsonField('blocks')));
         //echo '<br><br>';
-        $active_blocks = getActiveOnly($offerMix->getJsonField('blocks'));
-        $active_block = $active_blocks[0];
+        if (is_array($offerMix->getJsonField('blocks'))) {
+            $active_blocks = getActiveOnly($offerMix->getJsonField('blocks'));
+            $active_block = isset($active_blocks[0]) ? $active_blocks[0] : null;
+        } else {
+            $active_blocks = [];
+        }
+
         //если больше одного активного у предложения то сразу показываем
         if(count($active_blocks) > 1){
             $show = 1;
@@ -775,7 +778,8 @@ while($offer = $sql_objects->fetch(PDO::FETCH_LAZY)){
     }
 
 
-    if($show){
+    //if($show){
+    if(true){
 
         //$offers_list_shown[] = (int)$offer->id;
 
@@ -791,7 +795,7 @@ while($offer = $sql_objects->fetch(PDO::FETCH_LAZY)){
         $building_arr['object_id'] = $building_stat;
 
         $building_stat = $offerMix->getJsonField('photos');
-        $building_stat = explode('/',$building_stat[0]);
+        $building_stat = isset($building_stat[0]) ? explode('/',$building_stat[0]) : [];
         $name = array_pop($building_stat);
         $id = array_pop($building_stat);
         $building_arr['photos'] = 'https://pennylane.pro/system/controllers/photos/watermark.php/300/'.$id.'/'.$name;
@@ -869,7 +873,7 @@ while($offer = $sql_objects->fetch(PDO::FETCH_LAZY)){
             $general['gates'] = $val;
         }
         if($offerMix->getField('power')){
-            $val= $offerMix->getField('power_value').' кВт';  
+            $val= $offerMix->getField('power_value').' кВт';
             $general['power'] = $val;
         }
         if($offerMix->getField('ceiling_height_min') && !$offerMix->getField('is_land')){

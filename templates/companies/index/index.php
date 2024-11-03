@@ -920,7 +920,7 @@ if($_COOKIE['member_id'] == 141){
                                             <?include($_SERVER['DOCUMENT_ROOT'].'/templates/tasks/wall/index.php')?>
                                         </div>
                                         <div class="tab-content">
-                                            <div class="box">
+                                            <div class="box" style="max-width: 100%;">
                                                 <div class="flex-box box-small-vertical isBold">
                                                     <div style="width: 100px;">
                                                         #ID
@@ -942,7 +942,8 @@ if($_COOKIE['member_id'] == 141){
                                                 <? if($request->getField('area_floor_min')) { ?>
                                                     <?
 
-                                                    $requestsSql = $pdo->prepare("SELECT * FROM c_industry_offers_mix WHERE type_id IN(1,2) AND  deal_type=" . $request->getField('deal_type') . " AND area_min<". $request->getField('area_floor_min') ." AND area_max>" . $request->getField('area_floor_max') . " AND  deleted!=1 ORDER BY last_update DESC LIMIT 20 ");
+                                                    $requestsSql = $pdo->prepare("SELECT * FROM c_industry_offers_mix WHERE type_id IN(1,2) AND  deal_type=" . $request->getField('deal_type') . " AND area_min<". $request->getField('area_floor_min') ." AND area_max>" . intval($request->getField('area_floor_max')) . " AND  deleted!=1 ORDER BY last_update DESC LIMIT 20 ");
+                                                    //echo "SELECT * FROM c_industry_offers_mix WHERE type_id IN(1,2) AND  deal_type=" . $request->getField('deal_type') . " AND area_min<". $request->getField('area_floor_min') ." AND area_max>" . $request->getField('area_floor_max') . " AND  deleted!=1 ORDER BY last_update DESC LIMIT 20 ";
                                                     $requestsSql->execute();
                                                     while ($offerMix = $requestsSql->fetch(PDO::FETCH_LAZY)) { ?>
                                                         <div class="flex-box box-small-vertical">

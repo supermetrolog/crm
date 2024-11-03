@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'].'/errors.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/global_pass.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/errors.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/global_pass.php';
 
 $backup_folder = '/var/www/www-root/data/www/backups_pennylane/';    // куда будут сохранятся файлы
 $backup_name = 'pennylane_backup_' . date("Y-m-d-H-i");    // имя архива
@@ -8,9 +8,9 @@ $dir = '/home/my_site/www';    // что бэкапим
 $delay_delete = 7 * 24 * 3600;    // время жизни архива (в секундах)
 
 $db_host = 'localhost';
-$db_user = 'timon';
-$db_password = '20091993dec';
-$db_name = 'pennylane';
+$db_user = 'root';
+$db_password = 'root';
+$db_name = 'crm';
 
 
 $start = microtime(true);    // запускаем таймер
@@ -41,11 +41,11 @@ if ($deleteOld) {
 
 $time = microtime(true) - $start;     // считаем время, потраченое на выполнение скрипта
 
-$time_minutes = $time/60;
+$time_minutes = $time / 60;
 
-echo 'Затраченное время'.$time_minutes.' мин';
+echo 'Затраченное время' . $time_minutes . ' мин';
 
-file_put_contents('last_backup',date('d-m-Y H:i'));
+file_put_contents('last_backup', date('d-m-Y H:i'));
 
 
 function backupFiles($backup_folder, $backup_name, $dir)

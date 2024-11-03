@@ -205,7 +205,7 @@ function getPostHtml(url, post_id, table_id){
     params.push('post_id='+post_id);
     params.push('table='+table_id);
     return (sendAjaxRequest('POST',url,params,false));
-}
+}  
 
 
 

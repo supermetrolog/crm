@@ -155,6 +155,21 @@ $filter_line = '';
         $filter_line .= " AND (b.ad_cian=1 OR o.ad_cian=1) ";
     }
 
+
+
+    if($filters_arr->ad_cian_no) {
+        $filter_line .= " AND (b.ad_cian!=1 OR o.ad_cian!=1) ";
+    }
+    if($filters_arr->ad_realtor_no) {
+        $filter_line .= " AND (b.ad_realtor!=1 OR o.ad_realtor!=1) ";
+    }
+    if($filters_arr->ad_yandex_no) {
+        $filter_line .= " AND (b.ad_yandex!=1 OR o.ad_yandex!=1) ";
+    }
+    if($filters_arr->ad_free_no) {
+        $filter_line .= " AND (b.ad_free!=1 OR o.ad_free!=1) ";
+    }
+
     if($filters_arr->safe_type) {
         $safe_types = $filters_arr->safe_type;
         foreach ($safe_types as $safe_type){
@@ -406,7 +421,7 @@ $filter_line = '';
         //ТОЛЬКО ПЕРВЫЙ ЭТАЖ
         if($filters_arr->ground_floor) {
             $val = '%"1"%';
-            $filter_line .= " AND b.floor LIKE '$val' "; //Расширенный вариант 
+            $filter_line .= " AND b.floor LIKE '$val' "; //Расширенный вариант
 
             //$filter_line .= " AND (SELECT COUNT(b4.floor) FROM c_industry_blocks b4 WHERE b4.offer_id = o.id AND b4.floor=1) > 0"; //  суженный вариант
         }

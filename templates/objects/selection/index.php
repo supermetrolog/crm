@@ -17,7 +17,8 @@ ini_set('error_reporting', E_ALL);
 
 
 $unique_objects = [];       
-$sql_text_obj = "SELECT DISTINCT  i.id FROM  c_industry_complex cx          
+$unique_companies = [];
+$sql_text_obj = "SELECT DISTINCT  i.id, i.company_id FROM  c_industry_complex cx          
                                             LEFT JOIN  c_industry i ON i.complex_id=cx.id 
                                             LEFT JOIN  c_industry_offers o  ON o.object_id=i.id  
                                             LEFT JOIN c_industry_blocks b ON b.offer_id=o.id
@@ -41,8 +42,11 @@ while($obj = $sql_objects->fetch(PDO::FETCH_LAZY)){
     }
     */
     $unique_objects[] = $obj->id;
+    $unique_companies[] = $obj->company_id;
 }
 $objectsAmount = count($unique_objects);
+
+
 
 $factory = new Factory();
 

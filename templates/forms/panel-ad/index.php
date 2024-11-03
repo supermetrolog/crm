@@ -10,6 +10,12 @@ if($_POST['post'] && $_POST['table']){
     $id = $id;
 }
 
+/** @var PDO $pdo */
+$stmt = $pdo->prepare("SELECT * FROM c_industry_blocks WHERE id = :id");
+$stmt->bindValue(':id', $id);
+
+$stmt->execute();
+$block = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $table_obj = new Table($table);
 $table = $table_obj->tableName();
@@ -99,6 +105,33 @@ $table = $table_obj->tableName();
                         <?}?>
                         <div>
 
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="isBold">
+                        Avito
+                    </div>
+                    <div class="box-vertical">
+                        <div class="box-vertical ">
+                            <div class="flex-box box-vertical">
+                                <div class="form-element-autosave">
+                                    <div>
+                                        <div class="toggle-item flex-box flex-vertical-center">
+                                            <div class="toggle-bg">
+                                                <input type="radio" name="ad_avito" value="0">
+                                                <input type="radio" name="ad_avito" <?= $block['ad_avito'] ? 'checked' : ''?> value="1">
+                                                <div class="filler"></div>
+                                                <div class="switch"></div>
+                                            </div>
+                                        </div>
+                                    </div>                                </div>
+                                <div class="box-wide">
+                                    Avito                                </div>
+                            </div>
+                            <div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

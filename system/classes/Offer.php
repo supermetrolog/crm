@@ -120,6 +120,17 @@ class Offer extends Post
         return $result;
     }
 
+    public function adOnRealtor() : int
+    {
+        $sql = $this->pdo->prepare("SELECT COUNT(*) as num FROM c_industry_blocks WHERE offer_id='" . $this->postId() . "' AND ad_realtor=1 AND  deleted!=1    ");
+        $sql->execute();
+        $item = $sql->fetch(PDO::FETCH_LAZY);
+        if ($item->num > 0) {
+            return 1;
+        }
+        return 0;
+    }
+
     public function subItemsSortByFloors(): array
     {
         $sql = $this->pdo->prepare("SELECT * FROM c_industry_blocks WHERE offer_id='" . $this->postId() . "'  AND  deleted!=1 AND is_fake IS NULL  ORDER BY floor    ");
@@ -435,11 +446,12 @@ class Offer extends Post
     public function getOfferLastUpdate()
     {
         $max_value = 0;
-        foreach ($this->subItems() as $subItem) {
+        foreach ($this->subItemsActive() as $subItem) {
             if ($subItem['last_update'] > $max_value) {
                 $max_value = $subItem['last_update'];
             }
         }
+        $max_value =  $max_value ? $max_value :  $this->getField('last_update');
         return (int)$max_value;
     }
 

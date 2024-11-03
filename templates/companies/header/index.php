@@ -109,7 +109,7 @@ if($_COOKIE['member_id'] == 141){
     </div>
 
 
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=2b6763cf-cc99-48c7-81f1-f4ceb162502a&lang=ru_RU" type="text/javascript">
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=7cb3c3f6-2764-4ca3-ba87-121bd8921a4e&lang=ru_RU" type="text/javascript">
 
     </script>
     <script async defer type="text/javascript">

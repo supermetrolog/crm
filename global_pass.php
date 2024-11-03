@@ -12,17 +12,17 @@ $isHttps = !empty($_SERVER['HTTPS']) && 'off' !== strtolower($_SERVER['HTTPS']);
 ($isHttps) ? $protocol = 'https' : $protocol = 'http';
 $parts = explode($_SERVER['HTTP_HOST'],__DIR__);
 $folder = array_pop($parts);
+$folder = '/';
 define('PROJECT_URL',$protocol.'://'.$_SERVER['HTTP_HOST'].$folder);
-
 
 define("UPLOAD_DIR",'/uploads/');
 
 
 //Записываем пассы в константы
 define("DB_HOST", 'localhost');
-define("DB_NAME", 'pennylane');
-define("DB_USER", 'timon');
-define("DB_PASSWORD", '20091993dec');
+define("DB_NAME", 'user_pennylane');
+define("DB_USER", 'user_supermetrolog');
+define("DB_PASSWORD", 'Studentjke2h');
 
 /*
 //Записываем пассы к SMTP в константы
@@ -35,16 +35,9 @@ define("SMTP_PASSWORD", 'Ci5Za6To7');
 
 define("SMTP_HOST", 'ssl://smtp.yandex.ru');
 define("SMTP_PORT", 465);
-define("SMTP_USER", 'sonicspeedsss@yandex.ru');
-define("SMTP_PASSWORD", '20091993dec');
+define("SMTP_USER", 'sonicspeedsss@yandex.ru'); 
+define("SMTP_PASSWORD", '');
 
-
-/*
-define("SMTP_HOST", 'ssl://smtp.mail.ru');
-define("SMTP_PORT", 465);
-define("SMTP_USER", 'sonicspeedsss@mail.ru');
-define("SMTP_PASSWORD", '20091993decSonic-t');
-*/
 
 
 
@@ -62,4 +55,5 @@ $pdo->exec("set names utf8");
 
 //Для процедурки
 $pdo = \Bitkit\Core\Database\Connect::getInstance()->getConnection();
+
 

@@ -18,9 +18,9 @@ $intro_arr = [
         'Предлагается к ответственному хранению',
     ],
     [
-        'Предлагается в аренду',
-        'Сдается в аренду',
-        'Предлагается к аренде',
+        'Предлагается в субаренду',      
+        'Сдается в субаренду',
+        'Предлагается к субаренде',
     ]
 ];
 
@@ -202,8 +202,8 @@ foreach($offres_arr as $key=>$value){
     if($offer_desc->gf('is_land')  || $offer_desc->gf('deal_type') == 2){
         ($offer_desc->gf('land_category')) ? $objCategory='Категория :'.mb_strtolower($offer_desc->gf('land_category')).'. ' : $objCategory='' ;
         ($offer_desc->gf('own_type_land')) ? $objOwnType='Право: '.mb_strtolower($offer_desc->gf('own_type_land')).'. '  : $objOwnType='' ;
-        ($offer_desc->gf('land_use_restrictions')) ? $objRestriction='Есть ограничения. '  : $objRestriction='Ограничения отсутствуют' ;
-        $land_intro.=$objCategory.$objOwnType.$objRestriction;
+        ($offer_desc->gf('land_use_restrictions') == 1) ? $objRestriction='Есть ограничения. '  : $objRestriction='Ограничения отсутствуют' ;
+        $land_intro.=$objCategory.$objOwnType.$objRestriction;   
     }
 
 
@@ -458,7 +458,12 @@ foreach($offres_arr as $key=>$value){
 
 
     //$id_line= '<br><br>ID '.$offer_desc->gf('object_id').$deal.'</b>';
-    $id_line= '<br><br>ID '.$offer_desc->getField('visual_id').'</b>';
+    $objectId = $offer_desc->gf('object_id');
+    $visualId = $offer_desc->gf('visual_id');
+    if (in_array($objectId,[10607])) {
+        $visualId .= '-new';
+    }
+    $id_line= '<br><br>ID '.$visualId .'</b>';
 
 
     $purp_line = '<br>На объекте возможно организовать: ';

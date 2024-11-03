@@ -391,3 +391,20 @@ function getYoutubeId($url){
 
     return $res;
 }
+
+
+function getApiCompanies($ids) : array
+{
+    $idsLine = implode(',',$ids);
+    $baseUrl = 'https://api.pennylane.pro';
+    $xml = file_get_contents($baseUrl . '/companies?expand=requests,contacts.emails,contacts.phones,contacts.contactComments,broker,companyGroup,consultant,consultant.userProfile,productRanges,categories,files&id=' . $idsLine);
+    $companies = json_decode($xml,true);
+
+    $companiesAssoc = [];
+    foreach ($companies as $company) {
+        $companiesAssoc[$company['id']] = $company;
+    }
+    return $companiesAssoc;
+}
+
+

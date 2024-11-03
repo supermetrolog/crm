@@ -2,6 +2,12 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/global_pass.php');
 
+($router = Bitkit\Core\Routing\Router::getInstance())->setURL();
+
+if ($_GET['api']) {
+    $original_id = $router->getPath()[1];
+    $original_type = $router->getPath()[2];
+}
 
 $intro_arr = [
     [
@@ -14,7 +20,7 @@ $intro_arr = [
         'Предлагается на продажу',
     ],
     [
-        'Предлагается в ответственное хранение',
+        'Предлагается в ответственное хранение', 
         'Предлагается к ответственному хранению',
     ],
     [
@@ -63,7 +69,7 @@ foreach($offres_arr as $key=>$value){
     //раздел про местоположение
     $region = $offer_desc->gf('region');
     $direction = mb_strtolower($offer_desc->gf('direction_name'));
-    $town = mb_convert_case($offer_desc->gf('town_name'),MB_CASE_TITLE, "UTF-8");
+    $town = 'г.' . mb_convert_case($offer_desc->gf('town_name'),MB_CASE_TITLE, "UTF-8");
     $district = $offer_desc->gf('district_name');
     $highway = capFirst($offer_desc->gf('highway_name')).' шоссе,';
     $from_mkad = $offer_desc->gf('from_mkad');
@@ -87,8 +93,9 @@ foreach($offres_arr as $key=>$value){
         $line_loc = "на $direction".'е Московской области, '.$town.", $highway в $from_mkad км от МКАД. $objStation $objStationTime". mb_strtolower($objStationWay);
     }else{
         $district = $offer_desc->gf('district');
-        if($district == 'Новая Москва'){
-            $line_loc = "в Новой Москве $objMetro $objMetroTime ". mb_strtolower($objMetroWay).'. ';
+        $district_moscow = $offer_desc->gf('district_moscow_name');
+        if($district_moscow == 'Новая Москва'){
+            $line_loc = "в Новой Москве $town $objMetro $objMetroTime ". mb_strtolower($objMetroWay).'. ';
         }else{
             $line_loc = "в $district Москвы $objMetro $objMetroTime ". mb_strtolower($objMetroWay).'. ';
         }
@@ -122,7 +129,7 @@ foreach($offres_arr as $key=>$value){
 
     //раздел про бизнес
     $line_business = '';
-    if($offer_desc->gf('deal_type') == 2 && $offer_desc->gf('rent_business')){
+    if($offer_desc->gf('deal_type') == 2 && $offer_desc->gf('rent_business') == 1){
         $line_business = 'Объект продается с арендным бизнесом. ';
         if($offer_desc->gf('rent_business_fill') ){
             $fill = $offer_desc->gf('rent_business_fill') ;
@@ -200,7 +207,7 @@ foreach($offres_arr as $key=>$value){
     if($offer_desc->gf('is_land')  || $offer_desc->gf('deal_type') == 2){
         ($offer_desc->gf('land_category')) ? $objCategory='Категория :'.mb_strtolower($offer_desc->gf('land_category')).'. ' : $objCategory='' ;
         ($offer_desc->gf('own_type_land')) ? $objOwnType='Право: '.mb_strtolower($offer_desc->gf('own_type_land')).'. '  : $objOwnType='' ;
-        ($offer_desc->gf('land_use_restrictions')) ? $objRestriction='Есть ограничения. '  : $objRestriction='Ограничения отсутствуют' ;
+        ($offer_desc->gf('land_use_restrictions') == 1) ? $objRestriction='Есть ограничения. '  : $objRestriction='Ограничения отсутствуют' ;
         $land_intro.=$objCategory.$objOwnType.$objRestriction;
     }
 

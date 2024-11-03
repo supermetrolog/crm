@@ -18,7 +18,7 @@ if($_POST['company_id'] || $_POST['client_company_id'] || $_POST['owner_company_
     ($_POST['client_company_id'])? $company_id = $_POST['client_company_id'] : '';
     ($_POST['owner_company_id'])? $company_id = $_POST['owner_company_id'] : '';
     //$sql_text = "SELECT * FROM $table WHERE company_id=".(int)$company_id."  OR id LIKE '%$search%'  AND deleted!=1 LIMIT 10";
-    $sql_text = "SELECT * FROM $table WHERE company_id=".(int)$company_id."  AND deleted!=1 LIMIT 10";
+    $sql_text = "SELECT * FROM $table WHERE company_id=".(int)$company_id."  AND deleted!=1 LIMIT 40";
     //echo $sql_text;
 }elseif(in_array($table,['l_locations'])){
     $sql_text = "SELECT l.id as id, t.title as title, t.town_type as town_type, t.town_district as town_district FROM $table l RIGHT JOIN l_towns t ON l.town=t.id  WHERE (t.title LIKE '%$search%' OR  l.id='$search'  ) AND t.title!='москва' AND t.deleted!=1 GROUP BY t.title,t.town_type,t.town_district  LIMIT 10";

@@ -163,7 +163,7 @@ foreach($top_embedded_code->getBottomBlocks() as $top_code_block){
 
 
             //ДЛЯ ПОДКЛЮЧЕНИЯ ЯНДЕКС АДРЕСА
-            add_script("//api-maps.yandex.ru/2.1/?lang=ru_RU&load=SuggestView&onload=addAddress");
+            add_script("//api-maps.yandex.ru/2.1/?suggest_apikey=e08e55be-8f23-40a5-ae7f-d1a6758ebfca&apikey=7cb3c3f6-2764-4ca3-ba87-121bd8921a4e&lang=ru_RU&load=SuggestView&onload=addAddress");
 
             //ДЛЯ ПОДКЛЮЧЕНИЯ СЛАЙДЕРА
             add_script("https://pennylane.pro/js/slider.js");

@@ -6,6 +6,8 @@ $filters_arr = json_decode($_GET['request']);
 //строка фильтрации
 $filter_line = '';
 
+$join_line = " LEFT JOIN l_cranes cr  ON o.object_id=cr.object_id ";
+
 //если ищем в большом поле поиска
 if($search_line = trim($filters_arr->search)){
 
@@ -232,7 +234,22 @@ if ($value = (int)$filters_arr->status == 1) {
 
 }
 
+if ($value = (int)$filters_arr->ad_cian == 1) {
+    $filter_line .= " AND o.ad_cian=1";
+}
 
+if($filters_arr->ad_cian_no) {
+    $filter_line .= " AND (o.ad_cian!=1 OR ad_cian IS NULL) ";
+}
+if($filters_arr->ad_realtor_no) {
+    $filter_line .= " AND (o.ad_realtor!=1  OR ad_realtor IS NULL )  ";
+}
+if($filters_arr->ad_yandex_no) {
+    $filter_line .= " AND (o.ad_yandex!=1 OR ad_yandex IS NULL ) ";
+}
+if($filters_arr->ad_free_no) {
+    $filter_line .= " AND (o.ad_free!=1  OR ad_free IS NULL  ) ";
+}
 
 //РЕГИОН
 if($value = (int)$filters_arr->region) {
@@ -344,9 +361,9 @@ if($type = (int)$filters_arr->object_type) {
     if($filters_arr->purposes) {
         foreach($filters_arr->purposes as $purpose){
             $purp_obj = new Purpose($purpose);
-            if($purp_obj->getField('type') == $type){
+            //if($purp_obj->getField('type') == $type){
                 $purpose_line .= " o.purposes LIKE '".'%"'.(int)$purpose.'"%'."'".'OR';
-            }
+            //}
         }
         if($purpose_line){
             $filter_line .= " AND (".trim($purpose_line,'OR').")";
@@ -446,7 +463,7 @@ if($filters_arr->deal_type && ($filters_arr->object_type || $filters_arr->safe_t
 
     //КРАНЫ
     if($filters_arr->cranes) {
-        $filter_line .= " AND (o.has_cranes=1 )";
+        $filter_line .= " AND (o.has_cranes=1 AND cr.crane_capacity > 0 )";
     }
 
 

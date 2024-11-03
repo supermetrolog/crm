@@ -14,6 +14,8 @@ class Subitem extends Post
         return 'c_industry_blocks';
     }
 
+
+
     public function visualId()
     {
         return $this->showField('id_visual');

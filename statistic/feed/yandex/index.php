@@ -25,6 +25,8 @@ $table = 'c_industry_offers_mix';
 
 //всего
 
+echo '<b>Статистика выгрузки на Яндекс</b> <br><br><br>';
+
 
 $sql_text =  "SELECT COUNT(id) as num FROM $table WHERE (type_id=1 OR blocks_amount > 1) AND  deleted!='1' AND ad_yandex=1 AND status=1 AND (price_floor_min > 0 OR  price_sale_min > 0)   AND  test_only!=1  AND photos!='[\"[]\"]'  ";
 
@@ -48,6 +50,39 @@ $count = $sql->fetch(PDO::FETCH_LAZY);
 
 echo 'ВСЕГО АРЕНДЫ: '. $count['num'] .'шт. <br><br>';
 
+//-------------------------- АРЕНДЫ в Москве
+$sql_text =  "SELECT COUNT(id) as num FROM $table WHERE region=6  AND (deal_type=1 OR deal_type=3 OR deal_type=4) AND (type_id=1 OR blocks_amount > 1) AND  deleted!='1' AND ad_yandex=1 AND status=1 AND (price_floor_min > 0 OR  price_sale_min > 0)   AND  test_only!=1  AND photos!='[\"[]\"]'  ";
+
+//echo $sql;
+
+$sql = $pdo->prepare($sql_text);
+$sql->execute();
+$count = $sql->fetch(PDO::FETCH_LAZY);
+
+echo 'АРЕНДЫ в Москве: '. $count['num'] .'шт. <br><br>';
+
+//-------------------------- АРЕНДЫ в МО
+$sql_text =  "SELECT COUNT(id) as num FROM $table WHERE region=1  AND (deal_type=1 OR deal_type=3 OR deal_type=4) AND (type_id=1 OR blocks_amount > 1) AND  deleted!='1' AND ad_yandex=1 AND status=1 AND (price_floor_min > 0 OR  price_sale_min > 0)   AND  test_only!=1  AND photos!='[\"[]\"]'  ";
+
+//echo $sql;
+
+$sql = $pdo->prepare($sql_text);
+$sql->execute();
+$count = $sql->fetch(PDO::FETCH_LAZY);
+
+echo 'АРЕНДЫ в МО: '. $count['num'] .'шт. <br><br>';
+
+//-------------------------- АРЕНДЫ в регионах
+$sql_text =  "SELECT COUNT(id) as num FROM $table WHERE region NOT IN (1,6)  AND (deal_type=1 OR deal_type=3 OR deal_type=4) AND (type_id=1 OR blocks_amount > 1) AND  deleted!='1' AND ad_yandex=1 AND status=1 AND (price_floor_min > 0 OR  price_sale_min > 0)   AND  test_only!=1  AND photos!='[\"[]\"]'  ";
+
+//echo $sql;
+
+$sql = $pdo->prepare($sql_text);
+$sql->execute();
+$count = $sql->fetch(PDO::FETCH_LAZY);
+
+echo 'АРЕНДЫ в регионах: '. $count['num'] .'шт. <br><br>';
+
 
 //--------------------------всего ПРОДАЖИ
 $sql_text =  "SELECT COUNT(id) as num FROM $table WHERE deal_type=2 AND (type_id=1 OR blocks_amount > 1) AND  deleted!='1' AND ad_yandex=1 AND status=1 AND (price_floor_min > 0 OR  price_sale_min > 0)   AND  test_only!=1  AND photos!='[\"[]\"]'  ";
@@ -59,6 +94,41 @@ $sql->execute();
 $count = $sql->fetch(PDO::FETCH_LAZY);
 
 echo 'ВСЕГО ПРОДАЖИ: '. $count['num'] .'шт. <br><br>';
+
+//-------------------------- ПРОДАЖИ в Москве
+$sql_text =  "SELECT COUNT(id) as num FROM $table WHERE  region=6  AND deal_type=2 AND (type_id=1 OR blocks_amount > 1) AND  deleted!='1' AND ad_yandex=1 AND status=1 AND (price_floor_min > 0 OR  price_sale_min > 0)   AND  test_only!=1  AND photos!='[\"[]\"]'  ";
+
+//echo $sql;
+
+$sql = $pdo->prepare($sql_text);
+$sql->execute();
+$count = $sql->fetch(PDO::FETCH_LAZY);
+
+echo 'ПРОДАЖИ в Москве: '. $count['num'] .'шт. <br><br>';
+
+//-------------------------- ПРОДАЖИ в МО
+$sql_text =  "SELECT COUNT(id) as num FROM $table WHERE  region=1  AND deal_type=2 AND (type_id=1 OR blocks_amount > 1) AND  deleted!='1' AND ad_yandex=1 AND status=1 AND (price_floor_min > 0 OR  price_sale_min > 0)   AND  test_only!=1  AND photos!='[\"[]\"]'  ";
+
+//echo $sql;
+
+$sql = $pdo->prepare($sql_text);
+$sql->execute();
+$count = $sql->fetch(PDO::FETCH_LAZY);
+
+echo 'ПРОДАЖИ в МО: '. $count['num'] .'шт. <br><br>';
+
+
+
+//-------------------------- ПРОДАЖИ в регионах
+$sql_text =  "SELECT COUNT(id) as num FROM $table WHERE  region NOT IN (1,6)  AND deal_type=2 AND (type_id=1 OR blocks_amount > 1) AND  deleted!='1' AND ad_yandex=1 AND status=1 AND (price_floor_min > 0 OR  price_sale_min > 0)   AND  test_only!=1  AND photos!='[\"[]\"]'  ";
+
+//echo $sql;
+
+$sql = $pdo->prepare($sql_text);
+$sql->execute();
+$count = $sql->fetch(PDO::FETCH_LAZY);
+
+echo 'ПРОДАЖИ в регионах: '. $count['num'] .'шт. <br><br>';
 
 
 //---------------------------------всего ПРОДВИЖЕНИЕ

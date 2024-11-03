@@ -7,6 +7,9 @@ update.php
 global_pass.php
 log.log
 cron.log
+cron/workers/last_backup
+export/xml/cian/feed.xml
+export/xml/yandex/feed.xml
 
 #folders
 uploads/

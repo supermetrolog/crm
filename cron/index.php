@@ -1,7 +1,5 @@
 <?php
 
-
-
 date_default_timezone_set("Europe/Moscow");
 
 //$root = '/var/www/www-root/data/www/pennylane.pro';
@@ -35,7 +33,7 @@ while ($task = $sql->fetch(PDO::FETCH_LAZY)) {
     //если все ок то обновляем
     
     $logText = date('Y-m-d H:i:s') . " GO_UPDATE: " . $go_update . ", Title: " . $task->title . "\n";
-    file_put_contents($root . '/sukacrontest.txt', $logText, FILE_APPEND);
+    file_put_contents($root . '/cron.log', $logText, FILE_APPEND);
     
     if ($go_update) {
         $link = $host . $task->link;
@@ -48,7 +46,7 @@ while ($task = $sql->fetch(PDO::FETCH_LAZY)) {
         $plan = new \Bitkit\Core\Cron\Plan($task->id);
         $plan->updateField('last_update', time());
         $logText = date('Y-m-d H:i:s') . ": " . $task->title . "\n";
-        file_put_contents($root . '/sukacrontest.txt', $logText, FILE_APPEND);
+        file_put_contents($root . '/cron.log', $logText, FILE_APPEND);
     }
     //echo $returned;
 }

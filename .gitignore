@@ -6,8 +6,10 @@ update.php
 .env
 global_pass.php
 log.log
+cron.log
 
 #folders
 uploads/
 docker/mysql/data
 docker/nginx/logs
+.idea

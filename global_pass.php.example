@@ -1,0 +1,42 @@
+<?php
+//Корень проекта там где лежит  global_pass.php
+define('PROJECT_ROOT', __DIR__);
+//подключаем отображение ошибок
+//include_once(PROJECT_ROOT.'/errors.php');
+
+ini_set('error_reporting', 0);
+
+//Формируем URL
+$isHttps = !empty($_SERVER['HTTPS']) && 'off' !== strtolower($_SERVER['HTTPS']);
+($isHttps) ? $protocol = 'https' : $protocol = 'http';
+$parts = explode($_SERVER['HTTP_HOST'], __DIR__);
+$folder = array_pop($parts);
+define('PROJECT_URL', $protocol . '://' . $_SERVER['HTTP_HOST']);
+define("UPLOAD_DIR", '/uploads/');
+
+
+//Записываем пассы в константы
+define("DB_HOST", 'localhost');
+define("DB_NAME", 'db');
+define("DB_USER", 'test');
+define("DB_PASSWORD", 'test');
+
+define("SMTP_HOST", 'ssl://smtp.test.ru');
+define("SMTP_PORT", 465);
+define("SMTP_USER", 'test@test.ru');
+define("SMTP_PASSWORD", 'test');
+
+//для использования классов
+require_once(PROJECT_ROOT . '/system/classes/autoload.php');
+
+require_once(PROJECT_ROOT . '/functions/index.php');
+
+//Для процедурки
+/*
+$pdo = new \PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
+$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+$pdo->exec("set names utf8");
+*/
+
+//Для процедурки
+$pdo = \Bitkit\Core\Database\Connect::getInstance()->getConnection();

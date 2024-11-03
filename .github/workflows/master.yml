@@ -22,14 +22,7 @@ jobs:
           username: ${{ secrets.ssh_server_username }}
           password: ${{ secrets.ssh_server_password }}
           script: |
+            set -euox pipefail
+            
             echo "🚀 Change workdir..."
             cd ${{env.PROJECT_PATH}}
-            
-            echo "🚀 Pull or clone repository..."
-            git pull || git clone ${{env.REPO_URL}} .
-            
-            echo "🚀 Change owner..."
-            chown user:www-data -R ./
-
-            echo "🚀 Change mod..."
-            chmod 774 -R ./

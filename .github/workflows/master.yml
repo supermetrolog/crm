@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - master
+
+name: 🚀 Deploy on push
+env:
+  PROJECT_PATH: /home/user/web/pennylane.test.pro/public_html
+  REPO_URL: git@github.com:supermetrolog/crm.git
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 🚀 Start deploy over ssh connection
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.ssh_server_host }}
+          username: ${{ secrets.ssh_server_username }}
+          password: ${{ secrets.ssh_server_password }}
+          script: |
+            echo "🚀 Change workdir..."
+            cd ${{env.PROJECT_PATH}}
+            
+            echo "🚀 Pull or clone repository..."
+            git pull || git clone ${{env.REPO_URL}} .
+            
+            echo "🚀 Change owner..."
+            chown user:www-data -R ./
+
+            echo "🚀 Change mod..."
+            chmod 774 -R ./

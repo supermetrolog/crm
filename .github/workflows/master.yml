@@ -25,7 +25,7 @@ jobs:
             set -euox pipefail
             
             echo "🚀 Change workdir..."
-            # change workdir
+            : change workdir
             cd ${{env.PROJECT_PATH}}
             
             echo "🚀 Pull or clone repository..."

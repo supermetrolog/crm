@@ -97,8 +97,8 @@ RUN rm -rf /var/cache/apk/* && docker-php-source delete
 
 USER root
 
-#RUN curl -sS https://getcomposer.org/installer | php
-#RUN mv composer.phar /usr/local/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
 
 #  Install php extensions
 RUN docker-php-ext-install sockets

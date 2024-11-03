@@ -34,7 +34,6 @@ services:
         DOCKER_PHP_VERSION: '7.4'
         DOCKER_PHP_XDEBUG_VERSION: ${DOCKER_PHP_XDEBUG_VERSION}
         TZ: ${WORKSPACE_TIMEZONE}
-        PHP_IDE_CONFIG: serverName=phpxdebug
     working_dir: /var/www/crm
     volumes:
       - .:/var/www/crm

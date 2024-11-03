@@ -6,7 +6,7 @@ on:
 
 name: 🚀 Deploy on push
 env:
-  PROJECT_PATH: /home/user/web/pennylane.test.pro/public_html
+  PROJECT_PATH: /home/user/web/pennylane.pro/public_html
   REPO_URL: git@github.com:supermetrolog/crm.git
 jobs:
   web-deploy:

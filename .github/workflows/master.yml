@@ -24,15 +24,14 @@ jobs:
           script: |
             set -euox pipefail
             
-            echo "🚀 Change workdir..."
-            : change workdir
+            : 🚀 change workdir
             cd ${{env.PROJECT_PATH}}
             
-            echo "🚀 Pull or clone repository..."
+            : 🚀 Pull or clone repository...
             git pull || git clone ${{env.REPO_URL}} .
             
-            echo "🚀 Change owner..."
+            : 🚀 Change owner...
             chown user:www-data -R ./
 
-            echo "🚀 Change mod..."
+            : 🚀 Change mod...
             chmod 774 -R ./

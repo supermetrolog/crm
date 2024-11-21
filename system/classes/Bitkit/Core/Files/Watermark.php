@@ -53,17 +53,11 @@ class Watermark extends \Bitkit\Core\Files\File
         // Создаем ресурс изображения для нашего водяного знака
         $watermark_image = imagecreatefrompng(PROJECT_ROOT.'/img/watermark.png');
 
-        // Получаем значения ширины и высоты
-        $watermark_width = imagesx($watermark_image);
-        $watermark_height = imagesy($watermark_image);
-        $watermark_aspect = $watermark_width / $watermark_height;
-
         $watermark_scale = 0.6;
+        $watermark_width = $width * $watermark_scale;
 
-        $watermark_width = $new_width * $watermark_scale;
-        $watermark_height = $watermark_width / $watermark_aspect;
-
-		$scaled_watermark = imagescale($watermark_image, $watermark_width, $watermark_height);
+		$scaled_watermark = imagescale($watermark_image, $watermark_width);
+		$watermark_height = imagesy($scaled_watermark);
 
         // Самая важная функция - функция копирования и наложения нашего водяного знака на исходное изображение
 

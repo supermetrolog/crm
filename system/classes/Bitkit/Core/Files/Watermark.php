@@ -56,16 +56,19 @@ class Watermark extends \Bitkit\Core\Files\File
         // Получаем значения ширины и высоты
         $watermark_width = imagesx($watermark_image);
         $watermark_height = imagesy($watermark_image);
+        $watermark_aspect = $watermark_width / $watermark_height;
+
+        $watermark_scale = 0.6;
+
+        $watermark_width = $new_width * $watermark_scale;
+        $watermark_height = $watermark_width / $watermark_aspect;
 
         // Самая важная функция - функция копирования и наложения нашего водяного знака на исходное изображение
 
-        for($x = 0, $y = 0; $y < $height; $x=$x + $watermark_width*3/2){
-            if($x  > $width){
-                $x = 0;
-                $y= $y + $watermark_width/2;
-            }
-            imagecopy($image, $watermark_image, $x, $y, 0, 0, $watermark_width, $watermark_height);
-        }
+        $x = ($new_width - $watermark_width) / 2;
+        $y = ($new_height - $watermark_height) / 2;
+
+        imagecopy($image, $watermark_image, $x, $y, 0, 0, $watermark_width, $watermark_height);
 
 
 

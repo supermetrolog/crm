@@ -68,9 +68,7 @@ class Watermark extends \Bitkit\Core\Files\File
         $x = ($new_width - $watermark_width) / 2;
         $y = ($new_height - $watermark_height) / 2;
 
-        imagecopy($image, $watermark_image, $x, $y, 0, 0, $watermark_width, $watermark_height);
-
-
+        imagecopyresampled($image, $watermark_image, $x, $y, 0, 0, $width, $height, $watermark_width, $watermark_height);
 
         $thumb = imagecreatetruecolor( $thumb_width, $thumb_height );
 

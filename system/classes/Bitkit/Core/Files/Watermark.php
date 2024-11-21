@@ -63,12 +63,14 @@ class Watermark extends \Bitkit\Core\Files\File
         $watermark_width = $new_width * $watermark_scale;
         $watermark_height = $watermark_width / $watermark_aspect;
 
+		$scaled_watermark = imagescale($watermark_image, $watermark_width, $watermark_height);
+
         // Самая важная функция - функция копирования и наложения нашего водяного знака на исходное изображение
 
-        $x = ($new_width - $watermark_width) / 2;
-        $y = ($new_height - $watermark_height) / 2;
+        $x = ($width - $watermark_width) / 2;
+        $y = ($height - $watermark_height) / 2;
 
-        imagecopyresampled($image, $watermark_image, $x, $y, 0, 0, $width, $height, $watermark_width, $watermark_height);
+        imagecopy($image, $scaled_watermark, $x, $y, 0, 0, $watermark_width, $watermark_height);
 
         $thumb = imagecreatetruecolor( $thumb_width, $thumb_height );
 
@@ -95,6 +97,7 @@ class Watermark extends \Bitkit\Core\Files\File
         imagedestroy($image);
         imagedestroy($thumb);
         imagedestroy($watermark_image);
+        imagedestroy($scaled_watermark);
 
 
     }

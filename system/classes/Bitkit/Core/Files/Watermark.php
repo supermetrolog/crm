@@ -50,23 +50,7 @@ class Watermark extends \Bitkit\Core\Files\File
         imagealphablending($image, true);
         imagesavealpha($image, true);
 
-        // Создаем ресурс изображения для нашего водяного знака
-        $watermark_image = imagecreatefrompng(PROJECT_ROOT.'/img/watermark.png');
-
-        $watermark_scale = 0.6;
-        $watermark_width = $width * $watermark_scale;
-
-		$scaled_watermark = imagescale($watermark_image, $watermark_width);
-		$watermark_height = imagesy($scaled_watermark);
-
-        // Самая важная функция - функция копирования и наложения нашего водяного знака на исходное изображение
-
-        $x = ($width - $watermark_width) / 2;
-        $y = ($height - $watermark_height) / 2;
-
-        imagecopy($image, $scaled_watermark, $x, $y, 0, 0, $watermark_width, $watermark_height);
-
-        $thumb = imagecreatetruecolor( $thumb_width, $thumb_height );
+	    $thumb = imagecreatetruecolor( $thumb_width, $thumb_height );
 
 
         // Resize and crop
@@ -78,6 +62,21 @@ class Watermark extends \Bitkit\Core\Files\File
             $new_width, $new_height,
             $width, $height);
 
+	    // Создаем ресурс изображения для нашего водяного знака
+	    $watermark_image = imagecreatefrompng(PROJECT_ROOT.'/img/watermark.png');
+
+	    $watermark_scale = 0.7;
+	    $watermark_width = $new_width * $watermark_scale;
+
+	    $scaled_watermark = imagescale($watermark_image, $watermark_width);
+	    $watermark_height = imagesy($scaled_watermark);
+
+	    // Самая важная функция - функция копирования и наложения нашего водяного знака на исходное изображение
+
+	    $x = ($new_width - $watermark_width) / 2;
+	    $y = ($new_height - $watermark_height) / 2;
+
+	    imagecopy($thumb, $scaled_watermark, $x, $y, 0, 0, $watermark_width, $watermark_height);
 
 
         // Создание и сохранение результирующего изображения с водяным знаком

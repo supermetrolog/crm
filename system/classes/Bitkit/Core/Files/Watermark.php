@@ -62,8 +62,10 @@ class Watermark extends \Bitkit\Core\Files\File
             $new_width, $new_height,
             $width, $height);
 
+		$watermark_src = $thumb_width < 500 ? 'watermark-small.png' : 'watermark.png';
+
 	    // Создаем ресурс изображения для нашего водяного знака
-	    $watermark_image = imagecreatefrompng(PROJECT_ROOT.'/img/watermark.png');
+	    $watermark_image = imagecreatefrompng(PROJECT_ROOT . '/img/' . $watermark_src);
 
 	    $watermark_scale = 0.7;
 	    $watermark_width = $thumb_width * $watermark_scale;

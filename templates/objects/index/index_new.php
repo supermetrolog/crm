@@ -277,7 +277,66 @@
             </div>
             <div class="one_fourth no-shrink ">
                 <div data-company_id="<?= $object->getField('company_id') ?>" class="company-injector-container card-contacts-area-inner full-height flex-box box text_left flex-box-verical flex-between flex-box-to-left" style="background: #e6eedd;">
-
+	                <? $owners = [$object->getField('company_id')]?>
+	                <?foreach($owners as $owner){?>
+		                <?$company = new Company($owner ); ?>
+		                <div>
+			                <div class="isBold">
+				                Собственник 1
+			                </div>
+			                <?if($company->getField('company_group_id')){?>
+				                <div>
+					                <b>
+						                <?
+						                $company_group = new Post($company->getField('company_group_id'));
+						                $company_group->getTable('c_industry_companies_groups');
+						                ?>
+						                <?= $company_group->title() ?>
+					                </b>
+				                </div>
+			                <?}?>
+			                <div>
+				                <a href="/company/<?=$company->postId()?>" target="_blank">
+					                <?if($company->postId() == $company->title()){?>
+						                <span class="attention ">NONAME <?=$company->postId()?></span>
+					                <?}else{?>
+						                <?= $company->title() ?? 'NONAME '.$company->postId() ?>
+					                <?}?>
+					                --
+				                </a>
+			                </div>
+			                <?if($company->getField('company_group_id')){?>
+				                <div class="ghost">
+					                <?=(new CompanyGroup($company->getField('company_group_id')))->title()?>
+				                </div>
+			                <?}?>
+			                <?if($company->getField('rating')){?>
+				                <div class="ghost">
+					                тут рейтинг
+				                </div>
+			                <?}?>
+			                <div class="flex-box flex-wrap">
+				                <?if(count($company->getCompanyContacts())){?>
+					                <div class="underlined pointer href-blue" >
+						                контакты (<?=(count($company->getCompanyContacts()))?>) ,
+					                </div>
+				                <?}?>
+				                <?if(count($company->getCompanyRequests())){?>
+					                <div class="underlined pointer href-blue" >
+						                запросы (<?=(count($company->getCompanyRequests()))?>),
+					                </div>
+				                <?}?>
+				                <?if(count($company->getCompanyObjects())){?>
+					                <div class="underlined pointer href-blue" >
+						                объекты (<?=(count($company->getCompanyObjects()))?>)
+					                </div>
+				                <?}?>
+			                </div>
+			                <div>
+				                &#160;
+			                </div>
+		                </div>
+	                <?}?>
                 </div>
             </div>
         </div>
@@ -7237,7 +7296,83 @@
                                                             </div>
                                                         <? } ?>
                                                         <div data-company_id="<?= $offer->getField('company_id') ?>" data-contact_id="<?= $offer->getField('contact_id') ?>" class="offer-company-injector-container card-contacts-area-inner flex-box box text_left flex-box-verical flex-between flex-box-to-left" style="background: #e6eedd;">
-
+	                                                        <?if($offer->getField('company_id')){?>
+		                                                        <?$company = new Company($offer->getField('company_id')); ?>
+		                                                        <div>
+			                                                        <?if($company->getField('company_group_id')){?>
+				                                                        <div>
+					                                                        <b>
+						                                                        <?
+						                                                        $company_group = new Post($company->getField('company_group_id'));
+						                                                        $company_group->getTable('c_industry_companies_groups');
+						                                                        ?>
+						                                                        <?=$company_group->title()?>
+					                                                        </b>
+				                                                        </div>
+			                                                        <?}?>
+			                                                        <div>
+				                                                        <a href="/company/<?=$company->postId()?>" target="_blank">
+					                                                        <?if($company->postId() == $company->title()){?>
+						                                                        <span class="attention ">NONAME <?=$company->postId()?></span>
+					                                                        <?}else{?>
+						                                                        <?=$company->title()?>
+					                                                        <?}?>
+				                                                        </a>
+			                                                        </div>
+			                                                        <?if($company->getField('company_group_id')){?>
+				                                                        <div class="ghost">
+					                                                        <?=(new CompanyGroup($company->getField('company_group_id')))->title()?>
+				                                                        </div>
+			                                                        <?}?>
+			                                                        <?if($company->getField('rating')){?>
+				                                                        <div class="ghost">
+					                                                        тут рейтинг
+				                                                        </div>
+			                                                        <?}?>
+			                                                        <div class="flex-box flex-wrap">
+				                                                        <?if(count($company->getCompanyContacts())){?>
+					                                                        <div class="href-blue">
+						                                                        контакты (<?=(count($company->getCompanyContacts()))?>) ,
+					                                                        </div>
+				                                                        <?}?>
+				                                                        <?if(count($company->getCompanyRequests())){?>
+					                                                        <div class="href-blue">
+						                                                        запросы (<?=(count($company->getCompanyRequests()))?>),
+					                                                        </div>
+				                                                        <?}?>
+				                                                        <?if(count($company->getCompanyObjects())){?>
+					                                                        <div class="href-blue">
+						                                                        объекты (<?=(count($company->getCompanyObjects()))?>)
+					                                                        </div>
+				                                                        <?}?>
+			                                                        </div>
+			                                                        <div>
+				                                                        &#160;
+			                                                        </div>
+			                                                        <?if($offer->getField('contact_id')){?>
+				                                                        <div>
+					                                                        <?
+					                                                        $contact = new Contact($offer->getField('contact_id'));
+					                                                        ?>
+					                                                        <a href="/contact/<?=$contact->postId()?>"><?=$contact->title()?></a>
+				                                                        </div>
+				                                                        <div>
+					                                                        <div class="ghost">
+						                                                        <?$contact_group = new Post($contact->getField('contact_group'));
+						                                                        $contact_group->getTable('c_industry_contact_groups');
+						                                                        ?>
+						                                                        <?=$contact_group->title()?>
+					                                                        </div>
+					                                                        <div >
+						                                                        <?=$contact->phone()?>
+					                                                        </div>
+					                                                        <div>
+						                                                        <?=$contact->email()?>
+					                                                        </div>
+				                                                        </div>
+			                                                        <?}?>
+		                                                        </div>
+	                                                        <?}?>
                                                         </div>
                                                         <div class="card-brocker-area">
                                                             <div class="card-brocker-area-inner  text_left flex-box flex-vertical-top ">

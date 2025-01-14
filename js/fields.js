@@ -1,7 +1,7 @@
 $(document).ready(() => {
     replaceCompaniesInfo()
-    replaceCompanyOfferinfo();
-    replaceCompanyInfo()
+    // replaceCompanyOfferinfo();
+    // replaceCompanyInfo()
 });
 async function replaceCompanyOfferinfo() {
     const company_columns = document.querySelectorAll(".offer-company-injector-container");

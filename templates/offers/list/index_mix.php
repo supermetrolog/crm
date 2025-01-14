@@ -405,7 +405,7 @@
                 <? } ?>
             </div>
             <div class="for-customer obj-col-7" data-company_id="<?= $offer->getField('company_id') ?>" data-contact='<?= json_encode(['contact_id' => $offer->getField('contact_id'), 'company_id' => $offer->getField('company_id')]) ?>'>
-                <!-- <div class="for-customer-label">
+                <div class="for-customer-label">
                     <div class="box-vertical" style="position: relative">
                         <? if ($offer->getField('company_id') != NULL) { ?>
                             <? $offer_company = new Company($offer->getField('company_id')) ?>
@@ -485,7 +485,7 @@
                             <? } ?>
                         <? } ?>
                     </div>
-                </div> -->
+                </div>
             </div>
             <div class="for-agent obj-col-8">
                 <div class="box-vertical" style="position: relative">

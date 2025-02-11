@@ -17,11 +17,20 @@
         <div class=" flex-wrap cranes-field">
             <input type="hidden" name="<?=trim($field->title())?>" value="0" />
             <?
-            var_dump($src);
-            $floor = new Floor($_POST['floor_id'] ?? $src['id']);
-            $object_id = $floor->getField('object_id');
-            $object_id = ($object_id == "") ? null : $object_id;
+//            var_dump($src);
+
+            if ($table === 'c_industry') {
+	            $object_id = $src['id'];
+            } else {
+	            $floor = new Floor($_POST['floor_id'] ?? $src['id']);
+
+	            $object_id = $floor->getField('object_id');
+
+				if ($object_id == "") $object_id = null;
+            }
+
             $object = new Building($object_id);
+
             if($field->title() == 'cranes'){
                 $items = $object->getCranes();
                 $class = 'Crane';

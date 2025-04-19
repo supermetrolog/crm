@@ -11,7 +11,7 @@ if($_COOKIE['member_id'] == 941) {
     var_dump($pars);
 }
 
-$name = urldecode(array_pop($pars));
+$name = urldecode(explode('?', array_pop($pars))[0]);
 $post = (int)array_pop($pars);
 $width = (int)array_pop($pars);
 

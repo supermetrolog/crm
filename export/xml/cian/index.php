@@ -419,7 +419,7 @@ while ($offer = $sql->fetch(PDO::FETCH_LAZY)) {
 
         $PhotoSchema = $Photos->appendChild($dom->createElement('PhotoSchema'));
         $FullUrl = $PhotoSchema->appendChild($dom->createElement('FullUrl'));
-        $FullUrl->appendChild($dom->createTextNode(PROJECT_URL . '/system/controllers/photos/watermark.php/1200/' . $post . '/' . $name));
+        $FullUrl->appendChild($dom->createTextNode(PROJECT_URL . '/system/controllers/photos/watermark.php/1200/' . $post . '/' . $name . '?v=1'));
 
         $IsDefault = $PhotoSchema->appendChild($dom->createElement('IsDefault'));
         $IsDefault->appendChild($dom->createTextNode($photo_num == 1 ? 'true' : 'false'));

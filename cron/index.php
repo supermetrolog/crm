@@ -16,7 +16,10 @@ $sql = $pdo->prepare("SELECT * FROM core_plans WHERE deleted !=1 AND activity=1"
 $sql->execute();
 
 //часы ночного времени
-$night_hours = [22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+//$night_hours = [22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+// Новые часы ночного времени, чтобы фид не генерился с утра.
+$night_hours = [22, 23, 0, 1, 2, 3, 4];
 
 
 while ($task = $sql->fetch(PDO::FETCH_LAZY)) {

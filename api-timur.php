@@ -7,7 +7,7 @@ ini_set('display_startup_errors', 1);
 
 function getApiCompanies() : array
 {
-    $baseUrl = 'https://https://api.pennylane.pro';
+    $baseUrl = 'https://api.raysen.ru';
     $xml = file_get_contents($baseUrl . '/companies?expand=requests,contacts.emails,contacts.phones,contacts.contactComments,broker,companyGroup,consultant,consultant.userProfile,productRanges,categories,files');
     $companies = json_decode($xml,true);
 

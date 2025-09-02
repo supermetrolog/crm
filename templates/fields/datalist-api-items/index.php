@@ -7,7 +7,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/global_pass.php');
 $search = mb_strtolower($_POST['search']);
 
 // $url = 'https://api.pennylane.pro/companies?expand=requests,contacts.emails,contacts.phones,contacts.contactComments,broker,companyGroup,consultant,consultant.userProfile,productRanges,categories,files&all=' . $search;
-$url = 'https://api.pennylane.pro/companies?fields=id,full_name,nameRu,nameEng&all=' . $search;
+$url = 'https://api.raysen.ru/companies?fields=id,full_name,nameRu,nameEng&all=' . $search;
 $dataJson = file_get_contents($url);
 
 $data = json_decode($dataJson, true);

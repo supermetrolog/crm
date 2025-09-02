@@ -91,7 +91,7 @@ if (file_exists($to_dir)) {
 }
 // $snappy->generateFromHtml($test, $to_dir);
 
-$to_url = "https://api.pennylane.pro/pdf/presentations?type_id=$type_id&original_id=$original_id&object_id=$object_id&consultant=$member_id";
+$to_url = "https://api.raysen.ru/pdf/presentations?type_id=$type_id&original_id=$original_id&object_id=$object_id&consultant=$member_id";
 
 header("Location:  $to_url");
 

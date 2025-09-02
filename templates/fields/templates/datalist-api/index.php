@@ -33,7 +33,7 @@ if (!$field->getField('is_multifield')) {
 <?
 function getCompanyFullnameById($id)
 {
-    $url = "https://api.pennylane.pro/companies/$id?fields=full_name";
+    $url = "https://api.raysen.ru/companies/$id?fields=full_name";
     $company = json_decode(file_get_contents($url));
     if ($company) {
         return str_replace('"', '', $company->full_name);

@@ -3,7 +3,7 @@
 <?
 function getCompanyFullnameById($id)
 {
-    $url = "https://api.pennylane.pro/companies/$id?fields=full_name";
+    $url = "https://api.raysen.ru/companies/$id?fields=full_name";
     $company = json_decode(file_get_contents($url));
     if ($company) {
         return $company->full_name;
@@ -12,7 +12,7 @@ function getCompanyFullnameById($id)
 }
 function getContactListByCompanyId($id)
 {
-    $url = "https://api.pennylane.pro/contacts?company_id=$id&fields=id,full_name";
+    $url = "https://api.raysen.ru/contacts?company_id=$id&fields=id,full_name";
     return json_decode(file_get_contents($url));
 }
 ?>

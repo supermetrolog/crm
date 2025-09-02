@@ -1,5 +1,5 @@
-const API_URL = "https://api.pennylane.pro";
-const CLIENT_URL = "https://clients.pennylane.pro";
+const API_URL = "https://api.raysen.ru";
+const CLIENT_URL = "https://crm.raysen.ru";
 
 $(document).ready(() => {
     replaceCompaniesInfo();

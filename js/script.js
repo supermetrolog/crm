@@ -167,7 +167,7 @@ function setDatalistVariant() {
             params.push('table=' + table);
             let result = sendAjaxRequestPost('https://pennylane.pro/templates/fields/datalist-items/index.php', params, false);
 
-            let res = fetch("https://api.pennylane.pro/contacts?company_id=" + id + "&fields=id,full_name")
+            let res = fetch("https://api.raysen.ru/contacts?company_id=" + id + "&fields=id,full_name")
             console.warn(res);
             // res = JSON.parse(res);
             res.then((response) => {

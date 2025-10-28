@@ -771,6 +771,11 @@ class Post extends Unit
         return 0;
     }
 
+	public function postRestore() {
+		if ($this->setTableId() == 33) {
+			$this->softRestore();
+		}
+	}
 
     public function filesChange(string $field, string $files)
     {

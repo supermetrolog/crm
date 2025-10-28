@@ -238,6 +238,11 @@ abstract class Unit implements UnitActions
         return $post_id;
     }
 
+	public function softRestore()
+	{
+		$this->updateField('deleted', 0);
+	}
+
     public function activate()
     {
         $this->updateField('activity', 1);

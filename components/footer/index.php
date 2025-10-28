@@ -1250,6 +1250,30 @@ foreach($top_embedded_code->getBottomBlocks() as $top_code_block){
         }
     });
 
+	//ВОССТАНОВЛЕНИЕ ПОСТА
+	$('body').on('click', '.card-restore', function() {
+		const confirmed = confirm('Вы уверены?')
+
+		if (!confirmed) {
+			return;
+		}
+
+		const params = [
+			`id=${this.getAttribute('data-id')}`,
+			`table_id=${this.getAttribute('data-table')}`
+		];
+
+		sendAjaxRequestPost("<?=PROJECT_URL?>/system/controllers/posts/restore.php", params, false);
+
+		const redirectUrl = this.getAttribute('data-redirect');
+
+		if (redirectUrl) {
+			window.location.href = redirectUrl;
+		} else {
+			window.location.reload();
+		}
+	});
+
 
     $("body").on('focus',"input[type='tel'] ",function() {
         console.log( "Handler for .focus() called." );

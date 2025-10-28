@@ -128,13 +128,21 @@ if($_COOKIE['member_id'] == 141){
         <?//if(!$post->hasDeal()){?>
         <?if(1){?>
         <?//if(1){?>
-		    <?if ($table_id == 33) {?>
-		    <div class="icon-round to-end card-restore delete_post" data-id="<?=$post->postId()?>"  data-table="<?=$post->setTableId()?>" <?if($_POST['redirect']){?>data-redirect="<?=PROJECT_URL.'/'.$table_obj->getField('url_redirect')?>"   <?}?>>
-			    <span title="Восстановить"><i class="fas fa-undo-alt"></i></span>
-		    </div>
-		    <?}?>
-		    <div class="icon-round to-end card-trash delete_post" data-id="<?=$post->postId()?>"  data-table="<?=$post->setTableId()?>" <?if($_POST['redirect']){?>data-redirect="<?=PROJECT_URL.'/'.$table_obj->getField('url_redirect')?>"   <?}?>>
-			    <span title="Удалить"><i class="fas fa-trash-alt"></i></span>
+		    <div style="display: flex; gap: 10px; justify-content: flex-end; width: 100%">
+			    <button class="button btn-highlight box-small card-trash delete_post" data-id="<?=$post->postId()?>" data-table="<?=$post->setTableId()?>" <?if($_POST['redirect']){?>data-redirect="<?=PROJECT_URL.'/'.$table_obj->getField('url_redirect')?>"   <?}?>>
+				    <span style="display: inline-flex; gap: 5px; align-items: center;">
+					    <span>Удалить</span>
+				        <i class="fas fa-trash-alt"></i>
+				    </span>
+			    </button>
+			    <?if ($table_id == 33) {?>
+				    <button class="button btn-highlight box-small card-restore delete_post" data-id="<?=$post->postId()?>" data-table="<?=$post->setTableId()?>" <?if($_POST['redirect']){?>data-redirect="<?=PROJECT_URL.'/'.$table_obj->getField('url_redirect')?>"   <?}?>>
+					    <span style="display: inline-flex; gap: 5px; align-items: center;">
+						    <span>Восстановить</span>
+					        <i class="fas fa-undo-alt"></i>
+					    </span>
+				    </button>
+			    <?}?>
 		    </div>
         <?}?>
     <?}?>

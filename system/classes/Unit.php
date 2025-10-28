@@ -240,7 +240,11 @@ abstract class Unit implements UnitActions
 
 	public function softRestore()
 	{
+		$postId = $this->getField('id');
+
 		$this->updateField('deleted', 0);
+
+		return $postId;
 	}
 
     public function activate()

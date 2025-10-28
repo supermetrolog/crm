@@ -5,21 +5,22 @@ $availableTableIds = [33];
 
 $user = new Member($_COOKIE['member_id']);
 
+$table_id = (int)$_POST['table_id'];
+
 if ($user->is_valid()) {
 	$id      = (int)$_POST['id'];
-	$tableId = (int)$_POST['table_id'];
 
-	if (!in_array($tableId, $availableTableIds)) {
+	if (!in_array($table_id, $availableTableIds)) {
 		echo "You can't restore this post";
 		exit();
 	}
 
-	$table = (new Table($tableId))->tableName();
+	$table = (new Table($table_id))->tableName();
 	$post  = new Post($id);
 
 	$post->getTable($table);
 
-	$post->postRestore();
+	$post_id = $post->postRestore();
 
 	include_once (PROJECT_ROOT . '/table/feed_create.php');
 

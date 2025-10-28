@@ -129,7 +129,7 @@ if($_COOKIE['member_id'] == 141){
         <?if(1){?>
         <?//if(1){?>
 		    <?if ($table_id == 33) {?>
-		    <div hidden class="icon-round to-end card-restore delete_post hidden" data-id="<?=$post->postId()?>"  data-table="<?=$post->setTableId()?>" <?if($_POST['redirect']){?>data-redirect="<?=PROJECT_URL.'/'.$table_obj->getField('url_redirect')?>"   <?}?>>
+		    <div class="icon-round to-end card-restore delete_post" data-id="<?=$post->postId()?>"  data-table="<?=$post->setTableId()?>" <?if($_POST['redirect']){?>data-redirect="<?=PROJECT_URL.'/'.$table_obj->getField('url_redirect')?>"   <?}?>>
 			    <span title="Восстановить"><i class="fas fa-undo-alt"></i></span>
 		    </div>
 		    <?}?>

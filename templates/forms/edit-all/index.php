@@ -128,7 +128,7 @@ if($_COOKIE['member_id'] == 141){
         <?//if(!$post->hasDeal()){?>
         <?if(1){?>
         <?//if(1){?>
-		    <div style="display: flex; gap: 10px; justify-content: flex-end; width: 100%">
+		    <div style="display: flex; gap: 10px; justify-content: flex-end; width: 100%;margin: 0 20px 20px 0;">
 			    <button class="button btn-highlight box-small card-trash delete_post" data-id="<?=$post->postId()?>" data-table="<?=$post->setTableId()?>" <?if($_POST['redirect']){?>data-redirect="<?=PROJECT_URL.'/'.$table_obj->getField('url_redirect')?>"   <?}?>>
 				    <span style="display: inline-flex; gap: 5px; align-items: center;">
 					    <span>Удалить</span>

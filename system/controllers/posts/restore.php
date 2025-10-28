@@ -21,6 +21,8 @@ if ($user->is_valid()) {
 
 	$post->postRestore();
 
+	include_once (PROJECT_ROOT . '/table/feed_create.php');
+
 	header("Location: " . $_SERVER['HTTP_REFERER']);
 } else {
 	echo "F*ck you, hacker=)";
